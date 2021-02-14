@@ -2,7 +2,7 @@ import { Storage } from '@google-cloud/storage'
 import * as dayjs from 'dayjs'
 import { Context, Message } from './schema'
 
-const bucketName = process.env['INTERPHONE_LOG_BUCKET']
+const bucketName = process.env.INTERPHONE_TELEMETRY_BUCKET
 
 export const storeInterphoneTelemetry = async (
   message: Message,

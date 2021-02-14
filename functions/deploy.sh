@@ -23,5 +23,12 @@ gcloud functions deploy \
   --trigger-topic interphone \
   --runtime $runtime \
   --region $region \
+  --entry-point storeInterphoneCommand \
+  store-interphone-command
+
+gcloud functions deploy \
+  --trigger-topic interphone \
+  --runtime $runtime \
+  --region $region \
   --entry-point storeInterphoneTelemetry \
   store-interphone-telemetry

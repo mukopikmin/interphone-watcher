@@ -1,13 +1,15 @@
-import { v1 } from '@google-cloud/iot'
+import { v1 as iotCore } from '@google-cloud/iot'
+import { Storage } from '@google-cloud/storage'
 import * as dayjs from 'dayjs'
 import { Context, Message, Request, Response } from './schema'
 
 const region = process.env.REGION || ''
 const projectId = process.env.GCP_PROJECT || ''
 const registryId = process.env.REGISTRY_ID || ''
+const commandBucket = process.env.COMMAND_LOGS_BUCKET || ''
 
 export const sendInterphoneCommand = async (req: Request, res: Response) => {
-  const iot = new v1.DeviceManagerClient({
+  const iot = new iotCore.DeviceManagerClient({
     // optional auth parameters.
   })
   const commandMessage = req.query.command
@@ -36,9 +38,20 @@ export const sendInterphoneCommand = async (req: Request, res: Response) => {
   }
 }
 
-exports.storeCommand = async (message: Message, context: Context) => {
-  const command = {
-    timestamp: dayjs().format(),
+export const storeInterphoneCommand = async (
+  message: Message,
+  context: Context
+) => {
+  const storage = new Storage()
+  const bucket = storage.bucket(commandBucket)
+  const timestamp = dayjs().format()
+  const logFile = bucket.file(timestamp)
+  const lastLogFile = bucket.file('last')
+  const content = JSON.stringify({
+    timestamp,
     command: message,
-  }
+  })
+
+  await logFile.save(content)
+  await lastLogFile.save(content)
 }
