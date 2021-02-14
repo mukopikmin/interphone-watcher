@@ -24,6 +24,8 @@ MAXIMUM_BACKOFF_TIME = 32
 # Whether to wait with exponential backoff before publishing.
 should_backoff = False
 
+sensor_enabled = False
+
 
 def create_jwt(project_id, private_key_file, algorithm):
     """Creates a JWT (https://jwt.io) to establish an MQTT connection.
@@ -90,10 +92,12 @@ def on_disconnect(unused_client, unused_userdata, rc):
 
 def on_publish(unused_client, unused_userdata, unused_mid):
     """Paho callback when a message is sent to the broker."""
-    print("on_publish")
+    print(f"on_publish with enabled: {sensor_enabled}")
 
 
 def on_message(unused_client, unused_userdata, message):
+    global sensor_enabled
+
     """Callback when the device receives a message on a subscription."""
     payload = str(message.payload.decode("utf-8"))
     print(
@@ -101,6 +105,11 @@ def on_message(unused_client, unused_userdata, message):
             payload, message.topic, str(message.qos)
         )
     )
+
+    if payload == "start":
+        sensor_enabled = True
+    elif payload == "stop":
+        sensor_enabled = False
 
 
 def get_client(

@@ -12,14 +12,14 @@ gcloud functions deploy \
   --entry-point notifyInterphoneSlack \
   notify-interphone-slack
 
- gcloud functions deploy \
+gcloud functions deploy \
   --trigger-http \
   --runtime $runtime \
   --region $region \
   --entry-point sendInterphoneCommand \
   send-interphone-command
 
- gcloud functions deploy \
+gcloud functions deploy \
   --trigger-topic interphone \
   --runtime $runtime \
   --region $region \

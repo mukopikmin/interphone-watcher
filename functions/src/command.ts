@@ -24,15 +24,15 @@ export const sendInterphoneCommand = async (req: Request, res: Response) => {
     binaryData: binaryData,
   }
 
+  res.set('Access-Control-Allow-Origin', '*')
+  res.set('Content-Type', 'application/json')
+
   try {
     const responses = await iot.sendCommandToDevice(request)
 
-    res.set('Access-Control-Allow-Origin', '*')
-    res.send('Sent command: ', responses[0])
+    res.status(200).send(responses[0])
   } catch (err) {
-    res.status(500)
-    res.set('Access-Control-Allow-Origin', '*')
-    res.send('Could not send command:', err)
+    res.status(500).send(err)
   }
 }
 
