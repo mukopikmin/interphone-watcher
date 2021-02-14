@@ -185,6 +185,7 @@ def mqtt_device_demo(
     """Connects a device, sends data, and receives data."""
     # [START iot_mqtt_run]
     global minimum_backoff_time
+    global sensor_enabled
     global MAXIMUM_BACKOFF_TIME
 
     # Publish to the events or state topic based on the flag.
@@ -265,11 +266,7 @@ def mqtt_device_demo(
             print(data)
 
             payload = json.dumps(data)
-            # payload = "{}/{}-payload-{}".format(registry_id, device_id, i)
-            # print(
-            #     "Publishing message {}/{}: '{}'".format(i, num_messages, payload)
-            # )
-            # [START iot_mqtt_jwt_refresh]
+
             seconds_since_issue = (datetime.datetime.utcnow() - jwt_iat).seconds
             if seconds_since_issue > 60 * jwt_exp_mins:
                 print("Refreshing token after {}s".format(seconds_since_issue))
@@ -287,11 +284,9 @@ def mqtt_device_demo(
                     mqtt_bridge_hostname,
                     mqtt_bridge_port,
                 )
-            # [END iot_mqtt_jwt_refresh]
-            # Publish "payload" to the MQTT topic. qos=1 means at least once
-            # delivery. Cloud IoT Core also supports qos=0 for at most once
-            # delivery.
-            client.publish(mqtt_topic, payload, qos=1)
+
+            if sensor_enabled:
+                client.publish(mqtt_topic, payload, qos=1)
 
     stream.stop_stream()
     stream.close()
