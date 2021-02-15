@@ -1,0 +1,12 @@
+[Unit]
+Description=Sound sensor agent
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/interphone-watcher
+ExecStart=/home/pi/.anyenv/envs/pyenv/shims/pipenv run python watch.py
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
