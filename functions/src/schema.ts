@@ -24,3 +24,15 @@ export interface Telemetry {
 }
 
 export interface Context {}
+
+export interface DeviceConfigVersion {
+  version: number
+  cloudUpdateTime: string
+  deviceAckTime: string
+  config: DeviceConfig | null
+}
+
+export interface DeviceConfig {
+  sensorEnabled: boolean
+  threshold: number
+}

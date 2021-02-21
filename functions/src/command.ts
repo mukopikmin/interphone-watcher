@@ -1,7 +1,14 @@
 import { v1 as iotCore } from '@google-cloud/iot'
 import { Storage } from '@google-cloud/storage'
 import * as dayjs from 'dayjs'
-import { Context, Message, Request, Response } from './schema'
+import {
+  Context,
+  DeviceConfig,
+  DeviceConfigVersion,
+  Message,
+  Request,
+  Response,
+} from './schema'
 
 const region = process.env.REGION || ''
 const projectId = process.env.GCP_PROJECT || ''
@@ -30,9 +37,9 @@ export const sendInterphoneCommand = async (req: Request, res: Response) => {
   res.set('Content-Type', 'application/json')
 
   try {
-    const responses = await iot.sendCommandToDevice(request)
+    const responses = await iot.modifyCloudToDeviceConfig(request)
 
-    res.status(200).send(responses[0])
+    res.status(200).send(responses)
   } catch (err) {
     res.status(500).send(err)
   }
@@ -54,4 +61,60 @@ export const storeInterphoneCommand = async (
 
   await logFile.save(content)
   await lastLogFile.save(content)
+}
+
+export const getInterphoneDeviceState = async (req: Request, res: Response) => {
+  const deviceId = 'macmini'
+  const iot = new iotCore.DeviceManagerClient()
+  const devicePath = iot.devicePath(projectId, region, registryId, deviceId)
+  const [response] = await iot.listDeviceStates({ name: devicePath })
+  const states = response.deviceStates
+
+  if (states && states.length === 0) {
+    console.log(`No States for device: ${deviceId}`)
+  } else {
+    console.log(`States for device: ${deviceId}`)
+  }
+
+  const [configVersions] = await iot.listDeviceConfigVersions({
+    name: devicePath,
+  })
+  const { deviceConfigs } = configVersions
+
+  res.set('Access-Control-Allow-Origin', '*')
+  res.set('Content-Type', 'application/json')
+
+  if (!deviceConfigs) {
+    return res.status(500).send({})
+  }
+
+  const configs: DeviceConfigVersion[] = deviceConfigs.map((version) => {
+    const binaryData = version.binaryData?.toString()
+    const cloudUpdateTime = dayjs
+      .unix(Number(version.cloudUpdateTime?.seconds))
+      .format()
+    const deviceAckTime = dayjs
+      .unix(Number(version.deviceAckTime?.seconds))
+      .format()
+
+    if (binaryData) {
+      const config: DeviceConfig = JSON.parse(binaryData)
+
+      return {
+        version: Number(version.version),
+        cloudUpdateTime,
+        deviceAckTime,
+        config,
+      }
+    }
+
+    return {
+      version: Number(version.version),
+      cloudUpdateTime,
+      deviceAckTime,
+      config: null,
+    }
+  })
+
+  res.send(configs)
 }

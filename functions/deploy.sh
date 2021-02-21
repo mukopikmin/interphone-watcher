@@ -20,6 +20,13 @@ gcloud functions deploy \
   send-interphone-command
 
 gcloud functions deploy \
+  --trigger-http \
+  --runtime $runtime \
+  --region $region \
+  --entry-point getInterphoneDeviceState \
+  get-interphone-device-state
+
+gcloud functions deploy \
   --trigger-topic interphone \
   --runtime $runtime \
   --region $region \
