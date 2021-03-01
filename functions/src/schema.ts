@@ -21,6 +21,7 @@ export interface Telemetry {
   max: number
   min: number
   average: number
+  threshold: number
 }
 
 export interface Context {}

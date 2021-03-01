@@ -2,7 +2,6 @@ import { IncomingWebhook } from '@slack/webhook'
 import { Context, Message, Telemetry } from './schema'
 
 const url = process.env.SLACK_WEBHOOK_URL
-const threshold = process.env.SOUND_THRESHOLD || 120
 
 export const notifyInterphoneSlack = async (
   message: Message,
@@ -15,10 +14,11 @@ export const notifyInterphoneSlack = async (
   const webhook = new IncomingWebhook(url)
   const raw = Buffer.from(message.data, 'base64').toString()
   const data: Telemetry = JSON.parse(raw)
+  const { max, min, average, threshold } = data
 
-  if (data.max > threshold) {
+  if (max > threshold) {
     await webhook.send({
-      text: `Sound sensor: ${data.max}`,
+      text: `Max: ${max}, Min: ${min}, Average: ${average}, Threshold: ${threshold}`,
     })
   } else {
     console.log('No action.')
