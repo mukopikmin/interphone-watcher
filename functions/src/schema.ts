@@ -27,8 +27,8 @@ export interface Context {}
 
 export interface DeviceConfigVersion {
   version: number
-  cloudUpdateTime: string
-  deviceAckTime: string
+  cloudUpdateTime: string | null
+  deviceAckTime: string | null
   config: DeviceConfig | null
 }
 

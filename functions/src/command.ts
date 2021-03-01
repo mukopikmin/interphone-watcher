@@ -90,28 +90,30 @@ export const getInterphoneDeviceState = async (req: Request, res: Response) => {
 
   const configs: DeviceConfigVersion[] = deviceConfigs.map((version) => {
     const binaryData = version.binaryData?.toString()
-    const cloudUpdateTime = dayjs
-      .unix(Number(version.cloudUpdateTime?.seconds))
-      .format()
-    const deviceAckTime = dayjs
-      .unix(Number(version.deviceAckTime?.seconds))
-      .format()
+    const cloudUpdateTime = dayjs.unix(Number(version.cloudUpdateTime?.seconds))
+    const cloudUpdateTimeStr = cloudUpdateTime.isValid()
+      ? cloudUpdateTime.format()
+      : null
+    const deviceAckTime = dayjs.unix(Number(version.deviceAckTime?.seconds))
+    const deviceAckTimeStr = deviceAckTime.isValid()
+      ? deviceAckTime.format()
+      : null
 
     if (binaryData) {
       const config: DeviceConfig = JSON.parse(binaryData)
 
       return {
         version: Number(version.version),
-        cloudUpdateTime,
-        deviceAckTime,
+        cloudUpdateTime: cloudUpdateTimeStr,
+        deviceAckTime: deviceAckTimeStr,
         config,
       }
     }
 
     return {
       version: Number(version.version),
-      cloudUpdateTime,
-      deviceAckTime,
+      cloudUpdateTime: cloudUpdateTimeStr,
+      deviceAckTime: deviceAckTimeStr,
       config: null,
     }
   })
