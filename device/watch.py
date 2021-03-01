@@ -20,11 +20,13 @@ minimum_backoff_time = 1
 
 # The maximum backoff time before giving up, in seconds.
 MAXIMUM_BACKOFF_TIME = 32
+DEFAULT_THRESHOLD = 150
 
 # Whether to wait with exponential backoff before publishing.
 should_backoff = False
 
 sensor_enabled = False
+threshold = DEFAULT_THRESHOLD
 
 
 def create_jwt(project_id, private_key_file, algorithm):
@@ -97,19 +99,19 @@ def on_publish(unused_client, unused_userdata, unused_mid):
 
 def on_message(unused_client, unused_userdata, message):
     global sensor_enabled
+    global threshold
 
     """Callback when the device receives a message on a subscription."""
-    payload = str(message.payload.decode("utf-8"))
+    payload_str = str(message.payload.decode("utf-8"))
+    payload = json.loads(payload_str)
     print(
         "Received message '{}' on topic '{}' with Qos {}".format(
             payload, message.topic, str(message.qos)
         )
     )
 
-    if payload == "start":
-        sensor_enabled = True
-    elif payload == "stop":
-        sensor_enabled = False
+    sensor_enabled = payload["sensorEnabled"]
+    threshold = payload["threshold"]
 
 
 def get_client(
@@ -186,6 +188,7 @@ def mqtt_device_demo(
     # [START iot_mqtt_run]
     global minimum_backoff_time
     global sensor_enabled
+    global threshold
     global MAXIMUM_BACKOFF_TIME
 
     # Publish to the events or state topic based on the flag.
@@ -260,6 +263,7 @@ def mqtt_device_demo(
                 "max": np.max(records).item(),
                 "min": np.min(records).item(),
                 "average": np.mean(records).astype("int").item(),
+                "threshold": threshold,
             }
             start = now
             records = []
