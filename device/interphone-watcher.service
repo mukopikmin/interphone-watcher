@@ -3,7 +3,7 @@ Description=Sound sensor agent
 
 [Service]
 Type=simple
-WorkingDirectory=/home/pi/interphone-watcher
+WorkingDirectory=/home/pi/interphone-watcher/device
 ExecStart=/home/pi/.anyenv/envs/pyenv/shims/pipenv run python watch.py
 Restart=always
 User=pi
