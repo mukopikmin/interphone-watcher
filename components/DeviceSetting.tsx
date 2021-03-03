@@ -20,7 +20,7 @@ const DeviceSetting = (props: DeviceSettingProps) => {
     setThreshold(Number(e.target.value))
   }
   const query = useDeviceConfigVersionsQuery(props.deviceId)
-  const mutateDevice = useDeviceUpdateMutation()
+  const mutateDevice = useDeviceUpdateMutation(props.deviceId)
   const submit = () => {
     mutateDevice.mutate(
       {

@@ -13,7 +13,7 @@ export const useDeviceConfigQuery = (id: string) => {
   return data && data.length > 0 ? data[0] : null
 }
 
-export const useDeviceUpdateMutation = () =>
-  useMutation((config: DeviceConfig) => updateConfig(config), {
+export const useDeviceUpdateMutation = (id: string) =>
+  useMutation((config: DeviceConfig) => updateConfig(id, config), {
     onError: (e: Error) => console.log(e),
   })

@@ -1,13 +1,13 @@
 import { DeviceConfig, DeviceConfigVersion } from '../interfaces'
 
 export const getDeviceConfigVersions = async (deviceId: string) => {
-  const res = await fetch(`/api/devices/${deviceId}/config`)
+  const res = await fetch(`/api/devices/${deviceId}`)
   const configVersions: DeviceConfigVersion[] = await res.json()
 
   return configVersions
 }
 
-export const updateConfig = async (config: DeviceConfig) => {
+export const updateConfig = async (id: string, config: DeviceConfig) => {
   const options = {
     method: 'POST',
     headers: {
@@ -15,7 +15,7 @@ export const updateConfig = async (config: DeviceConfig) => {
     },
     body: JSON.stringify(config),
   }
-  const res = await fetch(`/api/config/update`, options)
+  const res = await fetch(`/api/devices/${id}`, options)
   const updatedConfig = await res.json()
 
   return updatedConfig
