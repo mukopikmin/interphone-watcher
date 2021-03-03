@@ -5,7 +5,7 @@ const url = process.env.SLACK_WEBHOOK_URL
 
 export const notifyInterphoneSlack = async (
   message: Message,
-  context: Context
+  _context: Context
 ) => {
   if (!url) {
     throw Error('Slack webhook is not specified')

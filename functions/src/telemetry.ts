@@ -6,7 +6,7 @@ const bucketName = process.env.INTERPHONE_TELEMETRY_BUCKET
 
 export const storeInterphoneTelemetry = async (
   message: Message,
-  context: Context
+  _context: Context
 ) => {
   if (!bucketName) {
     throw Error('No bucket is specified')
@@ -15,7 +15,7 @@ export const storeInterphoneTelemetry = async (
   const raw = Buffer.from(message.data, 'base64').toString()
   const data = JSON.parse(raw)
   const storage = new Storage()
-  const now = dayjs()
+  const now = new dayjs.Dayjs()
   const bucket = storage.bucket(bucketName)
   const file = bucket.file(`${now.format()}.json`)
 
