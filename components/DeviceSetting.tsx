@@ -4,6 +4,10 @@ import {
   useDeviceUpdateMutation,
 } from '../hooks/device'
 import { DeviceConfig } from '../interfaces'
+import Checkbox from '@material-ui/core/Checkbox'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 interface DeviceSettingProps {
   deviceId: string
@@ -38,17 +42,26 @@ const DeviceSetting = (props: DeviceSettingProps) => {
   useEffect(() => {
     setSensorEnabled(props.config.sensorEnabled)
     setThreshold(props.config.threshold)
-  }, [])
+  }, [props.config])
 
   return (
     <>
-      <input
-        type="checkbox"
-        checked={sensorEnabled}
-        onChange={onChangeSensorEnabled}
+      <FormControlLabel
+        control={
+          <Checkbox checked={sensorEnabled} onChange={onChangeSensorEnabled} />
+        }
+        label="Sensor enabled"
       />
-      <input type="number" value={threshold} onChange={onChangeThrehold} />
-      <button onClick={submit}>update</button>
+      <TextField
+        variant="outlined"
+        type="number"
+        value={threshold}
+        onChange={onChangeThrehold}
+        size="small"
+      />
+      <Button color="primary" variant="contained" onClick={submit}>
+        update
+      </Button>
     </>
   )
 }

@@ -9,16 +9,21 @@
   },
   "dependencies": {
     "@google-cloud/iot": "^2.3.0",
+    "@material-ui/core": "^4.11.3",
     "dayjs": "^1.10.4",
     "next": "latest",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-query": "^3.9.9"
+    "react-query": "^3.9.9",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/styles": "^4.11.3",
     "@types/node": "^12.12.21",
     "@types/react": "^16.9.16",
     "@types/react-dom": "^16.9.4",
+    "@types/styled-components": "^5.1.7",
     "typescript": "4.0"
   },
   "license": "MIT"
