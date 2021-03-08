@@ -25,12 +25,10 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
     const binaryData = version.binaryData?.toString()
     const cloudUpdateTime = dayjs.unix(Number(version.cloudUpdateTime?.seconds))
     const cloudUpdateTimeStr = cloudUpdateTime.isValid()
-      ? cloudUpdateTime.format()
+      ? cloudUpdateTime
       : null
     const deviceAckTime = dayjs.unix(Number(version.deviceAckTime?.seconds))
-    const deviceAckTimeStr = deviceAckTime.isValid()
-      ? deviceAckTime.format()
-      : null
+    const deviceAckTimeStr = deviceAckTime.isValid() ? deviceAckTime : null
 
     if (binaryData) {
       const config: DeviceConfig = JSON.parse(binaryData)

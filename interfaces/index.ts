@@ -1,8 +1,4 @@
-// You can include shared interfaces/types in a separate file
-// and then use them in any component by importing them. For
-// example, to import the interface below do:
-//
-// import { User } from 'path/to/interfaces';
+import dayjs from 'dayjs'
 
 export type User = {
   id: number
@@ -11,8 +7,8 @@ export type User = {
 
 export interface DeviceConfigVersion {
   version: number
-  cloudUpdateTime: string | null
-  deviceAckTime: string | null
+  cloudUpdateTime: dayjs.Dayjs | null
+  deviceAckTime: dayjs.Dayjs | null
   config: DeviceConfig | null
 }
 

@@ -8,6 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import DayjsTime from './DayjsTime'
 
 const ConfigVersionListItem = (props: { config: DeviceConfigVersion }) => {
   return (
@@ -15,20 +16,24 @@ const ConfigVersionListItem = (props: { config: DeviceConfigVersion }) => {
       <TableCell>{props.config.version}</TableCell>
       <TableCell>{props.config.config?.sensorEnabled ? 'o' : 'x'} </TableCell>
       <TableCell>{props.config.config?.threshold}</TableCell>
-      <TableCell>{props.config.cloudUpdateTime}</TableCell>
-      <TableCell>{props.config.deviceAckTime}</TableCell>
+      <TableCell>
+        <DayjsTime time={props.config.cloudUpdateTime} />
+      </TableCell>
+      <TableCell>
+        <DayjsTime time={props.config.deviceAckTime} />
+      </TableCell>
     </TableRow>
   )
 }
 
 const ConfigVersionList = (props: { deviceId: string }) => {
-  const query = useQuery<DeviceConfigVersion[]>(
+  const { data, isError, error } = useQuery<DeviceConfigVersion[], Error>(
     ['configVersions', props.deviceId],
     () => getDeviceConfigVersions(props.deviceId)
   )
 
-  if (query.isError && query.error instanceof Error) {
-    return <p>{query.error}</p>
+  if (isError && error) {
+    return <p>{error}</p>
   }
 
   return (
@@ -45,7 +50,7 @@ const ConfigVersionList = (props: { deviceId: string }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {query.data?.map((config) => (
+            {data?.map((config) => (
               <ConfigVersionListItem key={config.version} config={config} />
             ))}
           </TableBody>

@@ -6,15 +6,14 @@ import Button from '@material-ui/core/Button'
 import Link from 'next/link'
 import Container from '@material-ui/core/Container'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((_theme) => ({
   root: {
     flexGrow: 1,
+    marginBottom: 80,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
+  logo: {
+    height: 48,
+    verticalAlign: 'middle',
   },
 }))
 
@@ -23,9 +22,18 @@ export default function ButtonAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Container maxWidth="md">
+            <span>
+              <Link href={'/'}>
+                <img
+                  className={classes.logo}
+                  src="/static/icons/icon-192x192.png"
+                  alt=""
+                />
+              </Link>
+            </span>
             <Link href={'/'} passHref>
               <Button color="inherit" component="a">
                 Interphone Watcher
