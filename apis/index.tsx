@@ -1,29 +1,22 @@
-import { DeviceConfig, DeviceConfigVersion } from '../interfaces'
+import { Device, DeviceConfig, DeviceConfigVersion } from '../interfaces'
+import axios from 'axios'
 
 export const getDeviceConfigVersions = async (deviceId: string) => {
-  const res = await fetch(`/api/devices/${deviceId}`)
-  const configVersions: DeviceConfigVersion[] = await res.json()
+  const path = `/api/devices/${deviceId}`
+  const { data } = await axios.get<DeviceConfigVersion[]>(path)
 
-  return configVersions
+  return data
 }
 
 export const updateConfig = async (id: string, config: DeviceConfig) => {
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(config),
-  }
-  const res = await fetch(`/api/devices/${id}`, options)
-  const updatedConfig = await res.json()
+  const path = `/api/devices/${id}`
+  const res = await axios.post(path, config)
 
-  return updatedConfig
+  return res
 }
 
 export const getDevices = async () => {
-  const res = await fetch('/api/devices')
-  const devices = await res.json()
+  const { data } = await axios.get<Device[]>('/api/devices')
 
-  return devices
+  return data
 }
