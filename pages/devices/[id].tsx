@@ -21,8 +21,10 @@ const DevicePage = () => {
   const classes = useStyles()
   const router = useRouter()
   const id = router.query.id as string
-  const query = useQuery<DeviceConfigVersion[]>(['configVersions', id], () =>
-    getDeviceConfigVersions(id)
+  const query = useQuery<DeviceConfigVersion[]>(
+    ['configVersions', id],
+    () => getDeviceConfigVersions(id),
+    { enabled: id !== undefined }
   )
   const config =
     query.data && query.data.length > 0 ? query.data[0].config : null
