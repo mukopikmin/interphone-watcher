@@ -15,53 +15,49 @@ interface DeviceSettingProps {
 }
 
 const DeviceSetting = (props: DeviceSettingProps) => {
-  const [sensorEnabled, setSensorEnabled] = useState(props.config.sensorEnabled)
-  const [threshold, setThreshold] = useState(props.config.threshold)
+  const [config, setConfig] = useState(props.config)
   const onChangeSensorEnabled = () => {
-    setSensorEnabled(!sensorEnabled)
+    setConfig({ ...config, sensorEnabled: !config.sensorEnabled })
   }
   const onChangeThrehold = (e: ChangeEvent<HTMLInputElement>) => {
-    setThreshold(Number(e.target.value))
+    setConfig({ ...config, threshold: Number(e.target.value) })
+  }
+  const onChangeActOnce = () => {
+    setConfig({ ...config, actOnce: !config.actOnce })
   }
   const query = useDeviceConfigVersionsQuery(props.deviceId)
   const mutateDevice = useDeviceUpdateMutation(props.deviceId)
   const submit = () => {
-    mutateDevice.mutate(
-      {
-        sensorEnabled,
-        threshold,
+    mutateDevice.mutate(config, {
+      onSuccess: () => {
+        query.refetch()
       },
-      {
-        onSuccess: () => {
-          query.refetch()
-        },
-      }
-    )
+    })
   }
 
   useEffect(() => {
-    setSensorEnabled(props.config.sensorEnabled)
-    setThreshold(props.config.threshold)
+    setConfig({ ...config })
   }, [props.config])
 
   return (
     <>
       <FormControlLabel
         control={
-          <Switch checked={sensorEnabled} onChange={onChangeSensorEnabled} />
+          <Switch
+            checked={config.sensorEnabled}
+            onChange={onChangeSensorEnabled}
+          />
         }
         label="Sensor enabled"
       />
       <FormControlLabel
-        control={
-          <Switch checked={sensorEnabled} onChange={onChangeSensorEnabled} />
-        }
-        label="Disable after fire"
+        control={<Switch checked={config.actOnce} onChange={onChangeActOnce} />}
+        label="Act once"
       />
       <TextField
         variant="outlined"
         type="number"
-        value={threshold}
+        value={config.threshold}
         onChange={onChangeThrehold}
         size="small"
       />

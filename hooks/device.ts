@@ -15,7 +15,7 @@ export const useDeviceConfigVersionsQuery = (id: string) =>
 export const useDeviceConfigQuery = (id: string) => {
   const { data } = useDeviceConfigVersionsQuery(id)
 
-  return data && data.length > 0 ? data[0] : null
+  return data && data[0] && data[0].config ? data[0].config : null
 }
 
 export const useDeviceUpdateMutation = (id: string) =>

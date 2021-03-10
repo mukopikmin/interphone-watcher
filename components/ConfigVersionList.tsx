@@ -9,6 +9,9 @@ import Paper from '@material-ui/core/Paper'
 import DayjsTime from './DayjsTime'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import CheckIcon from '@material-ui/icons/Check'
+import RemoveIcon from '@material-ui/icons/Remove'
+import StatusIcon from './StatusIcon'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,8 +36,13 @@ const ConfigVersionListItem = (props: ConfigVersionListItem) => {
   return (
     <TableRow key={props.config.version}>
       <TableCell>{props.config.version}</TableCell>
-      <TableCell>{props.config.config?.sensorEnabled ? 'o' : 'x'} </TableCell>
+      <TableCell>
+        <StatusIcon active={props.config.config?.sensorEnabled} />
+      </TableCell>
       <TableCell>{props.config.config?.threshold}</TableCell>
+      <TableCell>
+        <StatusIcon active={props.config.config?.actOnce} />
+      </TableCell>
       <TableCell>
         <DayjsTime time={props.config.cloudUpdateTime} />
       </TableCell>
@@ -66,6 +74,7 @@ const ConfigVersionList = (props: ConfigVersionListProps) => {
               <TableCell>Version</TableCell>
               <TableCell>Enabled</TableCell>
               <TableCell>Threshold</TableCell>
+              <TableCell>Act Once</TableCell>
               <TableCell>Server updated</TableCell>
               <TableCell>Device updated</TableCell>
             </TableRow>
