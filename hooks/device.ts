@@ -1,10 +1,15 @@
 import { useMutation, useQuery } from 'react-query'
-import { getDeviceConfigVersions, updateConfig } from '../apis'
-import { DeviceConfig, DeviceConfigVersion } from '../interfaces'
+import { getDeviceConfigVersions, getDevices, updateConfig } from '../apis'
+import { Device, DeviceConfig, DeviceConfigVersion } from '../interfaces'
+
+export const useDevicesQuery = () =>
+  useQuery<Device[], Error>('devices', getDevices)
 
 export const useDeviceConfigVersionsQuery = (id: string) =>
-  useQuery<DeviceConfigVersion[]>(['configVersions', id], () =>
-    getDeviceConfigVersions(id)
+  useQuery<DeviceConfigVersion[], Error>(
+    ['configVersions', id],
+    () => getDeviceConfigVersions(id),
+    { enabled: !!id }
   )
 
 export const useDeviceConfigQuery = (id: string) => {

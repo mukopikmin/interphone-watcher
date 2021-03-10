@@ -1,12 +1,10 @@
 import { useRouter } from 'next/router'
-import { useQuery } from 'react-query'
-import { getDeviceConfigVersions } from '../../apis'
 import ConfigVersionList from '../../components/ConfigVersionList'
 import DeviceSetting from '../../components/DeviceSetting'
 import Layout from '../../components/Layout'
 import { DeviceConfig } from '../../functions/src/schema'
-import { DeviceConfigVersion } from '../../interfaces'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { useDeviceConfigVersionsQuery } from '../../hooks/device'
 
 const useStyles = makeStyles((_theme: Theme) =>
   createStyles({
@@ -21,33 +19,26 @@ const DevicePage = () => {
   const classes = useStyles()
   const router = useRouter()
   const id = router.query.id as string
-  const query = useQuery<DeviceConfigVersion[]>(
-    ['configVersions', id],
-    () => getDeviceConfigVersions(id),
-    { enabled: id !== undefined }
-  )
-  const config =
-    query.data && query.data.length > 0 ? query.data[0].config : null
-
-  if (!id) {
-    return (
-      <Layout title={`Interphone Watcher | ${id}`}>
-        <p>No device found.</p>
-      </Layout>
-    )
+  const {
+    data: configVersions,
+    isLoading,
+    isError,
+    error,
+  } = useDeviceConfigVersionsQuery(id)
+  const initialConfig: DeviceConfig = {
+    sensorEnabled: false,
+    threshold: 100,
   }
+  const config =
+    configVersions && configVersions[0] && configVersions[0].config
+      ? configVersions[0].config
+      : initialConfig
 
-  if (!config) {
-    const initialConfig: DeviceConfig = {
-      sensorEnabled: false,
-      threshold: 100,
-    }
-
+  if (isError) {
     return (
       <Layout title={`Interphone Watcher | ${id}`}>
         <h1>{id}</h1>
-        <DeviceSetting deviceId={id} config={initialConfig} />
-        <p>No settings found.</p>
+        <p>{error?.message}</p>
       </Layout>
     )
   }
@@ -56,8 +47,12 @@ const DevicePage = () => {
     <Layout title={`Interphone Watcher | ${id}`}>
       <h1>{id}</h1>
       <DeviceSetting deviceId={id} config={config} />
+
       <div className={classes.configs}>
-        <ConfigVersionList deviceId={id} />
+        <ConfigVersionList
+          configVersions={configVersions}
+          isLoading={isLoading}
+        />
       </div>
     </Layout>
   )

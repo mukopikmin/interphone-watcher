@@ -4,10 +4,10 @@ import {
   useDeviceUpdateMutation,
 } from '../hooks/device'
 import { DeviceConfig } from '../interfaces'
-import Checkbox from '@material-ui/core/Checkbox'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
 
 interface DeviceSettingProps {
   deviceId: string
@@ -48,9 +48,15 @@ const DeviceSetting = (props: DeviceSettingProps) => {
     <>
       <FormControlLabel
         control={
-          <Checkbox checked={sensorEnabled} onChange={onChangeSensorEnabled} />
+          <Switch checked={sensorEnabled} onChange={onChangeSensorEnabled} />
         }
         label="Sensor enabled"
+      />
+      <FormControlLabel
+        control={
+          <Switch checked={sensorEnabled} onChange={onChangeSensorEnabled} />
+        }
+        label="Disable after fire"
       />
       <TextField
         variant="outlined"

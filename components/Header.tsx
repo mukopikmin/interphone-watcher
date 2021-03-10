@@ -4,7 +4,6 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
 import Link from 'next/link'
-import Container from '@material-ui/core/Container'
 
 const useStyles = makeStyles((_theme) => ({
   root: {
@@ -24,22 +23,20 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
-          <Container maxWidth="md">
-            <span>
-              <Link href={'/'}>
-                <img
-                  className={classes.logo}
-                  src="/static/icons/icon-192x192.png"
-                  alt=""
-                />
-              </Link>
-            </span>
-            <Link href={'/'} passHref>
-              <Button color="inherit" component="a">
-                Interphone Watcher
-              </Button>
+          <span>
+            <Link href={'/'}>
+              <img
+                className={classes.logo}
+                src="/static/icons/icon-192x192.png"
+                alt=""
+              />
             </Link>
-          </Container>
+          </span>
+          <Link href={'/'} passHref>
+            <Button color="inherit" component="a">
+              Interphone Watcher
+            </Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>

@@ -1,5 +1,3 @@
-import { useQuery } from 'react-query'
-import { getDeviceConfigVersions } from '../apis'
 import { DeviceConfigVersion } from '../interfaces'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -9,8 +7,29 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import DayjsTime from './DayjsTime'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
-const ConfigVersionListItem = (props: { config: DeviceConfigVersion }) => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    progress: {
+      display: 'flex',
+      marginTop: theme.spacing(10),
+      justifyContent: 'center',
+    },
+  })
+)
+
+interface ConfigVersionListProps {
+  configVersions?: DeviceConfigVersion[]
+  isLoading: boolean
+}
+
+interface ConfigVersionListItem {
+  config: DeviceConfigVersion
+}
+
+const ConfigVersionListItem = (props: ConfigVersionListItem) => {
   return (
     <TableRow key={props.config.version}>
       <TableCell>{props.config.version}</TableCell>
@@ -26,14 +45,16 @@ const ConfigVersionListItem = (props: { config: DeviceConfigVersion }) => {
   )
 }
 
-const ConfigVersionList = (props: { deviceId: string }) => {
-  const { data, isError, error } = useQuery<DeviceConfigVersion[], Error>(
-    ['configVersions', props.deviceId],
-    () => getDeviceConfigVersions(props.deviceId)
-  )
+const ConfigVersionList = (props: ConfigVersionListProps) => {
+  const classes = useStyles()
+  const configVersions = props.configVersions || []
 
-  if (isError && error) {
-    return <p>{error}</p>
+  if (props.isLoading) {
+    return (
+      <div className={classes.progress}>
+        <CircularProgress />
+      </div>
+    )
   }
 
   return (
@@ -50,7 +71,7 @@ const ConfigVersionList = (props: { deviceId: string }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.map((config) => (
+            {configVersions.map((config) => (
               <ConfigVersionListItem key={config.version} config={config} />
             ))}
           </TableBody>

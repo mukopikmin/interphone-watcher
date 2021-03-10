@@ -1,10 +1,8 @@
 import Link from 'next/link'
-import { useQuery } from 'react-query'
-import { getDevices } from '../apis'
-import { Device } from '../interfaces'
+import { useDevicesQuery } from '../hooks/device'
 
 const DeviceList = () => {
-  const { data, isLoading } = useQuery<Device[]>('devices', getDevices)
+  const { data: devices, isLoading } = useDevicesQuery()
 
   if (isLoading) {
     return <p>Loading</p>
@@ -12,7 +10,7 @@ const DeviceList = () => {
 
   return (
     <ul>
-      {data?.map((device) => (
+      {devices?.map((device) => (
         <li key={device.id}>
           <Link href={`/devices/${device.id}`}>{device.id}</Link>
         </li>
