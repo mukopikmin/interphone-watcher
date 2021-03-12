@@ -7,6 +7,8 @@ WorkingDirectory=/home/pi/interphone-watcher/device
 ExecStart=/home/pi/.anyenv/envs/pyenv/shims/pipenv run python watch.py
 Restart=always
 User=pi
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
