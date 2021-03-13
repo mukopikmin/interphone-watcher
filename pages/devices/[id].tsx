@@ -27,6 +27,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
+const initialConfig: DeviceConfig = {
+  sensorEnabled: false,
+  threshold: 100,
+  actOnce: false,
+}
+
 const DevicePage = () => {
   const classes = useStyles()
   const router = useRouter()
@@ -40,11 +46,6 @@ const DevicePage = () => {
     error,
     refetch: refetchDeviceConfigVersion,
   } = useDeviceConfigVersionsQuery(id)
-  const initialConfig: DeviceConfig = {
-    sensorEnabled: false,
-    threshold: 100,
-    actOnce: true,
-  }
   const config = useDeviceConfigQuery(id) || initialConfig
   const refetch = async () => {
     await refetchDevices()

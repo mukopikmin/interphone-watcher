@@ -36,7 +36,7 @@ const DeviceSetting = (props: DeviceSettingProps) => {
   }
 
   useEffect(() => {
-    setConfig({ ...config })
+    setConfig({ ...props.config })
   }, [props.config])
 
   return (
