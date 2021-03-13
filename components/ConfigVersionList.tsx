@@ -9,8 +9,6 @@ import Paper from '@material-ui/core/Paper'
 import DayjsTime from './DayjsTime'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import CheckIcon from '@material-ui/icons/Check'
-import RemoveIcon from '@material-ui/icons/Remove'
 import StatusIcon from './StatusIcon'
 
 const useStyles = makeStyles((theme: Theme) =>

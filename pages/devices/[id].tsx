@@ -6,8 +6,10 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import {
   useDeviceConfigQuery,
   useDeviceConfigVersionsQuery,
+  useDevicesQuery,
 } from '../../hooks/device'
 import { DeviceConfig } from '../../interfaces'
+import DeviceSelect from '../../components/DeviceSelect'
 
 const useStyles = makeStyles((_theme: Theme) =>
   createStyles({
@@ -21,6 +23,8 @@ const useStyles = makeStyles((_theme: Theme) =>
 const DevicePage = () => {
   const classes = useStyles()
   const router = useRouter()
+  const { data } = useDevicesQuery()
+  const devices = data || []
   const id = router.query.id as string
   const {
     data: configVersions,
@@ -46,7 +50,10 @@ const DevicePage = () => {
 
   return (
     <Layout title={`Interphone Watcher | ${id}`}>
-      <h1>{id}</h1>
+      <div>
+        <DeviceSelect devices={devices} />
+      </div>
+
       <DeviceSetting deviceId={id} config={config || initialConfig} />
 
       <div className={classes.configs}>

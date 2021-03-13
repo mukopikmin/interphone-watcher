@@ -60,6 +60,7 @@ const DeviceSetting = (props: DeviceSettingProps) => {
         value={config.threshold}
         onChange={onChangeThrehold}
         size="small"
+        label="Threshold"
       />
       <Button color="primary" variant="contained" onClick={submit}>
         update
