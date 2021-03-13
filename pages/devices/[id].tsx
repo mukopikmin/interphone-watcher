@@ -41,15 +41,15 @@ const DevicePage = () => {
   const id = router.query.id as string
   const {
     data: configVersions,
-    isLoading,
     isError,
     error,
-    refetch: refetchDeviceConfigVersion,
+    refetch: refetchConfigVersions,
+    isFetching,
   } = useDeviceConfigVersionsQuery(id)
   const config = useDeviceConfigQuery(id) || initialConfig
   const refetch = async () => {
     await refetchDevices()
-    await refetchDeviceConfigVersion()
+    await refetchConfigVersions()
   }
 
   if (isError) {
@@ -75,7 +75,7 @@ const DevicePage = () => {
       <div className={classes.configs}>
         <ConfigVersionList
           configVersions={configVersions}
-          isLoading={isLoading}
+          isLoading={isFetching}
         />
       </div>
     </Layout>
