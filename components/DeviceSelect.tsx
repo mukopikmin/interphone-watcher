@@ -29,8 +29,6 @@ const DeviceSelect = (props: Props) => {
   const onChangeDevice = (e: ChangeEvent<ChangeEventProps>) => {
     const id = e.target.value as string
     const device = props?.devices.find((device) => device.id === id)
-    console.log(e)
-    console.log(device)
 
     if (device) {
       setDevice(device)

@@ -1,70 +1,66 @@
-import { ChangeEvent, useEffect, useState } from 'react'
-import {
-  useDeviceConfigVersionsQuery,
-  useDeviceUpdateMutation,
-} from '../hooks/device'
+import { ChangeEvent } from 'react'
 import { DeviceConfig } from '../interfaces'
 import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
-interface DeviceSettingProps {
+interface Props {
   deviceId: string
   config: DeviceConfig
+  updateConfig: Function
 }
 
-const DeviceSetting = (props: DeviceSettingProps) => {
-  const [config, setConfig] = useState(props.config)
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    thresholdForm: {
+      maxWidth: 100,
+      marginRight: theme.spacing(1),
+    },
+  })
+)
+
+const DeviceSetting = (props: Props) => {
+  const classes = useStyles()
   const onChangeSensorEnabled = () => {
-    setConfig({ ...config, sensorEnabled: !config.sensorEnabled })
-  }
-  const onChangeThrehold = (e: ChangeEvent<HTMLInputElement>) => {
-    setConfig({ ...config, threshold: Number(e.target.value) })
-  }
-  const onChangeActOnce = () => {
-    setConfig({ ...config, actOnce: !config.actOnce })
-  }
-  const query = useDeviceConfigVersionsQuery(props.deviceId)
-  const mutateDevice = useDeviceUpdateMutation(props.deviceId)
-  const submit = () => {
-    mutateDevice.mutate(config, {
-      onSuccess: () => {
-        query.refetch()
-      },
+    props.updateConfig({
+      ...props.config,
+      sensorEnabled: !props.config.sensorEnabled,
     })
   }
-
-  useEffect(() => {
-    setConfig({ ...props.config })
-  }, [props.config])
+  const onChangeThrehold = (e: ChangeEvent<HTMLInputElement>) => {
+    props.updateConfig({ ...props.config, threshold: Number(e.target.value) })
+  }
+  const onChangeActOnce = () => {
+    props.updateConfig({ ...props.config, actOnce: !props.config.actOnce })
+  }
 
   return (
     <>
       <FormControlLabel
         control={
           <Switch
-            checked={config.sensorEnabled}
+            checked={props.config.sensorEnabled}
             onChange={onChangeSensorEnabled}
           />
         }
         label="Sensor enabled"
       />
       <FormControlLabel
-        control={<Switch checked={config.actOnce} onChange={onChangeActOnce} />}
+        control={
+          <Switch checked={props.config.actOnce} onChange={onChangeActOnce} />
+        }
         label="Act once"
       />
       <TextField
         variant="outlined"
         type="number"
-        value={config.threshold}
+        value={props.config.threshold}
         onChange={onChangeThrehold}
         size="small"
         label="Threshold"
+        className={classes.thresholdForm}
       />
-      <Button color="primary" variant="contained" onClick={submit}>
-        update
-      </Button>
     </>
   )
 }

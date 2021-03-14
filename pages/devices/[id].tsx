@@ -11,6 +11,8 @@ import {
 import { DeviceConfig } from '../../interfaces'
 import DeviceSelect from '../../components/DeviceSelect'
 import ReloadButton from '../../components/ReloadButton'
+import SubmitSettingsButton from '../../components/SubmitSettingsButton'
+import { useEffect, useState } from 'react'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,10 +49,20 @@ const DevicePage = () => {
     isFetching,
   } = useDeviceConfigVersionsQuery(id)
   const config = useDeviceConfigQuery(id) || initialConfig
+  const [localConfig, setLocalConfig] = useState(config)
   const refetch = async () => {
     await refetchDevices()
     await refetchConfigVersions()
   }
+  const updateConfig = (config: DeviceConfig) => {
+    setLocalConfig(config)
+  }
+
+  useEffect(() => {
+    if (config) {
+      setLocalConfig(config)
+    }
+  }, [config])
 
   if (isError) {
     return (
@@ -68,9 +80,18 @@ const DevicePage = () => {
           <DeviceSelect devices={devices} />
         </span>
         <ReloadButton reload={refetch} />
+        <SubmitSettingsButton
+          deviceId={id}
+          config={localConfig}
+          refresh={refetch}
+        />
       </div>
 
-      <DeviceSetting deviceId={id} config={config || initialConfig} />
+      <DeviceSetting
+        deviceId={id}
+        updateConfig={updateConfig}
+        config={localConfig}
+      />
 
       <div className={classes.configs}>
         <ConfigVersionList
