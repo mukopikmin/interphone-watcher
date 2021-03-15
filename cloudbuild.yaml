@@ -1,0 +1,25 @@
+steps:
+  - name: gcr.io/cloud-builders/yarn
+    args:
+      - install
+  - name: gcr.io/cloud-builders/yarn
+    args:
+      - build
+  - name: bash
+    args:
+      - -c
+      - |
+        cat <<EOT > .env
+        GCP_PROJECT=$PROJECT_ID
+        REGION=$_REGION
+        REGISTRY_ID=$_REGISTRY_ID
+        EOT
+    env:
+      - GCP_PROJECT=$PROJECT_ID
+      - REGION=$_REGION
+      - REGISTRY_ID=$_REGISTRY_ID
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - app
+      - deploy
+      - --quiet
