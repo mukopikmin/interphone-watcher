@@ -28,11 +28,15 @@ interface ConfigVersionListProps {
 
 interface ConfigVersionListItem {
   config: DeviceConfigVersion
+  isActive: boolean
 }
 
 const ConfigVersionListItem = (props: ConfigVersionListItem) => {
   return (
     <TableRow key={props.config.version}>
+      <TableCell>
+        <StatusIcon active={props.isActive} />
+      </TableCell>
       <TableCell>{props.config.version}</TableCell>
       <TableCell>
         <StatusIcon active={props.config.config?.sensorEnabled} />
@@ -54,6 +58,10 @@ const ConfigVersionListItem = (props: ConfigVersionListItem) => {
 const ConfigVersionList = (props: ConfigVersionListProps) => {
   const classes = useStyles()
   const configVersions = props.configVersions || []
+  const activeVersion = configVersions
+    .filter((config) => config.deviceAckTime)
+    .map((config) => config.version)
+    .reduce((pre, cur) => (cur > pre ? cur : pre), 0)
 
   if (props.isLoading) {
     return (
@@ -69,6 +77,7 @@ const ConfigVersionList = (props: ConfigVersionListProps) => {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>Active</TableCell>
               <TableCell>Version</TableCell>
               <TableCell>Enabled</TableCell>
               <TableCell>Threshold</TableCell>
@@ -79,7 +88,11 @@ const ConfigVersionList = (props: ConfigVersionListProps) => {
           </TableHead>
           <TableBody>
             {configVersions.map((config) => (
-              <ConfigVersionListItem key={config.version} config={config} />
+              <ConfigVersionListItem
+                key={config.version}
+                config={config}
+                isActive={config.version === activeVersion}
+              />
             ))}
           </TableBody>
         </Table>
