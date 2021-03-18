@@ -5,11 +5,11 @@ import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import Paper from '@material-ui/core/Paper'
 import DayjsTime from './DayjsTime'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import StatusIcon from './StatusIcon'
+import Card from '@material-ui/core/Card'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -73,7 +73,7 @@ const ConfigVersionList = (props: ConfigVersionListProps) => {
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer component={Card}>
         <Table>
           <TableHead>
             <TableRow>

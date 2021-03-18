@@ -38,8 +38,8 @@ const initialConfig: DeviceConfig = {
 const DevicePage = () => {
   const classes = useStyles()
   const router = useRouter()
-  const { data, refetch: refetchDevices } = useDevicesQuery()
-  const devices = data || []
+  const { data: devices, refetch: refetchDevices } = useDevicesQuery()
+  // const devices = data || []
   const id = router.query.id as string
   const {
     data: configVersions,

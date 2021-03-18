@@ -6,9 +6,10 @@ import { Device } from '../interfaces'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import MenuItem from '@material-ui/core/MenuItem'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 interface Props {
-  devices: Device[]
+  devices?: Device[]
 }
 
 interface ChangeEventProps {
@@ -28,7 +29,7 @@ const DeviceSelect = (props: Props) => {
   const [device, setDevice] = useState<Device>()
   const onChangeDevice = (e: ChangeEvent<ChangeEventProps>) => {
     const id = e.target.value as string
-    const device = props?.devices.find((device) => device.id === id)
+    const device = props?.devices?.find((device) => device.id === id)
 
     if (device) {
       setDevice(device)
@@ -37,7 +38,7 @@ const DeviceSelect = (props: Props) => {
 
   useEffect(() => {
     if (router.query.id) {
-      const device = props?.devices.find(
+      const device = props?.devices?.find(
         (device) => device.id === router.query.id
       )
 
@@ -52,7 +53,7 @@ const DeviceSelect = (props: Props) => {
   }, [device])
 
   if (!device) {
-    return <></>
+    return <CircularProgress size="2rem" />
   }
 
   return (
@@ -64,7 +65,7 @@ const DeviceSelect = (props: Props) => {
       >
         <InputLabel>Device</InputLabel>
         <Select onChange={onChangeDevice} label="Device" value={device.id}>
-          {props.devices.map((device) => (
+          {props?.devices?.map((device) => (
             <MenuItem key={device.id} value={device.id}>
               {device.id}
             </MenuItem>
