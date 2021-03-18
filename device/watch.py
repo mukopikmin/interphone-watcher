@@ -94,7 +94,7 @@ def on_disconnect(unused_client, unused_userdata, rc):
 
 def on_publish(unused_client, unused_userdata, unused_mid):
     """Paho callback when a message is sent to the broker."""
-    print(f"on_publish with enabled: {sensor_enabled}")
+    # print(f"on_publish with enabled: {sensor_enabled}")
 
 
 def on_message(unused_client, unused_userdata, message):
@@ -158,6 +158,7 @@ def get_client(
     mqtt_config_topic = "/devices/{}/config".format(device_id)
 
     # Subscribe to the config topic.
+    print("Subscribing to {}".format(mqtt_config_topic))
     client.subscribe(mqtt_config_topic, qos=1)
 
     # The topic that the device will receive commands on.
@@ -233,19 +234,19 @@ def mqtt_device_demo(
 
     while True:
         client.loop()
-        # Wait if backoff is required.
-        if should_backoff:
-            # If backoff time is too large, give up.
-            if minimum_backoff_time > MAXIMUM_BACKOFF_TIME:
-                print("Exceeded maximum backoff time. Giving up.")
-                break
+        # # Wait if backoff is required.
+        # if should_backoff:
+        #     # If backoff time is too large, give up.
+        #     if minimum_backoff_time > MAXIMUM_BACKOFF_TIME:
+        #         print("Exceeded maximum backoff time. Giving up.")
+        #         break
 
-            # Otherwise, wait and connect again.
-            delay = minimum_backoff_time + random.randint(0, 1000) / 1000.0
-            print("Waiting for {} before reconnecting.".format(delay))
-            time.sleep(delay)
-            minimum_backoff_time *= 2
-            client.connect(mqtt_bridge_hostname, mqtt_bridge_port)
+        #     # Otherwise, wait and connect again.
+        #     delay = minimum_backoff_time + random.randint(0, 1000) / 1000.0
+        #     print("Waiting for {} before reconnecting.".format(delay))
+        #     time.sleep(delay)
+        #     minimum_backoff_time *= 2
+        #     client.connect(mqtt_bridge_hostname, mqtt_bridge_port)
 
         data = stream.read(CHUNK, exception_on_overflow=False)
         x = np.frombuffer(data, dtype="int16")
@@ -267,7 +268,7 @@ def mqtt_device_demo(
             }
             start = now
             records = []
-            print(data)
+            # print(data)
 
             payload = json.dumps(data)
 
