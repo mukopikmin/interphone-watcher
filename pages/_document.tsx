@@ -73,7 +73,7 @@ export default class CustomDocument extends NextDocument {
           <link
             rel="apple-touch-icon"
             sizes="180x180"
-            href="/static/icons/apple-touch-icon.png"
+            href="/static/icons/icon-192x192.png"
           />
           <link
             rel="icon"
