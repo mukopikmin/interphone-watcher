@@ -11,6 +11,6 @@
     "src/*.ts"
   ],
   "exclude": [
-    "node_modeles"
+    "node_modules"
   ]
 }

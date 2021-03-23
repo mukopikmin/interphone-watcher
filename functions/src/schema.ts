@@ -1,16 +1,3 @@
-export interface Request {
-  query: {
-    command: string
-    device: string
-  }
-}
-
-export interface Response {
-  set: Function
-  send: Function
-  status: Function
-}
-
 export interface Message {
   data: string
 }
@@ -36,4 +23,5 @@ export interface DeviceConfigVersion {
 export interface DeviceConfig {
   sensorEnabled: boolean
   threshold: number
+  actOnce: boolean
 }
