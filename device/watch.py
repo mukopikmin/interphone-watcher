@@ -254,16 +254,25 @@ def mqtt_device_demo(
 
 def create_message(device_id, start, now, records, config):
     return {
-        "device": {"id": device_id},
-        "data": {
-            "start": datetime.datetime.fromtimestamp(start).isoformat(),
-            "end": datetime.datetime.fromtimestamp(now).isoformat(),
-            "max": np.max(records).item(),
-            "min": np.min(records).item(),
-            "average": np.mean(records).astype("int").item(),
-        },
-        "config": config,
+        "device": device_id,
+        "start": datetime.datetime.fromtimestamp(start).isoformat(),
+        "end": datetime.datetime.fromtimestamp(now).isoformat(),
+        "max": np.max(records).item(),
+        "min": np.min(records).item(),
+        "average": np.mean(records).astype("int").item(),
+        "threshold": config["threshold"],
     }
+    # return {
+    #     "device": {"id": device_id},
+    #     "data": {
+    #         "start": datetime.datetime.fromtimestamp(start).isoformat(),
+    #         "end": datetime.datetime.fromtimestamp(now).isoformat(),
+    #         "max": np.max(records).item(),
+    #         "min": np.min(records).item(),
+    #         "average": np.mean(records).astype("int").item(),
+    #     },
+    #     "config": config,
+    # }
 
 
 def main():
