@@ -15,18 +15,8 @@ import paho.mqtt.client as mqtt
 
 logging.getLogger("googleapiclient.discovery_cache").setLevel(logging.CRITICAL)
 
-# The initial backoff time after a disconnection occurs, in seconds.
-minimum_backoff_time = 1
 
-# The maximum backoff time before giving up, in seconds.
-MAXIMUM_BACKOFF_TIME = 32
-DEFAULT_THRESHOLD = 150
-
-# Whether to wait with exponential backoff before publishing.
-should_backoff = False
-
-sensor_enabled = False
-threshold = DEFAULT_THRESHOLD
+config = {"sensor_enabled": False, "threshold": 150, "act_once": False}
 
 
 def create_jwt(project_id, private_key_file, algorithm):
@@ -75,43 +65,32 @@ def on_connect(unused_client, unused_userdata, unused_flags, rc):
     """Callback for when a device connects."""
     print("on_connect", mqtt.connack_string(rc))
 
-    # After a successful connect, reset backoff time and stop backing off.
-    global should_backoff
-    global minimum_backoff_time
-    should_backoff = False
-    minimum_backoff_time = 1
-
 
 def on_disconnect(unused_client, unused_userdata, rc):
     """Paho callback for when a device disconnects."""
     print("on_disconnect", error_str(rc))
 
-    # Since a disconnect occurred, the next loop iteration will wait with
-    # exponential backoff.
-    global should_backoff
-    should_backoff = True
-
 
 def on_publish(unused_client, unused_userdata, unused_mid):
     """Paho callback when a message is sent to the broker."""
-    # print(f"on_publish with enabled: {sensor_enabled}")
 
 
 def on_message(unused_client, unused_userdata, message):
-    global sensor_enabled
-    global threshold
+    global config
 
     """Callback when the device receives a message on a subscription."""
     payload_str = str(message.payload.decode("utf-8"))
     payload = json.loads(payload_str)
+
+    config["sensor_enabled"] = payload["sensorEnabled"]
+    config["threshold"] = payload["threshold"]
+    config["act_once"] = payload["actOnce"]
+
     print(
         "Received message '{}' on topic '{}' with Qos {}".format(
             payload, message.topic, str(message.qos)
         )
     )
-
-    sensor_enabled = payload["sensorEnabled"]
-    threshold = payload["threshold"]
 
 
 def get_client(
@@ -187,10 +166,7 @@ def mqtt_device_demo(
 ):
     """Connects a device, sends data, and receives data."""
     # [START iot_mqtt_run]
-    global minimum_backoff_time
-    global sensor_enabled
-    global threshold
-    global MAXIMUM_BACKOFF_TIME
+    global config
 
     # Publish to the events or state topic based on the flag.
     sub_topic = "events" if message_type == "event" else "state"
@@ -234,19 +210,6 @@ def mqtt_device_demo(
 
     while True:
         client.loop()
-        # # Wait if backoff is required.
-        # if should_backoff:
-        #     # If backoff time is too large, give up.
-        #     if minimum_backoff_time > MAXIMUM_BACKOFF_TIME:
-        #         print("Exceeded maximum backoff time. Giving up.")
-        #         break
-
-        #     # Otherwise, wait and connect again.
-        #     delay = minimum_backoff_time + random.randint(0, 1000) / 1000.0
-        #     print("Waiting for {} before reconnecting.".format(delay))
-        #     time.sleep(delay)
-        #     minimum_backoff_time *= 2
-        #     client.connect(mqtt_bridge_hostname, mqtt_bridge_port)
 
         data = stream.read(CHUNK, exception_on_overflow=False)
         x = np.frombuffer(data, dtype="int16")
@@ -257,19 +220,10 @@ def mqtt_device_demo(
 
         now = time.time()
         if now - start > 1.0:
-            data = {
-                "device": device_id,
-                "start": datetime.datetime.fromtimestamp(start).isoformat(),
-                "end": datetime.datetime.fromtimestamp(now).isoformat(),
-                "max": np.max(records).item(),
-                "min": np.min(records).item(),
-                "average": np.mean(records).astype("int").item(),
-                "threshold": threshold,
-            }
+            data = create_message(device_id, start, now, records, config)
+            print(data)
             start = now
             records = []
-            # print(data)
-
             payload = json.dumps(data)
 
             seconds_since_issue = (datetime.datetime.utcnow() - jwt_iat).seconds
@@ -290,12 +244,35 @@ def mqtt_device_demo(
                     mqtt_bridge_port,
                 )
 
-            if sensor_enabled:
+            if config["sensor_enabled"]:
                 client.publish(mqtt_topic, payload, qos=1)
 
     stream.stop_stream()
     stream.close()
     audio.terminate()
+
+
+def create_message(device_id, start, now, records, config):
+    return {
+        "device": device_id,
+        "start": datetime.datetime.fromtimestamp(start).isoformat(),
+        "end": datetime.datetime.fromtimestamp(now).isoformat(),
+        "max": np.max(records).item(),
+        "min": np.min(records).item(),
+        "average": np.mean(records).astype("int").item(),
+        "threshold": config["threshold"],
+    }
+    # return {
+    #     "device": {"id": device_id},
+    #     "data": {
+    #         "start": datetime.datetime.fromtimestamp(start).isoformat(),
+    #         "end": datetime.datetime.fromtimestamp(now).isoformat(),
+    #         "max": np.max(records).item(),
+    #         "min": np.min(records).item(),
+    #         "average": np.mean(records).astype("int").item(),
+    #     },
+    #     "config": config,
+    # }
 
 
 def main():

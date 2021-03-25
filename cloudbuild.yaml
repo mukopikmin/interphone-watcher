@@ -1,11 +1,14 @@
 steps:
   - name: gcr.io/cloud-builders/yarn
+    dir: frontend
     args:
       - install
   - name: gcr.io/cloud-builders/yarn
+    dir: frontend
     args:
       - build
   - name: bash
+    dir: frontend
     args:
       - -c
       - |
@@ -19,6 +22,7 @@ steps:
       - REGION=$_REGION
       - REGISTRY_ID=$_REGISTRY_ID
   - name: gcr.io/cloud-builders/gcloud
+    dir: frontend
     args:
       - app
       - deploy
