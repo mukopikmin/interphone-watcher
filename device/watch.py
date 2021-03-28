@@ -277,7 +277,7 @@ def create_message(device_id, start, now, records, config):
 
 def main():
     algorithm = "RS256"
-    ca_certs = "roots.pem"
+    ca_certs = "keys/roots.pem"
     cloud_region = os.environ.get("REGION")
     device_id = os.environ.get("DEVICE_ID")
     jwt_expires_minutes = 20
@@ -285,7 +285,7 @@ def main():
     message_type = "event"
     mqtt_bridge_hostname = "mqtt.googleapis.com"
     mqtt_bridge_port = 8883
-    private_key_file = "rsa_private.pem"
+    private_key_file = "keys/rsa_private.pem"
     project_id = os.environ.get("PROJECT_ID")
     registry_id = os.environ.get("REGISTRY_ID")
 
