@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { DeviceConfig, DeviceConfigVersion } from '../../../interfaces'
+import { DeviceConfig, DeviceConfigVersion } from '../../../../../interfaces'
 import { v1 as iotCore } from '@google-cloud/iot'
 import dayjs from 'dayjs'
 
 const region = process.env.REGION || ''
 const projectId = process.env.GCP_PROJECT || ''
-const registryId = process.env.REGISTRY_ID || ''
+const registryId = process.env.TEMPERATURE_REGISTRY_ID || ''
 
 const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   const deviceId = req.query.deviceId.toString()
@@ -53,32 +53,32 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   res.status(200).json(configs)
 }
 
-const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
-  const deviceId = req.query.deviceId.toString()
-  const iot = new iotCore.DeviceManagerClient()
-  const config = req.body as DeviceConfig
-  const request = {
-    name: iot.devicePath(projectId, region, registryId, deviceId),
-    binaryData: Buffer.from(JSON.stringify(config)),
-  }
+// const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
+//   const deviceId = req.query.deviceId.toString()
+//   const iot = new iotCore.DeviceManagerClient()
+//   const config = req.body as DeviceConfig
+//   const request = {
+//     name: iot.devicePath(projectId, region, registryId, deviceId),
+//     binaryData: Buffer.from(JSON.stringify(config)),
+//   }
 
-  res.setHeader('Content-Type', 'applciation/json')
+//   res.setHeader('Content-Type', 'applciation/json')
 
-  try {
-    const responses = await iot.modifyCloudToDeviceConfig(request)
+//   try {
+//     const responses = await iot.modifyCloudToDeviceConfig(request)
 
-    res.status(200).send(responses)
-  } catch (err) {
-    res.status(500).send(err)
-  }
-}
+//     res.status(200).send(responses)
+//   } catch (err) {
+//     res.status(500).send(err)
+//   }
+// }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'POST') {
-    handlePost(req, res)
-  } else {
-    handleGet(req, res)
-  }
+  // if (req.method === 'POST') {
+  //   handlePost(req, res)
+  // } else {
+  handleGet(req, res)
+  // }
 }
 
 export default handler
