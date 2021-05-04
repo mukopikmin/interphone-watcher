@@ -1,0 +1,5 @@
+- hosts: temperature
+  roles:
+    - roles/common
+    - roles/seed-python-dht
+    - roles/temperature-agent

@@ -1,0 +1,16 @@
+- name: Clone a repo
+  ansible.builtin.git:
+    repo: https://github.com/mukopikmin/interphone-watcher.git
+    dest: /home/pi/interphone-watcher
+- name: Create service for temperature agent
+  become: yes
+  file:
+    dest: /etc/systemd/system/temperature-agent.service
+    src: /home/pi/interphone-watcher/device/services/temperature-agent.service
+    state: link
+- name: Make sure a service is running
+  become: yes
+  ansible.builtin.systemd:
+    state: started
+    name: temperature-agent
+    daemon_reload: yes

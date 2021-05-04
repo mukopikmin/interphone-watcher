@@ -1,3 +1,0 @@
-- hosts: pizero
-  roles:
-    - roles/common
