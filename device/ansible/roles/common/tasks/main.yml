@@ -1,0 +1,10 @@
+- name: Set daily reboot
+  ansible.builtin.cron:
+    name: 'daily reboot'
+    minute: '0'
+    hour: '2'
+    job: 'touch /home/pi/rebooted && reboot'
+- name: Set timezone to Asia/Tokyo
+  become: yes
+  community.general.timezone:
+    name: Asia/Tokyo

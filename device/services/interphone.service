@@ -1,5 +1,5 @@
 [Unit]
-Description=Sound sensor agent
+Description=Agent for sensing sound
 
 [Service]
 Type=simple

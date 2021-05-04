@@ -27,7 +27,6 @@ detect_high = False
 detect_low = False
 
 def notify(data):
-    # webhook = "https://hooks.slack.com/services/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"
     webhook = os.environ.get("INCOMING_WEBHOOK")
     payload = {
         "text": f"{data} \nインターホンが鳴りました"

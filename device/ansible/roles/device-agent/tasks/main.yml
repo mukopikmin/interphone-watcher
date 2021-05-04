@@ -1,0 +1,4 @@
+- name: Install libatlas-base-dev
+  apt:
+    name: libatlas-base-dev
+    state: present

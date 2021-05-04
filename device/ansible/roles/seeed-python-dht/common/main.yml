@@ -1,0 +1,12 @@
+- name: Clone grove.py
+  git:
+    repo: https://github.com/Seeed-Studio/grove.py
+    dest: /home/pi/grove.py
+- name: Install grove.py
+  pip:
+    chdir: /home/pi/grove.py
+    virtualenv: /home/pi/venv
+    name: .
+- name: Install seeed-python-dht
+  pip:
+    name: seeed-python-dht

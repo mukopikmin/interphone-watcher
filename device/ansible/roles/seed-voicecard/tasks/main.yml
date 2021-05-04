@@ -1,0 +1,7 @@
+- name: Clone Seeed_Python_DH
+  ansible.builtin.git:
+    repo: https://github.com/Seeed-Studio/Seeed_Python_DHT.git
+    dest: /home/pi/Seeed_Python_DHT
+- name: Install Seeed_Python_DH
+  become: yes
+  ansible.builtin.shell: /home/pi/Seeed_Python_DHT/install.sh --compat-kernel

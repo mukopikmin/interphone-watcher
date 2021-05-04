@@ -1,0 +1,14 @@
+[Unit]
+Description=Agent for sensing temperature and humidity
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/interphone-watcher/device
+ExecStart=/home/pi/interphone-watcher/device/venv/bin/python temperature.py
+Restart=always
+User=pi
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,4 @@
+- hosts: interphone
+  roles:
+    - roles/common
+    - roles/seed-voicecard
