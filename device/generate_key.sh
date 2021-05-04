@@ -5,14 +5,19 @@
 
 set -ex
 
-output_dir=keys
+key="rsa"
 
+if [ ! "$1" = "" ]; then
+    key=$1 
+fi
+
+output_dir=keys
 mkdir -p $output_dir
 
 openssl req \
     -x509 \
     -newkey rsa:2048 \
-    -keyout $output_dir/rsa_private.pem \
+    -keyout $output_dir/${key}_private.pem \
     -nodes \
-    -out $output_dir/rsa_cert.pem \
+    -out $output_dir/${key}_cert.pem \
     -subj "/CN=unused"
