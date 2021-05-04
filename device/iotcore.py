@@ -85,11 +85,11 @@ def on_message(unused_client, unused_userdata, message):
     # config["threshold"] = payload["threshold"]
     # config["act_once"] = payload["actOnce"]
 
-    print(
-        "Received message '{}' on topic '{}' with Qos {}".format(
-            payload, message.topic, str(message.qos)
-        )
-    )
+    # print(
+    #     "Received message '{}' on topic '{}' with Qos {}".format(
+    #         payload, message.topic, str(message.qos)
+    #     )
+    # )
 
 
 def get_client(

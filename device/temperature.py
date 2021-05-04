@@ -14,6 +14,9 @@ import paho.mqtt.client as mqtt
 import iotcore
 import seeed_dht
 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 config = {}
 
@@ -61,7 +64,7 @@ def main(
 
         humi, temp = sensor.read()
         data = {
-            "device": device_id,
+            "deviceId": device_id,
             "timestamp": datetime.datetime.now().isoformat(),
             "humidity": humi,
             "temperature":temp
@@ -88,7 +91,8 @@ def main(
             )
 
         client.publish(mqtt_topic, payload, qos=1)
-
+        time.sleep(60)
+    
     stream.stop_stream()
     stream.close()
 
@@ -106,7 +110,7 @@ if __name__ == '__main__':
     mqtt_bridge_port = 8883
     private_key_file = "keys/rsa_private.pem"
     project_id = os.environ.get("PROJECT_ID")
-    registry_id = os.environ.get("REGISTRY_ID")
+    registry_id = os.environ.get("TEMPERATURE_REGISTRY_ID")
 
     main(
         algorithm,
