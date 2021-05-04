@@ -11,7 +11,7 @@ const firestore = new Firestore()
 
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
   const collection = firestore.collection('devices/pizero1/telemetry')
-  const snapshot = await collection.get()
+  const snapshot = await collection.orderBy('timestamp').get()
   const docs = snapshot.docs.map((doc) => {
     const data = doc.data() as Telemetry
 
