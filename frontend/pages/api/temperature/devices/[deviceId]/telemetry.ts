@@ -1,5 +1,6 @@
 import { Firestore, Timestamp } from '@google-cloud/firestore'
 import { NextApiRequest, NextApiResponse } from 'next'
+import dayjs from 'dayjs'
 
 interface Telemetry {
   humidity: number
@@ -17,7 +18,7 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
 
     return {
       ...data,
-      timestamp: data.timestamp.toDate(),
+      timestamp: dayjs(data.timestamp.toDate()).format(),
     }
   })
 
