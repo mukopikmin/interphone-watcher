@@ -78,7 +78,7 @@ def main(
             jwt_iat = datetime.datetime.utcnow()
             client.loop()
             client.disconnect()
-            client = get_client(
+            client = iotcore.get_client(
                 project_id,
                 cloud_region,
                 registry_id,
@@ -91,7 +91,10 @@ def main(
             )
 
         client.publish(mqtt_topic, payload, qos=1)
-        time.sleep(60)
+
+        for i in range(0, 60):
+            time.sleep(1)
+            client.loop()
     
     stream.stop_stream()
     stream.close()
