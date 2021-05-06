@@ -3,8 +3,8 @@
     repo: https://github.com/mukopikmin/interphone-watcher.git
     dest: /home/pi/interphone-watcher
 - name: Create venv
-  ansible.builtin.shell: python3 -m venv venv
-  args:
+  ansible.builtin.shell:
+    cmd: python3 -m venv venv
     chdir: /home/pi/interphone-watcher/device
 - name: Install pacakages with pip
   ansible.builtin.pip:
