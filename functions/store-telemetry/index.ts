@@ -19,21 +19,6 @@ interface TelemetryDoc {
   timestamp: Date
 }
 
-// async function quickstart() {
-//   const firestore = new Firestore()
-//   const telemetry: Telemetry = {
-//     temperature: 1,
-//     humidity: 2,
-//     timestamp: new Date(),
-//   }
-//   const db = await firestore
-//     .collection('devices')
-//     .doc('test2')
-//     .collection('telemetry')
-//     .add(telemetry)
-// }
-// quickstart()
-
 export const storeTemperatureTelemetry = async (
   message: Message,
   _context: Context
@@ -49,8 +34,10 @@ export const storeTemperatureTelemetry = async (
   }
 
   await firestore
+    .collection('versions')
+    .doc('1')
     .collection('devices')
     .doc(telemetry.deviceId)
-    .collection('telemetry')
+    .collection('temperature')
     .add(doc)
 }

@@ -8,15 +8,20 @@ interface Telemetry {
   timestamp: Timestamp
 }
 
+interface QueryParams {
+  [key: string]: string
+}
+
 const firestore = new Firestore()
 const DATA_RANGE_HOURS = 12
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { deviceId, start, end } = req.query as { [key: string]: string }
-  const startAt = dayjs(start)
-  const endAt = dayjs(end)
-  const collection = firestore.collection(`devices/${deviceId}/telemetry`)
-  let query = collection.orderBy('timestamp')
+  const { deviceId, start, end } = req.query as QueryParams
+  const startAt = dayjs(start || '')
+  const endAt = dayjs(end || '')
+  let query = firestore
+    .collection(`versions/1/devices/${deviceId}/temperature`)
+    .orderBy('timestamp')
 
   if (startAt.isValid() && endAt.isValid()) {
     query = query.startAt(startAt.toDate()).endAt(endAt.toDate())
@@ -27,10 +32,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const snapshot = await query.get()
   const docs = snapshot.docs.map((doc) => {
     const data = doc.data() as Telemetry
+    const timestamp = dayjs(data.timestamp.toDate()).format()
 
     return {
       ...data,
-      timestamp: dayjs(data.timestamp.toDate()).format(),
+      timestamp,
     }
   })
 
