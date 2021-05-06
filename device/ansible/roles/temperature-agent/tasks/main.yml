@@ -2,9 +2,17 @@
   ansible.builtin.git:
     repo: https://github.com/mukopikmin/interphone-watcher.git
     dest: /home/pi/interphone-watcher
+- name: Create venv
+  ansible.builtin.shell: python3 -m venv venv
+  args:
+    chdir: /home/pi/interphone-watcher/device
+- name: Install pacakages with pip
+  ansible.builtin.pip:
+    requirements: /home/pi/interphone-watcher/device/requirements.txt
+    virtualenv: /home/pi/interphone-watcher/device/venv
 - name: Create service for temperature agent
   become: yes
-  file:
+  ansible.builtin.file:
     dest: /etc/systemd/system/temperature-agent.service
     src: /home/pi/interphone-watcher/device/services/temperature-agent.service
     state: link
@@ -12,5 +20,6 @@
   become: yes
   ansible.builtin.systemd:
     state: started
+    enabled: yes
     name: temperature-agent
     daemon_reload: yes
