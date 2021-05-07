@@ -1,15 +1,16 @@
-import { DeviceConfigVersion } from '../interfaces'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import DayjsTime from './DayjsTime'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import StatusIcon from './StatusIcon'
 import Card from '@material-ui/core/Card'
+import React from 'react'
+import { DeviceConfigVersion } from '../interfaces'
+import StatusIcon from './StatusIcon'
+import DayjsTime from './DayjsTime'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(10),
       justifyContent: 'center',
     },
-  })
+  }),
 )
 
 interface ConfigVersionListProps {
@@ -31,7 +32,9 @@ interface ConfigVersionListItem {
   isActive: boolean
 }
 
-const ConfigVersionListItem = (props: ConfigVersionListItem) => {
+const ConfigVersionListItem: React.FC<ConfigVersionListItem> = (
+  props: ConfigVersionListItem,
+) => {
   return (
     <TableRow key={props.config.version}>
       <TableCell>
@@ -55,7 +58,9 @@ const ConfigVersionListItem = (props: ConfigVersionListItem) => {
   )
 }
 
-const ConfigVersionList = (props: ConfigVersionListProps) => {
+const ConfigVersionList: React.FC<ConfigVersionListProps> = (
+  props: ConfigVersionListProps,
+) => {
   const classes = useStyles()
   const configVersions = props.configVersions || []
   const activeVersion = configVersions

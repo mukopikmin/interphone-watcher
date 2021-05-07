@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components'
 import {
   ThemeProvider as MaterialUIThemeProvider,
@@ -12,7 +12,7 @@ import { createMuiTheme } from '@material-ui/core'
 
 const theme = createMuiTheme()
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   const queryClient = new QueryClient()
 
   useEffect(() => {

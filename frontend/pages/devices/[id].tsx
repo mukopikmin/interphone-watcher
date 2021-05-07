@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import React, { useEffect, useState } from 'react'
 import ConfigVersionList from '../../components/ConfigVersionList'
 import DeviceSetting from '../../components/DeviceSetting'
 import Layout from '../../components/Layout'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import {
   useDeviceConfigQuery,
   useDeviceConfigVersionsQuery,
@@ -12,7 +13,6 @@ import { DeviceConfig } from '../../interfaces'
 import DeviceSelect from '../../components/DeviceSelect'
 import ReloadButton from '../../components/ReloadButton'
 import SubmitSettingsButton from '../../components/SubmitSettingsButton'
-import { useEffect, useState } from 'react'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
     deviceSelector: {
       marginRight: theme.spacing(1),
     },
-  })
+  }),
 )
 
 const initialConfig: DeviceConfig = {
@@ -35,7 +35,7 @@ const initialConfig: DeviceConfig = {
   actOnce: false,
 }
 
-const DevicePage = () => {
+const DevicePage: React.FC = () => {
   const classes = useStyles()
   const router = useRouter()
   const { data: devices, refetch: refetchDevices } = useDevicesQuery()

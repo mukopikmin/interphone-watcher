@@ -5,7 +5,10 @@ const region = process.env.REGION || ''
 const projectId = process.env.GCP_PROJECT || ''
 const registryId = process.env.REGISTRY_ID || ''
 
-const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (
+  _req: NextApiRequest,
+  res: NextApiResponse,
+): Promise<void> => {
   const iot = new iotCore.DeviceManagerClient()
   const registryPath = iot.registryPath(projectId, region, registryId)
   const [devices] = await iot.listDevices({ parent: registryPath })

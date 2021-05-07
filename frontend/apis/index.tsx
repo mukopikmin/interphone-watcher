@@ -1,6 +1,6 @@
-import { Device, DeviceConfig } from '../interfaces'
 import axios from 'axios'
 import dayjs from 'dayjs'
+import { Device, DeviceConfig, DeviceConfigVersion } from '../interfaces'
 
 interface DeviceConfigVersionsResponse {
   version: number
@@ -9,7 +9,9 @@ interface DeviceConfigVersionsResponse {
   config: DeviceConfig | null
 }
 
-export const getDeviceConfigVersions = async (deviceId: string) => {
+export const getDeviceConfigVersions = async (
+  deviceId: string
+): Promise<DeviceConfigVersion[]> => {
   const path = `/api/devices/${deviceId}`
   const { data } = await axios.get<DeviceConfigVersionsResponse[]>(path)
 
@@ -20,14 +22,16 @@ export const getDeviceConfigVersions = async (deviceId: string) => {
   }))
 }
 
-export const updateConfig = async (id: string, config: DeviceConfig) => {
+export const updateConfig = async (
+  id: string,
+  config: DeviceConfig
+): Promise<void> => {
   const path = `/api/devices/${id}`
-  const res = await axios.post(path, config)
 
-  return res
+  await axios.post(path, config)
 }
 
-export const getDevices = async () => {
+export const getDevices = async (): Promise<Device[]> => {
   const { data } = await axios.get<Device[]>('/api/devices')
 
   return data

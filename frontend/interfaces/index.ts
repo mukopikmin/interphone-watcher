@@ -18,24 +18,22 @@ export interface DeviceConfig {
   actOnce: boolean
 }
 
-export interface Metadata {}
-
 export interface Device {
-  credentials: any[]
-  metadata: Metadata
+  // credentials: any[]
+  metadata: {}
   id: string
   name: string
   numId: string
-  lastHeartbeatTime?: any
-  lastEventTime?: any
-  lastErrorTime?: any
-  lastErrorStatus?: any
-  config?: any
-  lastConfigAckTime?: any
-  state?: any
-  lastConfigSendTime?: any
-  blocked: boolean
-  lastStateTime?: any
-  logLevel: string
-  gatewayConfig?: any
+  // lastHeartbeatTime?: any
+  // lastEventTime?: any
+  // lastErrorTime?: any
+  // lastErrorStatus?: any
+  // config?: any
+  // lastConfigAckTime?: any
+  // state?: any
+  // lastConfigSendTime?: any
+  // blocked: boolean
+  // lastStateTime?: any
+  // logLevel: string
+  // gatewayConfig?: any
 }

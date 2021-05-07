@@ -1,13 +1,14 @@
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
+import React from 'react'
 import { TemperatureDevice } from '../interfaces/temperature'
 
 interface Props {
   device: TemperatureDevice
 }
 
-const TemperatureSummary = (props: Props) => {
+const TemperatureSummary: React.FC<Props> = (props: Props) => {
   return (
     <Card>
       <CardContent>

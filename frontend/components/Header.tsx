@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
 import Link from 'next/link'
 
-const useStyles = makeStyles((_theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     marginBottom: 70,
@@ -16,7 +16,7 @@ const useStyles = makeStyles((_theme) => ({
   },
 }))
 
-export default function ButtonAppBar() {
+const Header: React.FC = () => {
   const classes = useStyles()
 
   return (
@@ -42,3 +42,5 @@ export default function ButtonAppBar() {
     </div>
   )
 }
+
+export default Header

@@ -9,7 +9,10 @@ type Props = {
   title?: string
 }
 
-const Layout = ({ children, title = 'Interphone Watcher' }: Props) => (
+const Layout: React.FC<Props> = ({
+  children,
+  title = 'Interphone Watcher',
+}: Props) => (
   <>
     <CssBaseline />
     <Head>

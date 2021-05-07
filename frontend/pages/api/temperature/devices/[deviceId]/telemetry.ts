@@ -15,7 +15,10 @@ interface QueryParams {
 const firestore = new Firestore()
 const DATA_RANGE_HOURS = 12
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+): Promise<void> => {
   const { deviceId, start, end } = req.query as QueryParams
   const startAt = dayjs(start || '')
   const endAt = dayjs(end || '')

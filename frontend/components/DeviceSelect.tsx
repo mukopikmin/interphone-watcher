@@ -1,12 +1,12 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
-import { Device } from '../interfaces'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import MenuItem from '@material-ui/core/MenuItem'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { Device } from '../interfaces'
 
 interface Props {
   devices?: Device[]
@@ -17,13 +17,13 @@ interface ChangeEventProps {
   value: unknown
 }
 
-const useStyles = makeStyles((_theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     formControl: {},
-  })
+  }),
 )
 
-const DeviceSelect = (props: Props) => {
+const DeviceSelect: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
   const router = useRouter()
   const [device, setDevice] = useState<Device>()
@@ -39,7 +39,7 @@ const DeviceSelect = (props: Props) => {
   useEffect(() => {
     if (router.query.id) {
       const device = props?.devices?.find(
-        (device) => device.id === router.query.id
+        (device) => device.id === router.query.id,
       )
 
       setDevice(device)

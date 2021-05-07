@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useDevicesQuery } from '../hooks/device'
 
-const DeviceList = () => {
+const DeviceList: React.FC = () => {
   const { data: devices, isLoading } = useDevicesQuery()
 
   if (isLoading) {

@@ -1,14 +1,14 @@
-import { ChangeEvent } from 'react'
-import { DeviceConfig } from '../interfaces'
+import React, { ChangeEvent } from 'react'
 import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import { DeviceConfig } from '../interfaces'
 
 interface Props {
   deviceId: string
   config: DeviceConfig
-  updateConfig: Function
+  updateConfig: (arg: DeviceConfig) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -17,10 +17,10 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 100,
       marginRight: theme.spacing(1),
     },
-  })
+  }),
 )
 
-const DeviceSetting = (props: Props) => {
+const DeviceSetting: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
   const onChangeSensorEnabled = () => {
     props.updateConfig({

@@ -5,7 +5,7 @@ interface Props {
   active?: boolean
 }
 
-const StatusIcon = (props: Props) =>
+const StatusIcon: React.FC<Props> = (props: Props) =>
   props.active ? (
     <CheckIcon color="secondary" />
   ) : (

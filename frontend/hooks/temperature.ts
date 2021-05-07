@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query'
+import { useQuery, UseQueryResult } from 'react-query'
 import { getTemperatureDevices } from '../apis/temperature'
 import { TemperatureDevice } from '../interfaces/temperature'
 // import { getDeviceTemperatureTelemetry } from '../apis/temperature'
@@ -35,8 +35,7 @@ import { TemperatureDevice } from '../interfaces/temperature'
 //   })
 // }
 
-export const useTemperatureDevices = () =>
-  useQuery<TemperatureDevice[], Error>(
-    ['temperature', 'devices'],
-    getTemperatureDevices
-  )
+export const useTemperatureDevices = (): UseQueryResult<
+  TemperatureDevice[],
+  Error
+> => useQuery(['temperature', 'devices'], getTemperatureDevices)

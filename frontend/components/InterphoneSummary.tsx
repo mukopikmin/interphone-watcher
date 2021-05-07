@@ -1,4 +1,3 @@
-import { Device, DeviceConfig } from '../interfaces'
 import { NotificationsOff, NotificationsActive } from '@material-ui/icons'
 import Card from '@material-ui/core/Card'
 import { createStyles, makeStyles, Theme } from '@material-ui/core'
@@ -9,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Link from 'next/link'
 import Grid from '@material-ui/core/Grid'
+import { Device, DeviceConfig } from '../interfaces'
 
 interface Props {
   devices?: Device[]
@@ -30,10 +30,10 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
     },
     gridItemDescription: {},
-  })
+  }),
 )
 
-const InterphoneSummary = (props: Props) => {
+const InterphoneSummary: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
   const deviceCount = props?.devices?.length
   const isActive = !!props.configs

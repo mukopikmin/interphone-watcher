@@ -1,4 +1,4 @@
-import { Firestore, Timestamp } from '@google-cloud/firestore'
+import { Firestore } from '@google-cloud/firestore'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { v1 as iotCore } from '@google-cloud/iot'
 import dayjs from 'dayjs'
@@ -13,7 +13,10 @@ const projectId = process.env.GCP_PROJECT || ''
 const registryId = process.env.TEMPERATURE_REGISTRY_ID || ''
 const firestore = new Firestore()
 
-const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (
+  _req: NextApiRequest,
+  res: NextApiResponse,
+): Promise<void> => {
   const iot = new iotCore.DeviceManagerClient()
   const registryPath = iot.registryPath(projectId, region, registryId)
   const [iotDevices] = await iot.listDevices({ parent: registryPath })
@@ -40,7 +43,7 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
         id: deviceId,
         telemetry: docs.length > 0 ? docs[0] : null,
       }
-    })
+    }),
   )
 
   res.setHeader('Content-Type', 'applciation/json')

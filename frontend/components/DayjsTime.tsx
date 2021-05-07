@@ -6,7 +6,7 @@ interface Props {
 
 const format = 'YYYY/MM/DD HH:mm:ss'
 
-const DayjsTime = (props: Props) => (
+const DayjsTime: React.FC<Props> = (props: Props) => (
   <>{props.time ? props.time.format(format) : ''}</>
 )
 

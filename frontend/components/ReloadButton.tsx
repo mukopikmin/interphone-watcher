@@ -1,9 +1,10 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import ReplayIcon from '@material-ui/icons/Replay'
+import React from 'react'
 
 interface Props {
-  reload: Function
+  reload: () => {}
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -11,10 +12,10 @@ const useStyles = makeStyles((theme: Theme) =>
     icon: {
       marginRight: theme.spacing(1),
     },
-  })
+  }),
 )
 
-const ReloadButton = (props: Props) => {
+const ReloadButton: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
   const reload = () => {
     props.reload()

@@ -13,7 +13,7 @@ import { ServerStyleSheets as MaterialServerStyleSheets } from '@material-ui/cor
 
 export default class CustomDocument extends NextDocument {
   static async getInitialProps(
-    ctx: DocumentContext
+    ctx: DocumentContext,
   ): Promise<DocumentInitialProps> {
     const styledComponentsSheet = new ServerStyleSheet()
     const materialUiSheets = new MaterialServerStyleSheets()
@@ -23,12 +23,12 @@ export default class CustomDocument extends NextDocument {
       ctx.renderPage = (): RenderPageResult | Promise<RenderPageResult> =>
         originalRenderPage({
           enhanceApp: (App) => (
-            props
+            props,
           ): React.ReactElement<{
             sheet: ServerStyleSheet
           }> =>
             styledComponentsSheet.collectStyles(
-              materialUiSheets.collect(<App {...props} />)
+              materialUiSheets.collect(<App {...props} />),
             ),
         })
 
