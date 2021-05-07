@@ -8,10 +8,10 @@ import Link from 'next/link'
 const useStyles = makeStyles((_theme) => ({
   root: {
     flexGrow: 1,
-    marginBottom: 80,
+    marginBottom: 70,
   },
   logo: {
-    height: 48,
+    height: 36,
     verticalAlign: 'middle',
   },
 }))
@@ -22,7 +22,7 @@ export default function ButtonAppBar() {
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar variant="dense">
           <span>
             <Link href={'/'}>
               <img
