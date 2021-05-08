@@ -1,18 +1,18 @@
 import { useRouter } from 'next/router'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import React, { useEffect, useState } from 'react'
-import ConfigVersionList from '../../components/ConfigVersionList'
-import DeviceSetting from '../../components/DeviceSetting'
-import Layout from '../../components/Layout'
+import ConfigVersionList from '../../../components/ConfigVersionList'
+import DeviceSetting from '../../../components/DeviceSetting'
+import Layout from '../../../components/Layout'
 import {
   useDeviceConfigQuery,
   useDeviceConfigVersionsQuery,
   useDevicesQuery,
-} from '../../hooks/device'
-import { DeviceConfig } from '../../interfaces'
-import DeviceSelect from '../../components/DeviceSelect'
-import ReloadButton from '../../components/ReloadButton'
-import SubmitSettingsButton from '../../components/SubmitSettingsButton'
+} from '../../../hooks/device'
+import { DeviceConfig } from '../../../interfaces'
+import DeviceSelect from '../../../components/DeviceSelect'
+import ReloadButton from '../../../components/ReloadButton'
+import SubmitSettingsButton from '../../../components/SubmitSettingsButton'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
     deviceSelector: {
       marginRight: theme.spacing(1),
     },
-  }),
+  })
 )
 
 const initialConfig: DeviceConfig = {

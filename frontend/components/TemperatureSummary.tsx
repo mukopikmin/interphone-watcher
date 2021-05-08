@@ -2,10 +2,11 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
+import CardActions from '@material-ui/core/CardActions'
+import Link from 'next/link'
+import Button from '@material-ui/core/Button'
 import React from 'react'
-import { useDeviceTemperatureTelemetry } from '../hooks/temperature'
 import { TemperatureDevice } from '../interfaces/temperature'
-import TemeperatureTelemetryChart from './TemperatureTelemetryChart'
 
 interface Props {
   device: TemperatureDevice
@@ -29,12 +30,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const TemperatureSummary: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
-  const { data: telemetry } = useDeviceTemperatureTelemetry(props.device.id)
 
   return (
     <Card>
       <CardContent>
-        <Typography gutterBottom>{props.device.id}</Typography>
+        <Typography>{props.device.id}</Typography>
+        <Typography variant="caption" gutterBottom>
+          {props.device.telemetry?.timestamp.format()}
+        </Typography>
 
         <div className={classes.container}>
           <div className={classes.telemetry}>
@@ -42,9 +45,7 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
               {props.device.telemetry?.temperature}
               <small>℃</small>
             </Typography>
-            <Typography variant="subtitle2" gutterBottom>
-              Temperature
-            </Typography>
+            <Typography variant="subtitle2">Temperature</Typography>
           </div>
 
           <div className={classes.telemetry}>
@@ -52,18 +53,18 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
               {props.device.telemetry?.humidity}
               <small>%</small>
             </Typography>
-            <Typography variant="subtitle2" gutterBottom>
-              Humidity
-            </Typography>
+            <Typography variant="subtitle2">Humidity</Typography>
           </div>
         </div>
-
-        <Typography variant="caption" gutterBottom>
-          {props.device.telemetry?.timestamp.format()}
-        </Typography>
-
-        {telemetry && <TemeperatureTelemetryChart telemetry={telemetry} />}
       </CardContent>
+
+      <CardActions>
+        <Link href={`/devices/${props.device.id}/temperature`} passHref>
+          <Button color="inherit" component="a">
+            Detail
+          </Button>
+        </Link>
+      </CardActions>
     </Card>
   )
 }
