@@ -15,7 +15,7 @@ const firestore = new Firestore()
 
 const handler = async (
   _req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ): Promise<void> => {
   const iot = new iotCore.DeviceManagerClient()
   const registryPath = iot.registryPath(projectId, region, registryId)
@@ -38,12 +38,13 @@ const handler = async (
           timestamp,
         }
       })
+      const telemetry = docs.length > 0 ? docs[docs.length - 1] : null
 
       return {
         id: deviceId,
-        telemetry: docs.length > 0 ? docs[0] : null,
+        telemetry,
       }
-    }),
+    })
   )
 
   res.setHeader('Content-Type', 'applciation/json')
