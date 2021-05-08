@@ -16,6 +16,12 @@ const TemperatureTelemetryChart: React.FC<Props> = (props: Props) => {
     chart: {
       locales: [locale],
       defaultLocale: 'ja',
+      toolbar: {
+        tools: {
+          download: false,
+          pan: false,
+        },
+      },
     },
     xaxis: {
       type: 'datetime',
