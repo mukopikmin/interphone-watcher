@@ -6,17 +6,17 @@ import { useDevicesConfigVersionsQuery, useDevicesQuery } from '../hooks/device'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    card: {
-      marginBottom: theme.spacing(2),
+    section: {
+      marginBottom: theme.spacing(3),
     },
-  }),
+  })
 )
 
 const IndexPage: React.FC = () => {
   const classes = useStyles()
   const { data: devices } = useDevicesQuery()
   const { data: devicesConfigVersions } = useDevicesConfigVersionsQuery(
-    devices?.map((device) => device.id),
+    devices?.map((device) => device.id)
   )
   const configs = devicesConfigVersions
     ?.map((versions) => versions[0] && versions[0].config)
@@ -24,10 +24,10 @@ const IndexPage: React.FC = () => {
 
   return (
     <Layout title="Interphone Watcher">
-      <div className={classes.card}>
+      <div className={classes.section}>
         <InterphoneSummary devices={devices} configs={configs} />
       </div>
-      <div className={classes.card}>
+      <div className={classes.section}>
         <TemperatureSummaryList />
       </div>
     </Layout>

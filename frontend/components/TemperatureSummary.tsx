@@ -25,6 +25,13 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 100,
       marginRight: theme.spacing(1),
     },
+    actions: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
+    unit: {
+      marginLeft: theme.spacing(1),
+    },
   })
 )
 
@@ -34,16 +41,13 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
   return (
     <Card>
       <CardContent>
-        <Typography>{props.device.id}</Typography>
-        <Typography variant="caption" gutterBottom>
-          {props.device.telemetry?.timestamp.format()}
-        </Typography>
+        <Typography gutterBottom>{props.device.id}</Typography>
 
         <div className={classes.container}>
           <div className={classes.telemetry}>
             <Typography variant="h4">
               {props.device.telemetry?.temperature}
-              <small>℃</small>
+              <small className={classes.unit}>℃</small>
             </Typography>
             <Typography variant="subtitle2">Temperature</Typography>
           </div>
@@ -51,19 +55,23 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
           <div className={classes.telemetry}>
             <Typography variant="h4">
               {props.device.telemetry?.humidity}
-              <small>%</small>
+              <small className={classes.unit}>%</small>
             </Typography>
             <Typography variant="subtitle2">Humidity</Typography>
           </div>
         </div>
       </CardContent>
 
-      <CardActions>
+      <CardActions className={classes.actions}>
         <Link href={`/devices/${props.device.id}/temperature`} passHref>
           <Button color="inherit" component="a">
             Detail
           </Button>
         </Link>
+
+        <Typography variant="caption">
+          {props.device.telemetry?.timestamp.format('YYYY/MM/DD HH:mm')}
+        </Typography>
       </CardActions>
     </Card>
   )
