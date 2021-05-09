@@ -6,6 +6,15 @@
   ansible.builtin.shell:
     cmd: python3 -m venv venv
     chdir: /home/pi/interphone-watcher/device
+- name: Clone a repo
+  ansible.builtin.git:
+    repo: https://github.com/Seeed-Studio/grove.py.git
+    dest: /home/pi/grove.py
+- name: Install pacakages with pip
+  ansible.builtin.pip:
+    name: .
+    virtualenv: /home/pi/interphone-watcher/device/venv
+    chdir: /home/pi/grove.py
 - name: Install pacakages with pip
   ansible.builtin.pip:
     requirements: /home/pi/interphone-watcher/device/requirements.txt
@@ -16,6 +25,17 @@
     dest: /etc/systemd/system/temperature-agent.service
     src: /home/pi/interphone-watcher/device/services/temperature-agent.service
     state: link
+# - name: Generate .env file
+#   ansible.builtin.shell:
+#     cmd: |
+#       cat <<EOS > .env
+#       PROJECT_ID=$(GCP_PROJECT)
+#       REGION=asia-east1
+#       DEVICE_ID=$(hostname)
+#       REGISTRY_ID=$(REGISTRY_ID)
+#       TEMPERATURE_REGISTRY_ID=$(TEMPERATURE_REGISTRY_ID)
+#       EOS
+#     chdir: /home/pi/interphone-watcher/device
 - name: Make sure a service is running
   become: yes
   ansible.builtin.systemd:

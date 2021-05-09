@@ -8,3 +8,14 @@
   become: yes
   community.general.timezone:
     name: Asia/Tokyo
+- name: Install apt packages
+  become: yes
+  ansible.builtin.apt:
+    pkg:
+      - git
+      - vim
+      - python3
+      - python3-venv
+      - python-setuptools
+      - libatlas-base-dev
+    update_cache: yes
