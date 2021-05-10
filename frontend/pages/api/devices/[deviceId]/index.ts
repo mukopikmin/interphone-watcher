@@ -75,7 +75,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ): Promise<void> => {
   if (req.method === 'POST') {
     handlePost(req, res)

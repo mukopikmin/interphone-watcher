@@ -32,7 +32,7 @@ export interface Device {
   // lastConfigAckTime?: any
   // state?: any
   // lastConfigSendTime?: any
-  // blocked: boolean
+  blocked: boolean
   // lastStateTime?: any
   // logLevel: string
   // gatewayConfig?: any

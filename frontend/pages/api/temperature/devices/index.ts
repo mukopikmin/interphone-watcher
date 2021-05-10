@@ -4,6 +4,7 @@ import { v1 as iotCore } from '@google-cloud/iot'
 import dayjs from 'dayjs'
 import {
   TemperatureDevice,
+  TemperatureDeviceMetadata,
   TemperatureRawTelemetry,
   TemperatureTelemetry,
 } from '../../../../interfaces/temperature'
@@ -19,7 +20,10 @@ const handler = async (
 ): Promise<void> => {
   const iot = new iotCore.DeviceManagerClient()
   const registryPath = iot.registryPath(projectId, region, registryId)
-  const [iotDevices] = await iot.listDevices({ parent: registryPath })
+  const [iotDevices] = await iot.listDevices({
+    parent: registryPath,
+    fieldMask: { paths: ['metadata', 'config'] },
+  })
 
   const devices: TemperatureDevice[] = await Promise.all(
     iotDevices.map(async (device) => {
@@ -39,9 +43,11 @@ const handler = async (
         }
       })
       const telemetry = docs.length > 0 ? docs[docs.length - 1] : null
+      const metadata = device.metadata as TemperatureDeviceMetadata
 
       return {
         id: deviceId,
+        location: metadata?.location,
         telemetry,
       }
     })

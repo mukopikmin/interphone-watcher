@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
     unit: {
       marginLeft: theme.spacing(1),
     },
+    title: {
+      marginBottom: theme.spacing(2),
+    },
   })
 )
 
@@ -41,7 +44,10 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
   return (
     <Card>
       <CardContent>
-        <Typography gutterBottom>{props.device.id}</Typography>
+        <div className={classes.title}>
+          <Typography>{props.device.location}</Typography>
+          <Typography variant="caption">{props.device.id}</Typography>
+        </div>
 
         <div className={classes.container}>
           <div className={classes.telemetry}>
