@@ -1,4 +1,3 @@
-// import Chart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import locale from 'apexcharts/dist/locales/ja.json'
 import dynamic from 'next/dynamic'
@@ -30,6 +29,19 @@ const TemperatureTelemetryChart: React.FC<Props> = (props: Props) => {
           dayjs(timestamp).format('YYYY/MM/DD HH:mm'),
       },
     },
+    yaxis: [
+      {
+        labels: {
+          formatter: (val) => `${val} ℃`,
+        },
+      },
+      {
+        opposite: true,
+        labels: {
+          formatter: (val) => `${val} %`,
+        },
+      },
+    ],
     markers: {
       size: 0,
     },
@@ -56,13 +68,7 @@ const TemperatureTelemetryChart: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <Chart
-        options={options}
-        series={series}
-        type="area"
-        // width={500}
-        height={320}
-      />
+      <Chart options={options} series={series} type="area" height={350} />
     </>
   )
 }
