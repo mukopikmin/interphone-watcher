@@ -7,6 +7,7 @@ import {
 
 interface TemperatureDeviceResponse {
   id: string
+  location?: string
   telemetry: TemperatureTelemetryResponse | null
 }
 
@@ -31,10 +32,19 @@ export const getTemperatureDevices = async (): Promise<TemperatureDevice[]> => {
   }))
 }
 
+export const getTemperatureDevice = async (
+  id: string
+): Promise<TemperatureDevice> => {
+  const path = `/api/temperature/devices/${id}`
+  const { data: device } = await axios.get<TemperatureDeviceResponse>(path)
+
+  return device as TemperatureDevice
+}
+
 export const getDeviceTemperatureTelemetry = async (
-  deviceId: string
+  id: string
 ): Promise<TemperatureTelemetry[]> => {
-  const path = `/api/temperature/devices/${deviceId}/telemetry`
+  const path = `/api/temperature/devices/${id}/telemetry`
   const { data: telemetry } = await axios.get<TemperatureTelemetryResponse[]>(
     path
   )
