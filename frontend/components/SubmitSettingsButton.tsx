@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button'
 import PublishIcon from '@material-ui/icons/Publish'
 import React from 'react'
 import { useDeviceUpdateMutation } from '../hooks/device'
-import { DeviceConfig } from '../interfaces'
+import { DeviceConfig } from '../interfaces/interphone'
 
 interface Props {
   deviceId: string
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
     icon: {
       marginRight: theme.spacing(1),
     },
-  }),
+  })
 )
 
 const SubmitSettingsButton: React.FC<Props> = (props: Props) => {

@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Link from 'next/link'
 import Grid from '@material-ui/core/Grid'
-import { Device, DeviceConfig } from '../interfaces'
+import { Device, DeviceConfig } from '../interfaces/interphone'
 
 interface Props {
   devices?: Device[]
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
     },
     gridItemDescription: {},
-  }),
+  })
 )
 
 const InterphoneSummary: React.FC<Props> = (props: Props) => {

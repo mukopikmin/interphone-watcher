@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { DeviceConfig } from '../interfaces'
+import { DeviceConfig } from '../interfaces/interphone'
 
 interface Props {
   deviceId: string
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 100,
       marginRight: theme.spacing(1),
     },
-  }),
+  })
 )
 
 const DeviceSetting: React.FC<Props> = (props: Props) => {

@@ -1,7 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { v1 as iotCore } from '@google-cloud/iot'
 import dayjs from 'dayjs'
-import { DeviceConfig, DeviceConfigVersion } from '../../../../../interfaces'
+import {
+  DeviceConfig,
+  DeviceConfigVersion,
+} from '../../../../../interfaces/interphone'
 
 const region = process.env.REGION || ''
 const projectId = process.env.GCP_PROJECT || ''
@@ -75,7 +78,7 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ): Promise<void> => {
   // if (req.method === 'POST') {
   //   handlePost(req, res)

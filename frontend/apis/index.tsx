@@ -1,6 +1,10 @@
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { Device, DeviceConfig, DeviceConfigVersion } from '../interfaces'
+import {
+  Device,
+  DeviceConfig,
+  DeviceConfigVersion,
+} from '../interfaces/interphone'
 
 interface DeviceConfigVersionsResponse {
   version: number

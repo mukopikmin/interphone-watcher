@@ -6,7 +6,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import MenuItem from '@material-ui/core/MenuItem'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { Device } from '../interfaces'
+import { Device } from '../interfaces/interphone'
 
 interface Props {
   devices?: Device[]
@@ -20,7 +20,7 @@ interface ChangeEventProps {
 const useStyles = makeStyles(() =>
   createStyles({
     formControl: {},
-  }),
+  })
 )
 
 const DeviceSelect: React.FC<Props> = (props: Props) => {
@@ -39,7 +39,7 @@ const DeviceSelect: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     if (router.query.id) {
       const device = props?.devices?.find(
-        (device) => device.id === router.query.id,
+        (device) => device.id === router.query.id
       )
 
       setDevice(device)

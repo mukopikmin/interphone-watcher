@@ -1,7 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { v1 as iotCore } from '@google-cloud/iot'
 import dayjs from 'dayjs'
-import { DeviceConfig, DeviceConfigVersion } from '../../../../interfaces'
+import {
+  DeviceConfig,
+  DeviceConfigVersion,
+} from '../../../../interfaces/interphone'
 
 const region = process.env.REGION || ''
 const projectId = process.env.GCP_PROJECT || ''

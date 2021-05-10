@@ -5,7 +5,11 @@ import {
   UseQueryResult,
 } from 'react-query'
 import { getDeviceConfigVersions, getDevices, updateConfig } from '../apis'
-import { Device, DeviceConfig, DeviceConfigVersion } from '../interfaces'
+import {
+  Device,
+  DeviceConfig,
+  DeviceConfigVersion,
+} from '../interfaces/interphone'
 
 export const useDevicesQuery = (): UseQueryResult<Device[], Error> =>
   useQuery('devices', getDevices, {
