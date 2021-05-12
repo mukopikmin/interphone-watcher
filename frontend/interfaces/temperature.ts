@@ -1,10 +1,9 @@
 import { Timestamp } from '@google-cloud/firestore'
 import dayjs from 'dayjs'
+import { Device } from './iotcore'
 
-export interface TemperatureDevice {
-  id: string
-  location?: string
-  telemetry: TemperatureTelemetry | null
+export interface TemperatureDevice extends Device {
+  metadata: TemperatureDeviceMetadata
 }
 
 export interface TemperatureDeviceMetadata {
@@ -22,36 +21,3 @@ export interface TemperatureRawTelemetry {
   temperature: number
   timestamp: Timestamp
 }
-
-// export interface Device {
-//   // credentials: any[]
-//   metadata: {
-//     location?: string
-//   }
-//   id: string
-//   name: string
-//   numId: string
-//   // lastHeartbeatTime?: any
-//   // lastEventTime?: any
-//   // lastErrorTime?: any
-//   // lastErrorStatus?: any
-//   config: {
-//     version: string
-//     cloudUpdateTime: {
-//       seconds: string
-//       nanos: number
-//     }
-//     deviceAckTime: {
-//       seconds: string
-//       nanos: number
-//     }
-//     binaryData: Buffer
-//   }
-//   // lastConfigAckTime?: any
-//   // state?: any
-//   // lastConfigSendTime?: any
-//   blocked: boolean
-//   // lastStateTime?: any
-//   logLevel: string
-//   // gatewayConfig?: any
-// }

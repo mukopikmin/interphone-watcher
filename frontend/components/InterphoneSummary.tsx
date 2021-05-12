@@ -8,11 +8,14 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Link from 'next/link'
 import Grid from '@material-ui/core/Grid'
-import { Device, DeviceConfig } from '../interfaces/interphone'
+import {
+  InterphoneDevice,
+  InterphoneDeviceConfig,
+} from '../interfaces/interphone'
 
 interface Props {
-  devices?: Device[]
-  configs?: (DeviceConfig | null)[]
+  devices?: InterphoneDevice[]
+  configs?: (InterphoneDeviceConfig | null)[]
 }
 
 const useStyles = makeStyles((theme: Theme) =>

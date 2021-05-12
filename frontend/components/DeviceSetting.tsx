@@ -3,12 +3,12 @@ import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { DeviceConfig } from '../interfaces/interphone'
+import { InterphoneDeviceConfig } from '../interfaces/interphone'
 
 interface Props {
   deviceId: string
-  config: DeviceConfig
-  updateConfig: (arg: DeviceConfig) => void
+  config: InterphoneDeviceConfig
+  updateConfig: (arg: InterphoneDeviceConfig) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>

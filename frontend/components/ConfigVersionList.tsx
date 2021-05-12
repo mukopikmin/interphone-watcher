@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import React from 'react'
-import { DeviceConfigVersion } from '../interfaces/interphone'
+import { InterphoneDeviceConfigVersion } from '../interfaces/interphone'
 import StatusIcon from './StatusIcon'
 import DayjsTime from './DayjsTime'
 
@@ -23,12 +23,12 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 interface ConfigVersionListProps {
-  configVersions?: DeviceConfigVersion[]
+  configVersions?: InterphoneDeviceConfigVersion[]
   isLoading: boolean
 }
 
 interface ConfigVersionListItem {
-  config: DeviceConfigVersion
+  config: InterphoneDeviceConfigVersion
   isActive: boolean
 }
 

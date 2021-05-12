@@ -15,7 +15,7 @@ const DeviceTemperaturePage: React.FC = () => {
 
   return (
     <Layout title="Temperature">
-      <Typography variant="h6">{device?.location}</Typography>
+      <Typography variant="h6">{device?.metadata.location}</Typography>
       <Typography variant="caption">{device?.id}</Typography>
 
       {telemetry && <TemeperatureTelemetryChart telemetry={telemetry} />}

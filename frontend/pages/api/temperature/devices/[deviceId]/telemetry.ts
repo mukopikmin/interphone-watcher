@@ -13,11 +13,11 @@ interface QueryParams {
 }
 
 const firestore = new Firestore()
-const DATA_RANGE_HOURS = 12
+const DEFAULT_DATA_RANGE_HOURS = 12
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ): Promise<void> => {
   const { deviceId, start, end } = req.query as QueryParams
   const startAt = dayjs(start || '')
@@ -29,7 +29,9 @@ const handler = async (
   if (startAt.isValid() && endAt.isValid()) {
     query = query.startAt(startAt.toDate()).endAt(endAt.toDate())
   } else {
-    query = query.startAt(dayjs().add(-DATA_RANGE_HOURS, 'hours').toDate())
+    query = query.startAt(
+      dayjs().add(-DEFAULT_DATA_RANGE_HOURS, 'hours').toDate()
+    )
   }
 
   const snapshot = await query.get()

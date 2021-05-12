@@ -6,7 +6,12 @@ import CardActions from '@material-ui/core/CardActions'
 import Link from 'next/link'
 import Button from '@material-ui/core/Button'
 import React from 'react'
-import { TemperatureDevice } from '../interfaces/temperature'
+import {
+  TemperatureDevice,
+} from '../interfaces/temperature'
+import {
+  useTemperatureDeviceLastTelemetry,
+} from '../hooks/temperature'
 
 interface Props {
   device: TemperatureDevice
@@ -40,19 +45,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const TemperatureSummary: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
+  const { data: telemetry } = useTemperatureDeviceLastTelemetry(props.device.id)
 
   return (
     <Card>
       <CardContent>
         <div className={classes.title}>
-          <Typography>{props.device.location}</Typography>
+          <Typography>{props.device.metadata.location}</Typography>
           <Typography variant="caption">{props.device.id}</Typography>
         </div>
 
         <div className={classes.container}>
           <div className={classes.telemetry}>
             <Typography variant="h4">
-              {props.device.telemetry?.temperature}
+              {telemetry?.temperature}
               <small className={classes.unit}>℃</small>
             </Typography>
             <Typography variant="subtitle2">Temperature</Typography>
@@ -60,7 +66,7 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
 
           <div className={classes.telemetry}>
             <Typography variant="h4">
-              {props.device.telemetry?.humidity}
+              {telemetry?.humidity}
               <small className={classes.unit}>%</small>
             </Typography>
             <Typography variant="subtitle2">Humidity</Typography>
@@ -76,7 +82,7 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
         </Link>
 
         <Typography variant="caption">
-          {props.device.telemetry?.timestamp.format('YYYY/MM/DD HH:mm')}
+          {telemetry?.timestamp.format('YYYY/MM/DD HH:mm')}
         </Typography>
       </CardActions>
     </Card>

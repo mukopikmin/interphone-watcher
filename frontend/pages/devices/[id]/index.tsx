@@ -9,7 +9,7 @@ import {
   useDeviceConfigVersionsQuery,
   useDevicesQuery,
 } from '../../../hooks/device'
-import { DeviceConfig } from '../../../interfaces/interphone'
+import { InterphoneDeviceConfig } from '../../../interfaces/interphone'
 import DeviceSelect from '../../../components/DeviceSelect'
 import ReloadButton from '../../../components/ReloadButton'
 import SubmitSettingsButton from '../../../components/SubmitSettingsButton'
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const initialConfig: DeviceConfig = {
+const initialConfig: InterphoneDeviceConfig = {
   sensorEnabled: false,
   threshold: 100,
   actOnce: false,
@@ -54,7 +54,7 @@ const DevicePage: React.FC = () => {
     await refetchDevices()
     await refetchConfigVersions()
   }
-  const updateConfig = (config: DeviceConfig) => {
+  const updateConfig = (config: InterphoneDeviceConfig) => {
     setLocalConfig(config)
   }
 

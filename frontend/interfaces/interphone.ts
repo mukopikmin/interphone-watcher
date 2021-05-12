@@ -1,39 +1,19 @@
 import dayjs from 'dayjs'
+import { Device } from './iotcore'
 
-export type User = {
-  id: number
-  name: string
-}
-
-export interface DeviceConfigVersion {
+export interface InterphoneDeviceConfigVersion {
   version: number
   cloudUpdateTime: dayjs.Dayjs | null
   deviceAckTime: dayjs.Dayjs | null
-  config: DeviceConfig | null
+  config: InterphoneDeviceConfig | null
 }
 
-export interface DeviceConfig {
+export interface InterphoneDeviceConfig {
   sensorEnabled: boolean
   threshold: number
   actOnce: boolean
 }
 
-export interface Device {
-  // credentials: any[]
-  metadata: {}
-  id: string
-  name: string
-  numId: string
-  // lastHeartbeatTime?: any
-  // lastEventTime?: any
-  // lastErrorTime?: any
-  // lastErrorStatus?: any
-  // config?: any
-  // lastConfigAckTime?: any
-  // state?: any
-  // lastConfigSendTime?: any
-  blocked: boolean
-  // lastStateTime?: any
-  // logLevel: string
-  // gatewayConfig?: any
+export interface InterphoneDevice extends Device {
+  config: InterphoneDeviceConfig
 }

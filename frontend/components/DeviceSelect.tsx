@@ -6,10 +6,10 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import MenuItem from '@material-ui/core/MenuItem'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { Device } from '../interfaces/interphone'
+import { InterphoneDevice } from '../interfaces/interphone'
 
 interface Props {
-  devices?: Device[]
+  devices?: InterphoneDevice[]
 }
 
 interface ChangeEventProps {
@@ -26,7 +26,7 @@ const useStyles = makeStyles(() =>
 const DeviceSelect: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
   const router = useRouter()
-  const [device, setDevice] = useState<Device>()
+  const [device, setDevice] = useState<InterphoneDevice>()
   const onChangeDevice = (e: ChangeEvent<ChangeEventProps>) => {
     const id = e.target.value as string
     const device = props?.devices?.find((device) => device.id === id)
