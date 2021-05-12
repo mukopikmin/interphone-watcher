@@ -6,7 +6,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import MenuItem from '@material-ui/core/MenuItem'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { InterphoneDevice } from '../interfaces/interphone'
+import { InterphoneDevice } from '../models/interphone'
 
 interface Props {
   devices?: InterphoneDevice[]

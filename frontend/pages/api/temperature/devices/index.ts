@@ -1,8 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { v1 as iotCore } from '@google-cloud/iot'
-import {
-  TemperatureDevice,
-} from '../../../../interfaces/temperature'
+import { TemperatureDevice } from '../../../../models/temperature'
 
 const region = process.env.REGION || ''
 const projectId = process.env.GCP_PROJECT || ''

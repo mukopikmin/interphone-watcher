@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { InterphoneDeviceConfig } from '../interfaces/interphone'
+import { InterphoneDeviceConfig } from '../models/interphone'
 
 interface Props {
   deviceId: string

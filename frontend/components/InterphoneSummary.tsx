@@ -8,10 +8,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Link from 'next/link'
 import Grid from '@material-ui/core/Grid'
-import {
-  InterphoneDevice,
-  InterphoneDeviceConfig,
-} from '../interfaces/interphone'
+import { InterphoneDevice, InterphoneDeviceConfig } from '../models/interphone'
 
 interface Props {
   devices?: InterphoneDevice[]

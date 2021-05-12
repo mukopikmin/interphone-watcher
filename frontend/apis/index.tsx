@@ -4,7 +4,7 @@ import {
   InterphoneDevice,
   InterphoneDeviceConfig,
   InterphoneDeviceConfigVersion,
-} from '../interfaces/interphone'
+} from '../models/interphone'
 
 interface DeviceConfigVersionsResponse {
   version: number

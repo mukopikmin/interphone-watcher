@@ -9,7 +9,7 @@ import {
   InterphoneDevice,
   InterphoneDeviceConfig,
   InterphoneDeviceConfigVersion,
-} from '../interfaces/interphone'
+} from '../models/interphone'
 
 export const useDevicesQuery = (): UseQueryResult<InterphoneDevice[], Error> =>
   useQuery('devices', getDevices, {

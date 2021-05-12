@@ -2,7 +2,7 @@ import { ApexOptions } from 'apexcharts'
 import locale from 'apexcharts/dist/locales/ja.json'
 import dynamic from 'next/dynamic'
 import dayjs from 'dayjs'
-import { TemperatureTelemetry } from '../interfaces/temperature'
+import { TemperatureTelemetry } from '../models/temperature'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 

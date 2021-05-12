@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import React from 'react'
-import { InterphoneDeviceConfigVersion } from '../interfaces/interphone'
+import { InterphoneDeviceConfigVersion } from '../models/interphone'
 import StatusIcon from './StatusIcon'
 import DayjsTime from './DayjsTime'
 

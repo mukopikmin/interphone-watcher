@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button'
 import PublishIcon from '@material-ui/icons/Publish'
 import React from 'react'
 import { useDeviceUpdateMutation } from '../hooks/device'
-import { InterphoneDeviceConfig } from '../interfaces/interphone'
+import { InterphoneDeviceConfig } from '../models/interphone'
 
 interface Props {
   deviceId: string

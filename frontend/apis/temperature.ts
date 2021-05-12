@@ -1,9 +1,6 @@
 import axios from 'axios'
 import dayjs from 'dayjs'
-import {
-  TemperatureDevice,
-  TemperatureTelemetry,
-} from '../interfaces/temperature'
+import { TemperatureDevice, TemperatureTelemetry } from '../models/temperature'
 
 // interface TemperatureDeviceResponse {
 //   id: string

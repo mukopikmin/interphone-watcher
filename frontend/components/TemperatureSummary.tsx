@@ -6,12 +6,8 @@ import CardActions from '@material-ui/core/CardActions'
 import Link from 'next/link'
 import Button from '@material-ui/core/Button'
 import React from 'react'
-import {
-  TemperatureDevice,
-} from '../interfaces/temperature'
-import {
-  useTemperatureDeviceLastTelemetry,
-} from '../hooks/temperature'
+import { TemperatureDevice } from '../models/temperature'
+import { useTemperatureDeviceLastTelemetry } from '../hooks/temperature'
 
 interface Props {
   device: TemperatureDevice

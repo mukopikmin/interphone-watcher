@@ -4,10 +4,7 @@ import {
   getTemperatureDevice,
   getTemperatureDevices,
 } from '../apis/temperature'
-import {
-  TemperatureDevice,
-  TemperatureTelemetry,
-} from '../interfaces/temperature'
+import { TemperatureDevice, TemperatureTelemetry } from '../models/temperature'
 
 export const useTemperatureDevices = (): UseQueryResult<
   TemperatureDevice[],
