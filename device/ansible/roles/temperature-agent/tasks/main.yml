@@ -2,6 +2,7 @@
   ansible.builtin.git:
     repo: https://github.com/mukopikmin/interphone-watcher.git
     dest: /home/pi/interphone-watcher
+    update: yes
 - name: Create venv
   ansible.builtin.shell:
     cmd: python3 -m venv venv
@@ -10,6 +11,7 @@
   ansible.builtin.git:
     repo: https://github.com/Seeed-Studio/grove.py.git
     dest: /home/pi/grove.py
+    update: yes
 - name: Install pacakages with pip
   ansible.builtin.pip:
     name: .
