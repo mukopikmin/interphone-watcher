@@ -4,7 +4,11 @@ import {
   useQuery,
   UseQueryResult,
 } from 'react-query'
-import { getDeviceConfigVersions, getDevices, updateConfig } from '../apis'
+import {
+  getDeviceConfigVersions,
+  getDevices,
+  updateConfig,
+} from '../apis/interphone'
 import {
   InterphoneDevice,
   InterphoneDeviceConfig,

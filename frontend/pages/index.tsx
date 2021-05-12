@@ -2,7 +2,10 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import Layout from '../components/Layout'
 import InterphoneSummary from '../components/InterphoneSummary'
 import TemperatureSummaryList from '../components/TemperatureSummaryList'
-import { useDevicesConfigVersionsQuery, useDevicesQuery } from '../hooks/device'
+import {
+  useDevicesConfigVersionsQuery,
+  useDevicesQuery,
+} from '../hooks/interphone'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -8,7 +8,7 @@ import {
   useDeviceConfigQuery,
   useDeviceConfigVersionsQuery,
   useDevicesQuery,
-} from '../../../hooks/device'
+} from '../../../hooks/interphone'
 import { InterphoneDeviceConfig } from '../../../models/interphone'
 import DeviceSelect from '../../../components/DeviceSelect'
 import ReloadButton from '../../../components/ReloadButton'

@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import {
   InterphoneDeviceConfig,
   InterphoneDeviceConfigVersion,
-} from '../../../../models/interphone'
+} from '../../../../../models/interphone'
 
 const region = process.env.REGION || ''
 const projectId = process.env.GCP_PROJECT || ''

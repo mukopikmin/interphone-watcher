@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useDevicesQuery } from '../hooks/device'
+import { useDevicesQuery } from '../hooks/interphone'
 
 const DeviceList: React.FC = () => {
   const { data: devices, isLoading } = useDevicesQuery()
