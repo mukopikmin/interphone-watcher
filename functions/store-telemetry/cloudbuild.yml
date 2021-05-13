@@ -1,12 +1,9 @@
 steps:
-  - name: gcr.io/cloud-builders/npm
+  - name: gcr.io/cloud-builders/yarn
+    dir: functions/store-telemetry
+  - name: gcr.io/cloud-builders/yarn
     dir: functions/store-telemetry
     args:
-      - install
-  - name: gcr.io/cloud-builders/npm
-    dir: functions/store-telemetry
-    args:
-      - run
       - build
   - name: gcr.io/cloud-builders/gcloud
     dir: functions/store-telemetry

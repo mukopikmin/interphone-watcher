@@ -4,8 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "deploy": "tsc && gcloud functions deploy --trigger-topic interphone --runtime nodejs12 --region asia-northeast2 --entry-point storeTelemetry store-telemetry"
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
