@@ -1,0 +1,20 @@
+steps:
+  - name: gcr.io/cloud-builders/npm
+    dir: functions/store-telemetry
+    args:
+      - install
+  - name: gcr.io/cloud-builders/npm
+    dir: functions/store-telemetry
+    args:
+      - run
+      - build
+  - name: gcr.io/cloud-builders/gcloud
+    dir: functions/store-telemetry
+    args:
+      - functions
+      - deploy
+      - store-telemetry
+      - --trigger-topic=$_TRIGGER_TOPIC
+      - --runtime=nodejs12
+      - --region=asia-northeast2
+      - --entry-point=storeTelemetry
