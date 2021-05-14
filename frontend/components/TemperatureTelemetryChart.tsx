@@ -37,6 +37,8 @@ const TemperatureTelemetryChart: React.FC<Props> = (props: Props) => {
       },
       {
         opposite: true,
+        max: 100,
+        min: 0,
         labels: {
           formatter: (val) => `${val} %`,
         },
