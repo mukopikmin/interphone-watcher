@@ -1,0 +1,17 @@
+steps:
+  - name: gcr.io/cloud-builders/yarn
+    dir: functions/store-telemetry
+  - name: gcr.io/cloud-builders/yarn
+    dir: functions/store-telemetry
+    args:
+      - build
+  - name: gcr.io/cloud-builders/gcloud
+    dir: functions/store-telemetry
+    args:
+      - functions
+      - deploy
+      - store-telemetry
+      - --trigger-topic=$_TRIGGER_TOPIC
+      - --runtime=nodejs12
+      - --region=asia-northeast2
+      - --entry-point=storeTelemetry
