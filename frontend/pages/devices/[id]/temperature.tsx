@@ -12,9 +12,10 @@ const DeviceTemperaturePage: React.FC = () => {
   const id = router.query.id as string
   const { data: device } = useTemperatureDevice(id)
   const { data: telemetry } = useTemperatureDeviceTelemetry(id)
+  const title = `Temperature | ${device?.metadata.location}`
 
   return (
-    <Layout title="Temperature">
+    <Layout title={title}>
       <Typography variant="h6">{device?.metadata.location}</Typography>
       <Typography variant="caption">{device?.id}</Typography>
 

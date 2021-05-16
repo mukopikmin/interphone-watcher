@@ -39,7 +39,6 @@ const DevicePage: React.FC = () => {
   const classes = useStyles()
   const router = useRouter()
   const { data: devices, refetch: refetchDevices } = useDevicesQuery()
-  // const devices = data || []
   const id = router.query.id as string
   const {
     data: configVersions,
@@ -66,7 +65,7 @@ const DevicePage: React.FC = () => {
 
   if (isError) {
     return (
-      <Layout title={`Interphone Watcher | ${id}`}>
+      <Layout title={id}>
         <h1>{id}</h1>
         <p>{error?.message}</p>
       </Layout>
@@ -74,7 +73,7 @@ const DevicePage: React.FC = () => {
   }
 
   return (
-    <Layout title={`Interphone Watcher | ${id}`}>
+    <Layout title={id}>
       <div className={classes.actions}>
         <span className={classes.deviceSelector}>
           <DeviceSelect devices={devices} />

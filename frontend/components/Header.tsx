@@ -34,7 +34,7 @@ const Header: React.FC = () => {
           </span>
           <Link href={'/'} passHref>
             <Button color="inherit" component="a">
-              Interphone Watcher
+              House Dashboard
             </Button>
           </Link>
         </Toolbar>

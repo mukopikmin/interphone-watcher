@@ -59,7 +59,7 @@ const InterphoneSummary: React.FC<Props> = (props: Props) => {
   return (
     <Card>
       <CardContent>
-        <Typography gutterBottom>Interphone Notification</Typography>
+        <Typography gutterBottom>Interphone</Typography>
 
         <Grid container spacing={2}>
           <Grid item sm={6} xs={12} className={classes.gridItemIcon}>
