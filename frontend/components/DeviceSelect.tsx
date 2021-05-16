@@ -6,10 +6,11 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import MenuItem from '@material-ui/core/MenuItem'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { InterphoneDevice } from '../models/interphone'
+import { Device } from '../models/iotcore'
 
 interface Props {
-  devices?: InterphoneDevice[]
+  devices?: Device[]
+  onSelect: (device: Device) => void
 }
 
 interface ChangeEventProps {
@@ -26,7 +27,7 @@ const useStyles = makeStyles(() =>
 const DeviceSelect: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
   const router = useRouter()
-  const [device, setDevice] = useState<InterphoneDevice>()
+  const [device, setDevice] = useState<Device>()
   const onChangeDevice = (e: ChangeEvent<ChangeEventProps>) => {
     const id = e.target.value as string
     const device = props?.devices?.find((device) => device.id === id)
@@ -48,7 +49,7 @@ const DeviceSelect: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     if (device) {
-      router.push(`/devices/${device.id}`)
+      props.onSelect(device)
     }
   }, [device])
 

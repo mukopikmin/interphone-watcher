@@ -13,6 +13,7 @@ import { InterphoneDeviceConfig } from '../../../models/interphone'
 import DeviceSelect from '../../../components/DeviceSelect'
 import ReloadButton from '../../../components/ReloadButton'
 import SubmitSettingsButton from '../../../components/SubmitSettingsButton'
+import { Device } from '../../../models/iotcore'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,6 +57,9 @@ const DevicePage: React.FC = () => {
   const updateConfig = (config: InterphoneDeviceConfig) => {
     setLocalConfig(config)
   }
+  const onSelectDevice = (device: Device) => {
+    router.push(`/devices/${device.id}`)
+  }
 
   useEffect(() => {
     if (config) {
@@ -76,7 +80,7 @@ const DevicePage: React.FC = () => {
     <Layout title={id}>
       <div className={classes.actions}>
         <span className={classes.deviceSelector}>
-          <DeviceSelect devices={devices} />
+          <DeviceSelect devices={devices} onSelect={onSelectDevice} />
         </span>
         <ReloadButton reload={refetch} />
         <SubmitSettingsButton
