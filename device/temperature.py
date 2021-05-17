@@ -20,6 +20,7 @@ load_dotenv()
 
 config = {}
 
+
 def main(
     algorithm,
     ca_certs,
@@ -35,13 +36,12 @@ def main(
     registry_id,
 ):
     """Connects a device, sends data, and receives data."""
-    # [START iot_mqtt_run]
     global config
 
     # Publish to the events or state topic based on the flag.
     sub_topic = "events" if message_type == "event" else "state"
 
-    mqtt_topic = "/devices/{}/{}".format(device_id, sub_topic)
+    mqtt_topic = "/devices/{}/{}/temperature".format(device_id, sub_topic)
 
     jwt_iat = datetime.datetime.utcnow()
     jwt_exp_mins = jwt_expires_minutes
@@ -67,7 +67,7 @@ def main(
             "deviceId": device_id,
             "timestamp": datetime.datetime.now().isoformat(),
             "humidity": humi,
-            "temperature":temp
+            "temperature": temp,
         }
         print(data)
         payload = json.dumps(data)
@@ -95,13 +95,12 @@ def main(
         for i in range(0, 60):
             time.sleep(1)
             client.loop()
-    
+
     stream.stop_stream()
     stream.close()
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     algorithm = "RS256"
     ca_certs = "keys/roots.pem"
     cloud_region = os.environ.get("REGION")

@@ -1,11 +1,28 @@
 import { Firestore } from '@google-cloud/firestore'
 import * as dayjs from 'dayjs'
 
-interface Message {
+interface Event {
+  attributes: {
+    deviceId: string
+    deviceNumId: string
+    deviceRegistryId: string
+    deviceRegistryLocation: string
+    projectId: string
+    subFolder: string
+  }
   data: string
 }
 
-interface Context {}
+interface Context {
+  eventId: string
+  timestamp: string
+  eventType: string
+  resource: {
+    service: string
+    name: string
+    type: string
+  }
+}
 
 interface Telemetry {
   deviceId: string
@@ -20,24 +37,30 @@ interface TelemetryDoc {
 }
 
 export const storeTemperatureTelemetry = async (
-  message: Message,
+  event: Event,
   _context: Context
 ) => {
   const firestore = new Firestore()
-  const raw = Buffer.from(message.data, 'base64').toString()
+  const message = Buffer.from(event.data, 'base64').toString()
   const now = dayjs()
-  const telemetry: Telemetry = JSON.parse(raw)
+  const telemetry: Telemetry = JSON.parse(message)
   const doc: TelemetryDoc = {
     temperature: telemetry.temperature,
     humidity: telemetry.humidity,
     timestamp: now.toDate(),
   }
+  const { subFolder } = event.attributes
 
-  await firestore
-    .collection('versions')
-    .doc('1')
-    .collection('devices')
-    .doc(telemetry.deviceId)
-    .collection('temperature')
-    .add(doc)
+  console.log(subFolder)
+
+  switch (subFolder) {
+    case 'temperature':
+      await firestore
+        .collection('versions')
+        .doc('1')
+        .collection('devices')
+        .doc(telemetry.deviceId)
+        .collection('temperature')
+        .add(doc)
+  }
 }
