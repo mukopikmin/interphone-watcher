@@ -49,18 +49,12 @@ export const storeTemperatureTelemetry = async (
     humidity: telemetry.humidity,
     timestamp: now.toDate(),
   }
-  const { subFolder } = event.attributes
 
-  console.log(subFolder)
-
-  switch (subFolder) {
-    case 'temperature':
-      await firestore
-        .collection('versions')
-        .doc('1')
-        .collection('devices')
-        .doc(telemetry.deviceId)
-        .collection('temperature')
-        .add(doc)
-  }
+  await firestore
+    .collection('versions')
+    .doc('2')
+    .collection('devices')
+    .doc(telemetry.deviceId)
+    .collection('temperature')
+    .add(doc)
 }
