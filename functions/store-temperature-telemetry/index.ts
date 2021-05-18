@@ -52,7 +52,7 @@ export const storeTemperatureTelemetry = async (
 
   await firestore
     .collection('versions')
-    .doc('2')
+    .doc('1')
     .collection('devices')
     .doc(telemetry.deviceId)
     .collection('temperature')
