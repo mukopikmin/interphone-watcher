@@ -3,9 +3,10 @@ import os
 import time
 import time
 import json
-import seeed_dht
+from seeed_dht import DHT
 from dotenv import load_dotenv
 import iotcore
+from sensors import TSL2561
 
 load_dotenv()
 
@@ -49,17 +50,20 @@ def main(
         mqtt_bridge_port,
     )
 
-    sensor = seeed_dht.DHT("11", DHT_SENSOR)
+    dht = DHT("11", DHT_SENSOR)
+    tsl = TSL2561()
 
     while True:
         client.loop()
 
-        humi, temp = sensor.read()
+        print(f"{tsl.read()} lx")
+
+        humidity, temperature = dht.read()
         data = {
             "deviceId": DEVICE_ID,
             "timestamp": datetime.datetime.now().isoformat(),
-            "humidity": humi,
-            "temperature": temp,
+            "humidity": humidity,
+            "temperature": temperature,
         }
         print(data)
         payload = json.dumps(data)

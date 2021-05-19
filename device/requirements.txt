@@ -11,4 +11,5 @@ rpi-ws281x==4.2.6
 RPi.GPIO==0.7.0
 seeed-python-dht==0.0.1
 six==1.15.0
+smbus==1.1.post2
 smbus2==0.4.1
