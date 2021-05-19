@@ -6,7 +6,7 @@ import json
 from seeed_dht import DHT
 from dotenv import load_dotenv
 import iotcore
-from sensors import TSL2561
+from sensors.tsl2561 import TSL2561
 
 load_dotenv()
 
