@@ -56,14 +56,14 @@ def main(
     while True:
         client.loop()
 
-        print(f"{tsl.read()} lx")
-
         humidity, temperature = dht.read()
+        brightness = tsl.read()
         data = {
             "deviceId": DEVICE_ID,
             "timestamp": datetime.datetime.now().isoformat(),
             "humidity": humidity,
             "temperature": temperature,
+            "brightness": brightness,
         }
         print(data)
         payload = json.dumps(data)
@@ -91,9 +91,6 @@ def main(
         for _ in range(0, 60):
             time.sleep(1)
             client.loop()
-
-    stream.stop_stream()
-    stream.close()
 
 
 if __name__ == "__main__":
