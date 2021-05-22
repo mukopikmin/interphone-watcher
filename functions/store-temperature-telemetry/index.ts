@@ -28,18 +28,17 @@ interface Telemetry {
   deviceId: string
   temperature: number
   humidity: number
+  brightness: number
 }
 
 interface TelemetryDoc {
   temperature: number
   humidity: number
   timestamp: Date
+  brightness: number
 }
 
-export const storeTemperatureTelemetry = async (
-  event: Event,
-  _context: Context
-) => {
+export const storeTemperatureTelemetry = async (event: Event, _: Context) => {
   const firestore = new Firestore()
   const message = Buffer.from(event.data, 'base64').toString()
   const now = dayjs()
@@ -47,12 +46,13 @@ export const storeTemperatureTelemetry = async (
   const doc: TelemetryDoc = {
     temperature: telemetry.temperature,
     humidity: telemetry.humidity,
+    brightness: telemetry.brightness,
     timestamp: now.toDate(),
   }
 
   await firestore
     .collection('versions')
-    .doc('1')
+    .doc('2')
     .collection('devices')
     .doc(telemetry.deviceId)
     .collection('temperature')
