@@ -11,6 +11,7 @@ import { TemperatureDevice, TemperatureTelemetry } from '../models/temperature'
 interface TemperatureTelemetryResponse {
   temperature: number
   humidity: number
+  brightness: number
   timestamp: string
 }
 

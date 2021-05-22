@@ -7,6 +7,7 @@ import {
   useTemperatureDevice,
   useTemperatureDevices,
 } from '../../../hooks/temperature'
+import BrightnessChart from '../../../components/BrightnessChart'
 import TemeperatureTelemetryChart from '../../../components/TemperatureTelemetryChart'
 import DeviceSelect from '../../../components/DeviceSelect'
 import { Device } from '../../../models/iotcore'
@@ -46,6 +47,7 @@ const DeviceTemperaturePage: React.FC = () => {
       </div>
 
       {telemetry && <TemeperatureTelemetryChart telemetry={telemetry} />}
+      {telemetry && <BrightnessChart telemetry={telemetry} />}
     </Layout>
   )
 }

@@ -23,7 +23,7 @@ const handler = async (
   const startAt = dayjs(start || '')
   const endAt = dayjs(end || '')
   let query = firestore
-    .collection(`versions/1/devices/${deviceId}/temperature`)
+    .collection(`versions/2/devices/${deviceId}/temperature`)
     .orderBy('timestamp')
 
   if (startAt.isValid() && endAt.isValid()) {

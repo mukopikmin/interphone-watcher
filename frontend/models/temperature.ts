@@ -13,11 +13,13 @@ export interface TemperatureDeviceMetadata {
 export interface TemperatureTelemetry {
   humidity: number
   temperature: number
+  brightness: number
   timestamp: dayjs.Dayjs
 }
 
 export interface TemperatureRawTelemetry {
   humidity: number
   temperature: number
+  brightness: number
   timestamp: Timestamp
 }
