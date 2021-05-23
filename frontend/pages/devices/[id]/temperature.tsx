@@ -2,6 +2,8 @@ import { useRouter } from 'next/router'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import { useEffect, useState } from 'react'
+import RoomIcon from '@material-ui/icons/Room'
+import Button from '@material-ui/core/Button'
 import Layout from '../../../components/Layout'
 import {
   useTemperatureDeviceTelemetry,
@@ -13,12 +15,15 @@ import TimeSeriesChart, {
 } from '../../../components/TimeSeriesChart'
 import DeviceSelect from '../../../components/DeviceSelect'
 import { Device } from '../../../models/iotcore'
+import ReloadButton from '../../../components/ReloadButton'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    deviceLocation: {
-      verticalAlign: 'bottom',
-      marginLeft: theme.spacing(2),
+    controls: {
+      marginBottom: theme.spacing(3),
+    },
+    icon: {
+      marginRight: theme.spacing(1),
     },
   })
 )
@@ -28,7 +33,7 @@ const DeviceTemperaturePage: React.FC = () => {
   const router = useRouter()
   const id = router.query.id as string
   const { data: device } = useTemperatureDevice(id)
-  const { data: telemetry } = useTemperatureDeviceTelemetry(id)
+  const { data: telemetry, refetch } = useTemperatureDeviceTelemetry(id)
   const { data: devices } = useTemperatureDevices()
   const title = `Temperature | ${device?.metadata.location}`
   const onSelectDevice = (device: Device) => {
@@ -65,25 +70,31 @@ const DeviceTemperaturePage: React.FC = () => {
 
   return (
     <Layout title={title}>
-      <div>
+      <div className={classes.controls}>
         <DeviceSelect devices={devices} onSelect={onSelectDevice} />
-        <Typography
-          display="inline"
-          variant="subtitle1"
-          className={classes.deviceLocation}
-        >
+        <Button>
+          <RoomIcon className={classes.icon} />
           {device?.metadata.location}
-        </Typography>
+        </Button>
+        <ReloadButton reload={refetch} />
       </div>
 
       {telemetry && (
         <>
           <Typography variant="subtitle1">Temperature</Typography>
-          <TimeSeriesChart unit="℃" telemetry={temperature} />
+          <TimeSeriesChart
+            loading={!telemetry}
+            unit="℃"
+            telemetry={temperature}
+          />
           <Typography variant="subtitle1">Humidity</Typography>
-          <TimeSeriesChart unit="%" telemetry={humidity} />
+          <TimeSeriesChart loading={!telemetry} unit="%" telemetry={humidity} />
           <Typography variant="subtitle1">Brightness</Typography>
-          <TimeSeriesChart unit="Lux" telemetry={brightness} />
+          <TimeSeriesChart
+            loading={!telemetry}
+            unit="Lux"
+            telemetry={brightness}
+          />
         </>
       )}
     </Layout>
