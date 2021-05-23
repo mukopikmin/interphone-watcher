@@ -67,6 +67,14 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
             </Typography>
             <Typography variant="subtitle2">Humidity</Typography>
           </div>
+
+          <div className={classes.telemetry}>
+            <Typography variant="h4">
+              {telemetry?.brightness}
+              <small className={classes.unit}>Lux</small>
+            </Typography>
+            <Typography variant="subtitle2">Brightness</Typography>
+          </div>
         </div>
       </CardContent>
 
