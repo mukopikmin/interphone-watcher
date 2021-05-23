@@ -33,7 +33,11 @@ const DeviceTemperaturePage: React.FC = () => {
   const router = useRouter()
   const id = router.query.id as string
   const { data: device } = useTemperatureDevice(id)
-  const { data: telemetry, refetch } = useTemperatureDeviceTelemetry(id)
+  const {
+    data: telemetry,
+    refetch,
+    isFetching,
+  } = useTemperatureDeviceTelemetry(id)
   const { data: devices } = useTemperatureDevices()
   const title = `Temperature | ${device?.metadata.location}`
   const onSelectDevice = (device: Device) => {
@@ -76,7 +80,7 @@ const DeviceTemperaturePage: React.FC = () => {
           <RoomIcon className={classes.icon} />
           {device?.metadata.location}
         </Button>
-        <ReloadButton reload={refetch} />
+        <ReloadButton reload={refetch} loading={isFetching} />
       </div>
 
       {telemetry && (

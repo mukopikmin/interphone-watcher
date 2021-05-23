@@ -82,7 +82,7 @@ const DevicePage: React.FC = () => {
         <span className={classes.deviceSelector}>
           <DeviceSelect devices={devices} onSelect={onSelectDevice} />
         </span>
-        <ReloadButton reload={refetch} />
+        <ReloadButton reload={refetch} loading={isFetching} />
         <SubmitSettingsButton
           deviceId={id}
           config={localConfig}
