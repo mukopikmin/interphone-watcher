@@ -2,15 +2,20 @@ import { ApexOptions } from 'apexcharts'
 import locale from 'apexcharts/dist/locales/ja.json'
 import dynamic from 'next/dynamic'
 import dayjs from 'dayjs'
-import { TemperatureTelemetry } from '../models/temperature'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-interface Props {
-  telemetry: TemperatureTelemetry[]
+export interface TimeSeriesDataProp {
+  value: number
+  timestamp: dayjs.Dayjs
 }
 
-const BrightnessChart: React.FC<Props> = (props: Props) => {
+interface Props {
+  telemetry: TimeSeriesDataProp[]
+  unit: string
+}
+
+const TimeSeriesChart: React.FC<Props> = (props: Props) => {
   const options: ApexOptions = {
     chart: {
       locales: [locale],
@@ -31,7 +36,7 @@ const BrightnessChart: React.FC<Props> = (props: Props) => {
     },
     yaxis: {
       labels: {
-        formatter: (val) => `${val} Lux`,
+        formatter: (val) => `${val} ${props.unit}`,
       },
     },
     markers: {
@@ -46,16 +51,16 @@ const BrightnessChart: React.FC<Props> = (props: Props) => {
       name: 'Brightness',
       data: props.telemetry.map((t) => ({
         x: t.timestamp.unix() * 1000,
-        y: t.brightness,
+        y: t.value,
       })),
     },
   ]
 
   return (
     <>
-      <Chart options={options} series={series} type="area" height={350} />
+      <Chart options={options} series={series} type="area" height={250} />
     </>
   )
 }
 
-export default BrightnessChart
+export default TimeSeriesChart
