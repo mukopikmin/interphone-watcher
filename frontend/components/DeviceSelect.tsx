@@ -1,4 +1,4 @@
-import { createStyles, makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
@@ -18,9 +18,19 @@ interface ChangeEventProps {
   value: unknown
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    formControl: {},
+    wrapper: {
+      margin: theme.spacing(1),
+      position: 'relative',
+    },
+    buttonProgress: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      marginTop: -12,
+      marginLeft: -12,
+    },
   })
 )
 
@@ -36,6 +46,7 @@ const DeviceSelect: React.FC<Props> = (props: Props) => {
       setDevice(device)
     }
   }
+  const loading = !props.devices || !device
 
   useEffect(() => {
     if (router.query.id) {
@@ -53,19 +64,30 @@ const DeviceSelect: React.FC<Props> = (props: Props) => {
     }
   }, [device])
 
-  if (!device) {
-    return <CircularProgress size="2rem" />
+  if (loading) {
+    return (
+      <>
+        <FormControl size="small" variant="outlined">
+          <InputLabel>Device</InputLabel>
+          <Select
+            onChange={onChangeDevice}
+            label="Device"
+            disabled
+            value="dummy"
+          >
+            <MenuItem value="dummy"></MenuItem>
+          </Select>
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        </FormControl>
+      </>
+    )
   }
 
   return (
     <>
-      <FormControl
-        size="small"
-        variant="outlined"
-        className={classes.formControl}
-      >
+      <FormControl size="small" variant="outlined">
         <InputLabel>Device</InputLabel>
-        <Select onChange={onChangeDevice} label="Device" value={device.id}>
+        <Select onChange={onChangeDevice} label="Device" value={device?.id}>
           {props?.devices?.map((device) => (
             <MenuItem key={device.id} value={device.id}>
               {device.id}

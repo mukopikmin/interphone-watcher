@@ -59,7 +59,7 @@ const DeviceTemperaturePage: React.FC = () => {
     refetch: refetchConfigVersions,
   } = useDeviceConfigVersionsQuery(id)
   const [tab, setTab] = useState(0)
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const handleTabChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setTab(newValue)
   }
   const reload = () => {
