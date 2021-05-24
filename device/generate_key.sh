@@ -22,4 +22,4 @@ openssl req \
     -out $output_dir/${key}_cert.pem \
     -subj "/CN=unused"
 
-wget https://pki.google.com/roots.pemß
+wget https://pki.google.com/roots.pem -O $output_dir/roots.pem
