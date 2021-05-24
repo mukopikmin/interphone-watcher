@@ -114,6 +114,8 @@ const DeviceTemperaturePage: React.FC = () => {
         onChange={handleTabChange}
         indicatorColor="primary"
         textColor="primary"
+        scrollButtons="auto"
+        variant="scrollable"
       >
         <Tab label="Telemetry charts" />
         <Tab label="Device settings" />
