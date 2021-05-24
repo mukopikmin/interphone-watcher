@@ -125,14 +125,21 @@ const DeviceTemperaturePage: React.FC = () => {
         <div className={classes.tabpanel}>
           <Typography variant="subtitle1">Temperature</Typography>
           <TimeSeriesChart
+            name="Temperature"
             loading={!telemetry}
             unit="℃"
             telemetry={temperature}
           />
           <Typography variant="subtitle1">Humidity</Typography>
-          <TimeSeriesChart loading={!telemetry} unit="%" telemetry={humidity} />
+          <TimeSeriesChart
+            name="Humidity"
+            loading={!telemetry}
+            unit="%"
+            telemetry={humidity}
+          />
           <Typography variant="subtitle1">Brightness</Typography>
           <TimeSeriesChart
+            name="Brightness"
             loading={!telemetry}
             unit="Lux"
             telemetry={brightness}

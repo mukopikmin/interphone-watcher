@@ -25,6 +25,7 @@ interface Props {
   telemetry: TimeSeriesDataProp[]
   unit: string
   loading: boolean
+  name: string
 }
 
 const TimeSeriesChart: React.FC<Props> = (props: Props) => {
@@ -45,6 +46,7 @@ const TimeSeriesChart: React.FC<Props> = (props: Props) => {
       labels: {
         formatter: (_, timestamp) =>
           dayjs(timestamp).format('YYYY/MM/DD HH:mm'),
+        rotate: 0,
       },
     },
     yaxis: {
@@ -58,10 +60,17 @@ const TimeSeriesChart: React.FC<Props> = (props: Props) => {
     dataLabels: {
       enabled: false,
     },
+    fill: {
+      type: 'solid',
+      opacity: 0.3,
+    },
+    stroke: {
+      width: 2,
+    },
   }
   const series = [
     {
-      name: 'Brightness',
+      name: props.name,
       data: props.telemetry.map((t) => ({
         x: t.timestamp.unix() * 1000,
         y: t.value,
