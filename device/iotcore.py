@@ -1,14 +1,7 @@
 import datetime
 import logging
-import os
-import random
 import ssl
-import time
-import wave
-import time
 import json
-
-import numpy as np
 import jwt
 import paho.mqtt.client as mqtt
 
@@ -78,8 +71,11 @@ def on_message(unused_client, unused_userdata, message):
     global config
 
     """Callback when the device receives a message on a subscription."""
-    # payload_str = str(message.payload.decode("utf-8"))
-    # payload = json.loads(payload_str)
+    payload_str = str(message.payload.decode("utf-8"))
+    payload = json.loads(payload_str)
+    config = payload
+
+    print(config)
 
     # config["sensor_enabled"] = payload["sensorEnabled"]
     # config["threshold"] = payload["threshold"]
@@ -147,4 +143,3 @@ def get_client(
     client.subscribe(mqtt_command_topic, qos=0)
 
     return client
-

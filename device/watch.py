@@ -1,18 +1,16 @@
 import datetime
 import logging
 import os
-import random
 import ssl
 import time
-import wave
-import time
 import json
-
 import numpy as np
 import pyaudio
 import jwt
 import paho.mqtt.client as mqtt
+from dotenv import load_dotenv
 
+load_dotenv()
 logging.getLogger("googleapiclient.discovery_cache").setLevel(logging.CRITICAL)
 
 
