@@ -51,7 +51,7 @@ const TimeSeriesChart: React.FC<Props> = (props: Props) => {
     },
     yaxis: {
       labels: {
-        formatter: (val) => `${val} ${props.unit}`,
+        formatter: (val) => `${val.toFixed(0)} ${props.unit}`,
       },
     },
     markers: {
