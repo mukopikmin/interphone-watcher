@@ -9,8 +9,6 @@ const handler = async (
   _req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> => {
-  console.log(registryId)
-  console.log(process.env)
   const iot = new iotCore.DeviceManagerClient()
   const registryPath = iot.registryPath(projectId, region, registryId)
   const [devices] = await iot.listDevices({ parent: registryPath })

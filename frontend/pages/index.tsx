@@ -1,11 +1,11 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import Layout from '../components/Layout'
-import InterphoneSummary from '../components/InterphoneSummary'
+// import InterphoneSummary from '../components/InterphoneSummary'
 import TemperatureSummaryList from '../components/TemperatureSummaryList'
-import {
-  useDevicesConfigVersionsQuery,
-  useDevicesQuery,
-} from '../hooks/interphone'
+// import {
+// useDevicesConfigVersionsQuery,
+//   useDevicesQuery,
+// } from '../hooks/interphone'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,19 +17,19 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const IndexPage: React.FC = () => {
   const classes = useStyles()
-  const { data: devices } = useDevicesQuery()
-  const { data: devicesConfigVersions } = useDevicesConfigVersionsQuery(
-    devices?.map((device) => device.id)
-  )
-  const configs = devicesConfigVersions
-    ?.map((versions) => versions[0] && versions[0].config)
-    .filter((config) => config !== null)
+  // const { data: devices } = useDevicesQuery()
+  // const { data: devicesConfigVersions } = useDevicesConfigVersionsQuery(
+  //   devices?.map((device) => device.id)
+  // )
+  // const configs = devicesConfigVersions
+  //   ?.map((versions) => versions[0] && versions[0].config)
+  //   .filter((config) => config !== null)
 
   return (
     <Layout title="Interphone Watcher">
-      <div className={classes.section}>
+      {/* <div className={classes.section}>
         <InterphoneSummary devices={devices} configs={configs} />
-      </div>
+      </div> */}
       <div className={classes.section}>
         <TemperatureSummaryList />
       </div>
