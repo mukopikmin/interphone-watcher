@@ -95,10 +95,10 @@ def main(
             ndarray = np.frombuffer(input, dtype="int16")
             abs_array = np.abs(ndarray) / 32768
 
-            # print(abs_array.max())
+            print(abs_array.max())
             # print(count_h)
 
-            if abs_array.max() > 0.3:
+            if abs_array.max() > 0.1:
                 # FFTで最大振幅の周波数を取得
                 freq_max = getMaxFreqFFT(ndarray, CHUNK, freq)
                 print("振幅最大の周波数:", freq_max, "Hz")

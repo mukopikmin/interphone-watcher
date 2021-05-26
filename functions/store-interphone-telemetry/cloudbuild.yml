@@ -1,0 +1,17 @@
+steps:
+  - name: gcr.io/cloud-builders/yarn
+    dir: functions/store-interphone-telemetry
+  - name: gcr.io/cloud-builders/yarn
+    dir: functions/store-interphone-telemetry
+    args:
+      - build
+  - name: gcr.io/cloud-builders/gcloud
+    dir: functions/store-interphone-telemetry
+    args:
+      - functions
+      - deploy
+      - store-interphone-telemetry
+      - --trigger-topic=$_TRIGGER_TOPIC
+      - --runtime=nodejs12
+      - --region=asia-northeast2
+      - --entry-point=storeInterphoneTelemetry
