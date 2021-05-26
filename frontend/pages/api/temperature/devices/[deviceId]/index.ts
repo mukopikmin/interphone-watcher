@@ -4,7 +4,7 @@ import { TemperatureDevice } from '../../../../../models/temperature'
 
 const region = process.env.REGION || ''
 const projectId = process.env.GCP_PROJECT || ''
-const registryId = process.env.TEMPERATURE_REGISTRY_ID || ''
+const registryId = process.env.REGISTRY_ID || ''
 
 const handler = async (
   req: NextApiRequest,

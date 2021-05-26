@@ -16,7 +16,7 @@ DHT_SENSOR = int(os.environ.get("DHT_SENSOR") or "5")
 REGION = os.environ.get("REGION")
 DEVICE_ID = os.environ.get("DEVICE_ID")
 PROJECT_ID = os.environ.get("PROJECT_ID")
-TEMPERATURE_REGISTRY_ID = os.environ.get("TEMPERATURE_REGISTRY_ID")
+REGISTRY_ID = os.environ.get("REGISTRY_ID")
 
 
 def main(
@@ -41,7 +41,7 @@ def main(
     client = iotcore.get_client(
         PROJECT_ID,
         REGION,
-        TEMPERATURE_REGISTRY_ID,
+        REGISTRY_ID,
         DEVICE_ID,
         private_key_file,
         algorithm,
@@ -77,7 +77,7 @@ def main(
             client = iotcore.get_client(
                 PROJECT_ID,
                 REGION,
-                TEMPERATURE_REGISTRY_ID,
+                REGISTRY_ID,
                 DEVICE_ID,
                 private_key_file,
                 algorithm,

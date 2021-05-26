@@ -16,14 +16,12 @@ steps:
         GCP_PROJECT=$PROJECT_ID
         REGION=$_REGION
         REGISTRY_ID=$_REGISTRY_ID
-        TEMPERATURE_REGISTRY_ID=$_TEMPERATURE_REGISTRY_ID
         TZ=Asia/Tokyo
         EOT
     env:
       - GCP_PROJECT=$PROJECT_ID
       - REGION=$_REGION
       - REGISTRY_ID=$_REGISTRY_ID
-      - TEMPERATURE_REGISTRY_ID=$_TEMPERATURE_REGISTRY_ID
   - name: gcr.io/cloud-builders/gcloud
     dir: frontend
     args:
