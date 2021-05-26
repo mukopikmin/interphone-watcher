@@ -42,19 +42,22 @@ const useStyles = makeStyles((theme: Theme) =>
 const TemperatureSummary: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
   const { data: telemetry } = useTemperatureDeviceLastTelemetry(props.device.id)
+  const telemetryPlaceholder = '-'
 
   return (
     <Card>
       <CardContent>
         <div className={classes.title}>
-          <Typography>{props.device.metadata.location}</Typography>
+          <Typography>
+            {props.device.metadata.location || 'Unknown Location'}
+          </Typography>
           <Typography variant="caption">{props.device.id}</Typography>
         </div>
 
         <div className={classes.container}>
           <div className={classes.telemetry}>
             <Typography variant="h4">
-              {telemetry?.temperature}
+              {telemetry?.temperature || telemetryPlaceholder}
               <small className={classes.unit}>℃</small>
             </Typography>
             <Typography variant="subtitle2">Temperature</Typography>
@@ -62,7 +65,7 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
 
           <div className={classes.telemetry}>
             <Typography variant="h4">
-              {telemetry?.humidity}
+              {telemetry?.humidity || telemetryPlaceholder}
               <small className={classes.unit}>%</small>
             </Typography>
             <Typography variant="subtitle2">Humidity</Typography>
@@ -70,7 +73,7 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
 
           <div className={classes.telemetry}>
             <Typography variant="h4">
-              {telemetry?.brightness}
+              {telemetry?.brightness || telemetryPlaceholder}
               <small className={classes.unit}>Lux</small>
             </Typography>
             <Typography variant="subtitle2">Brightness</Typography>
