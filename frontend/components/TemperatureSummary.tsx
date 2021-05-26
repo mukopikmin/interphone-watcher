@@ -42,14 +42,14 @@ const useStyles = makeStyles((theme: Theme) =>
 const TemperatureSummary: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
   const { data: telemetry } = useTemperatureDeviceLastTelemetry(props.device.id)
-  const telemetryPlaceholder = '-'
+  const placeholder = '-'
 
   return (
     <Card>
       <CardContent>
         <div className={classes.title}>
           <Typography>
-            {props.device.metadata.location || 'Unknown Location'}
+            {props.device.metadata.location || placeholder}
           </Typography>
           <Typography variant="caption">{props.device.id}</Typography>
         </div>
@@ -57,7 +57,7 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
         <div className={classes.container}>
           <div className={classes.telemetry}>
             <Typography variant="h4">
-              {telemetry?.temperature || telemetryPlaceholder}
+              {telemetry ? telemetry.temperature : placeholder}
               <small className={classes.unit}>℃</small>
             </Typography>
             <Typography variant="subtitle2">Temperature</Typography>
@@ -65,7 +65,7 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
 
           <div className={classes.telemetry}>
             <Typography variant="h4">
-              {telemetry?.humidity || telemetryPlaceholder}
+              {telemetry ? telemetry.humidity : placeholder}
               <small className={classes.unit}>%</small>
             </Typography>
             <Typography variant="subtitle2">Humidity</Typography>
@@ -73,7 +73,7 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
 
           <div className={classes.telemetry}>
             <Typography variant="h4">
-              {telemetry?.brightness || telemetryPlaceholder}
+              {telemetry ? telemetry.brightness : placeholder}
               <small className={classes.unit}>Lux</small>
             </Typography>
             <Typography variant="subtitle2">Brightness</Typography>
