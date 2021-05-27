@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { v1 as iotCore } from '@google-cloud/iot'
-import { Device } from '../../../../models/iotcore'
+import {
+  DeviceConfig,
+} from '../../../../../models/iotcore'
 
 const region = process.env.REGION || ''
 const projectId = process.env.GCP_PROJECT || ''
@@ -12,20 +14,21 @@ const handler = async (
 ): Promise<void> => {
   const deviceId = req.query.deviceId.toString()
   const iot = new iotCore.DeviceManagerClient()
-  const devicePath = iot.devicePath(projectId, region, registryId, deviceId)
-  const [iotDevice] = await iot.getDevice({
-    name: devicePath,
-    fieldMask: { paths: ['metadata', 'config'] },
-  })
-  // const metadata = iotDevice.metadata as TemperatureDeviceMetadata
-  // const device: TemperatureDevice = {
-  //   id: deviceId,
-  //   location: metadata.location,
-  //   telemetry: null,
-  // }
+  const config = req.body as DeviceConfig
+  const request = {
+    name: iot.devicePath(projectId, region, registryId, deviceId),
+    binaryData: Buffer.from(JSON.stringify(config)),
+  }
 
   res.setHeader('Content-Type', 'applciation/json')
-  res.status(200).json(iotDevice as Device)
+
+  try {
+    const responses = await iot.modifyCloudToDeviceConfig(request)
+
+    res.status(200).send(responses)
+  } catch (err) {
+    res.status(500).send(err)
+  }
 }
 
 export default handler

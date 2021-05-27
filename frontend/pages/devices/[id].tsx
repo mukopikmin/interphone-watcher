@@ -4,21 +4,21 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import { useEffect, useState } from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import Layout from '../../../components/Layout'
+import Layout from '../../components/Layout'
 import {
   useTemperatureDeviceTelemetry,
   useDevice,
   useDevices,
-} from '../../../hooks/temperature'
+} from '../../hooks/temperature'
 import TimeSeriesChart, {
   TimeSeriesDataProp,
-} from '../../../components/TimeSeriesChart'
-import DeviceSelect from '../../../components/DeviceSelect'
-import { Device } from '../../../models/iotcore'
-import ReloadButton from '../../../components/ReloadButton'
-import ConfigVersionList from '../../../components/ConfigVersionList'
-import { useDeviceConfigVersionsQuery } from '../../../hooks/iotcore'
-import TabPanel from '../../../components/TabPanel'
+} from '../../components/TimeSeriesChart'
+import DeviceSelect from '../../components/DeviceSelect'
+import { Device } from '../../models/iotcore'
+import ReloadButton from '../../components/ReloadButton'
+import DeviceSetting from '../../components/DeviceSetting'
+import { useDeviceConfigVersionsQuery } from '../../hooks/iotcore'
+import TabPanel from '../../components/TabPanel'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,21 +38,18 @@ const DeviceTemperaturePage: React.FC = () => {
   const { data: device } = useDevice(id)
   const {
     data: telemetry,
-    refetch,
+    refetch: refetchTelemetry,
     isFetching,
   } = useTemperatureDeviceTelemetry(id)
   const { data: devices } = useDevices()
   const title = `Temperature | ${device?.metadata.location}`
   const onSelectDevice = (device: Device) => {
-    router.push(`/devices/${device.id}/temperature`)
+    router.push(`/devices/${device.id}`)
   }
   const [temperature, setTemperature] = useState<TimeSeriesDataProp[]>([])
   const [humidity, setHumidity] = useState<TimeSeriesDataProp[]>([])
   const [brightness, setBrightness] = useState<TimeSeriesDataProp[]>([])
-  const {
-    data: configVersions,
-    refetch: refetchConfigVersions,
-  } = useDeviceConfigVersionsQuery(id)
+  const { refetch: refetchConfigVersions } = useDeviceConfigVersionsQuery(id)
   const [tab, setTab] = useState(0)
   const handleTabChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setTab(newValue)
@@ -60,7 +57,7 @@ const DeviceTemperaturePage: React.FC = () => {
   const reload = () => {
     switch (tab) {
       case 0:
-        refetch()
+        refetchTelemetry()
         break
       case 1:
         refetchConfigVersions()
@@ -140,10 +137,7 @@ const DeviceTemperaturePage: React.FC = () => {
 
       <TabPanel value={tab} index={1}>
         <div className={classes.tabpanel}>
-          <ConfigVersionList
-            configVersions={configVersions}
-            isLoading={isFetching}
-          />
+          <DeviceSetting deviceId={id} />
         </div>
       </TabPanel>
     </Layout>

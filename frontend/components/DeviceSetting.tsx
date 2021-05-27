@@ -1,66 +1,70 @@
-import React, { ChangeEvent } from 'react'
-import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import { useEffect, useState } from 'react'
+import { createStyles, makeStyles, Theme } from '@material-ui/core'
+import {
+  useDeviceConfigQuery,
+  useDeviceConfigVersionsQuery,
+} from '../hooks/iotcore'
 import { DeviceConfig } from '../models/iotcore'
+import DeviceSettingForm from './DeviceSettingForm'
+import SubmitSettingsButton from './SubmitSettingsButton'
+import ConfigVersionList from './ConfigVersionList'
 
 interface Props {
   deviceId: string
-  config: DeviceConfig
-  updateConfig: (arg: DeviceConfig) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    thresholdForm: {
-      maxWidth: 100,
-      marginRight: theme.spacing(1),
+    versionList: {
+      marginTop: theme.spacing(1),
     },
   })
 )
 
+const initialConfig: DeviceConfig = {
+  sensorEnabled: false,
+  threshold: 100,
+  actOnce: false,
+}
+
 const DeviceSetting: React.FC<Props> = (props: Props) => {
+  const { deviceId } = props
   const classes = useStyles()
-  const onChangeSensorEnabled = () => {
-    props.updateConfig({
-      ...props.config,
-      sensorEnabled: !props.config.sensorEnabled,
-    })
+  const config = useDeviceConfigQuery(deviceId)
+  const {
+    data: configVersions,
+    refetch,
+    isFetching,
+  } = useDeviceConfigVersionsQuery(deviceId)
+  const [localConfig, setLocalConfig] = useState(initialConfig)
+  const updateConfig = (config: DeviceConfig) => {
+    setLocalConfig(config)
   }
-  const onChangeThrehold = (e: ChangeEvent<HTMLInputElement>) => {
-    props.updateConfig({ ...props.config, threshold: Number(e.target.value) })
-  }
-  const onChangeActOnce = () => {
-    props.updateConfig({ ...props.config, actOnce: !props.config.actOnce })
-  }
+
+  useEffect(() => {
+    if (config) {
+      setLocalConfig(config)
+    }
+  }, [config])
 
   return (
     <>
-      <FormControlLabel
-        control={
-          <Switch
-            checked={props.config.sensorEnabled}
-            onChange={onChangeSensorEnabled}
-          />
-        }
-        label="Sensor enabled"
+      <DeviceSettingForm
+        deviceId={deviceId}
+        updateConfig={updateConfig}
+        config={localConfig}
       />
-      <FormControlLabel
-        control={
-          <Switch checked={props.config.actOnce} onChange={onChangeActOnce} />
-        }
-        label="Act once"
+      <SubmitSettingsButton
+        deviceId={deviceId}
+        config={localConfig}
+        refresh={refetch}
       />
-      <TextField
-        variant="outlined"
-        type="number"
-        value={props.config.threshold}
-        onChange={onChangeThrehold}
-        size="small"
-        label="Threshold"
-        className={classes.thresholdForm}
-      />
+      <div className={classes.versionList}>
+        <ConfigVersionList
+          configVersions={configVersions}
+          isLoading={isFetching}
+        />
+      </div>
     </>
   )
 }

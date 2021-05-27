@@ -12,7 +12,7 @@ interface DeviceConfigVersionsResponse {
 export const getDeviceConfigVersions = async (
   deviceId: string
 ): Promise<DeviceConfigVersion[]> => {
-  const path = `/api/devices/${deviceId}`
+  const path = `/api/devices/${deviceId}/config/versions`
   const { data } = await axios.get<DeviceConfigVersionsResponse[]>(path)
 
   return data.map((d) => ({
@@ -26,7 +26,7 @@ export const updateConfig = async (
   id: string,
   config: DeviceConfig
 ): Promise<void> => {
-  const path = `/api/devices/${id}`
+  const path = `/api/devices/${id}/config`
 
   await axios.post(path, config)
 }

@@ -113,7 +113,7 @@ const TemperatureSummary: React.FC<Props> = (props: Props) => {
       </CardContent>
 
       <CardActions className={classes.actions}>
-        <Link href={`/devices/${props.device.id}/temperature`} passHref>
+        <Link href={`/devices/${props.device.id}`} passHref>
           <Button color="inherit" component="a">
             Detail
           </Button>
