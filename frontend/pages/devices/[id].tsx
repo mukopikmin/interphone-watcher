@@ -4,21 +4,21 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import { useEffect, useState } from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import Layout from '../../components/Layout'
+import Layout from '@/components/Layout'
 import {
   useTemperatureDeviceTelemetry,
   useDevice,
   useDevices,
-} from '../../hooks/temperature'
+} from '@/hooks/temperature'
 import TimeSeriesChart, {
   TimeSeriesDataProp,
-} from '../../components/TimeSeriesChart'
-import DeviceSelect from '../../components/DeviceSelect'
-import { Device } from '../../models/iotcore'
-import ReloadButton from '../../components/ReloadButton'
-import DeviceSetting from '../../components/DeviceSetting'
-import { useDeviceConfigVersionsQuery } from '../../hooks/iotcore'
-import TabPanel from '../../components/TabPanel'
+} from '@/components/TimeSeriesChart'
+import DeviceSelect from '@/components/DeviceSelect'
+import { Device } from '@/models/iotcore'
+import ReloadButton from '@/components/ReloadButton'
+import DeviceSetting from '@/components/DeviceSetting'
+import { useDeviceConfigVersionsQuery } from '@/hooks/iotcore'
+import TabPanel from '@/components/TabPanel'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -7,6 +7,7 @@ import {
 import { Device } from '../models/iotcore'
 import { TemperatureTelemetry } from '../models/temperature'
 
+// TODO: Move to iotcore
 export const useDevices = (): UseQueryResult<Device[], Error> =>
   useQuery(['temperature', 'devices'], getDevices)
 
