@@ -13,6 +13,10 @@ interface Props {
   onSelect: (device: Device) => void
 }
 
+interface DropdownProps {
+  children?: React.ReactNode
+}
+
 interface ChangeEventProps {
   name?: string
   value: unknown
@@ -33,6 +37,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 )
+
+const Dropdown: React.FC<DropdownProps> = (props: DropdownProps) => {
+  return (
+    <FormControl size="small" variant="outlined">
+      <InputLabel>Device</InputLabel>
+      {props.children}
+    </FormControl>
+  )
+}
 
 const DeviceSelect: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
@@ -66,36 +79,25 @@ const DeviceSelect: React.FC<Props> = (props: Props) => {
 
   if (loading) {
     return (
-      <>
-        <FormControl size="small" variant="outlined">
-          <InputLabel>Device</InputLabel>
-          <Select
-            onChange={onChangeDevice}
-            label="Device"
-            disabled
-            value="dummy"
-          >
-            <MenuItem value="dummy"></MenuItem>
-          </Select>
-          <CircularProgress size={24} className={classes.buttonProgress} />
-        </FormControl>
-      </>
+      <Dropdown>
+        <Select onChange={onChangeDevice} label="Device" disabled value="dummy">
+          <MenuItem value="dummy"></MenuItem>
+        </Select>
+        <CircularProgress size={24} className={classes.buttonProgress} />
+      </Dropdown>
     )
   }
 
   return (
-    <>
-      <FormControl size="small" variant="outlined">
-        <InputLabel>Device</InputLabel>
-        <Select onChange={onChangeDevice} label="Device" value={device?.id}>
-          {props?.devices?.map((device) => (
-            <MenuItem key={device.id} value={device.id}>
-              {device.id}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </>
+    <Dropdown>
+      <Select onChange={onChangeDevice} label="Device" value={device?.id}>
+        {props?.devices?.map((device) => (
+          <MenuItem key={device.id} value={device.id}>
+            {device.metadata.location || 'Unknown'} - {device.id}
+          </MenuItem>
+        ))}
+      </Select>
+    </Dropdown>
   )
 }
 

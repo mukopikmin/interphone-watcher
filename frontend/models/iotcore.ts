@@ -1,6 +1,6 @@
 export interface Device {
   // credentials: any[]
-  // metadata: {}
+  metadata: Metadata
   id: string
   name: string
   numId: string
@@ -16,4 +16,8 @@ export interface Device {
   // lastStateTime?: any
   // logLevel: string
   // gatewayConfig?: any
+}
+
+interface Metadata {
+  location?: string
 }

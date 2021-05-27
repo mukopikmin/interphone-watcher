@@ -2,8 +2,6 @@ import { useRouter } from 'next/router'
 import Typography from '@material-ui/core/Typography'
 import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import { useEffect, useState } from 'react'
-import RoomIcon from '@material-ui/icons/Room'
-import Button from '@material-ui/core/Button'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Layout from '../../../components/Layout'
@@ -26,9 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     controls: {
       marginBottom: theme.spacing(3),
-    },
-    icon: {
-      marginRight: theme.spacing(1),
     },
     tabpanel: {
       marginTop: theme.spacing(2),
@@ -102,10 +97,6 @@ const DeviceTemperaturePage: React.FC = () => {
     <Layout title={title}>
       <div className={classes.controls}>
         <DeviceSelect devices={devices} onSelect={onSelectDevice} />
-        <Button>
-          <RoomIcon className={classes.icon} />
-          {device?.metadata.location}
-        </Button>
         <ReloadButton reload={reload} loading={isFetching} />
       </div>
 
