@@ -16,7 +16,9 @@ export const useDevicesQuery = (): UseQueryResult<Device[], Error> =>
   useQuery(['devices'], getDevices)
 
 export const useDeviceQuery = (id: string): UseQueryResult<Device, Error> =>
-  useQuery(['devices', id], () => getDevice(id))
+  useQuery(['devices', id], () => getDevice(id), {
+    enabled: !!id,
+  })
 
 export const useDeviceConfigVersionsQuery = (
   id: string

@@ -39,7 +39,7 @@ const DeviceTemperaturePage: React.FC = () => {
   const {
     data: telemetry,
     refetch: refetchTelemetry,
-    isFetching,
+    isFetching: isFetchingTelemetry,
   } = useTemperatureDeviceTelemetry(id)
   const { data: devices } = useDevicesQuery()
   const title = `Temperature | ${device?.metadata.location}`
@@ -49,7 +49,10 @@ const DeviceTemperaturePage: React.FC = () => {
   const [temperature, setTemperature] = useState<TimeSeriesDataProp[]>([])
   const [humidity, setHumidity] = useState<TimeSeriesDataProp[]>([])
   const [brightness, setBrightness] = useState<TimeSeriesDataProp[]>([])
-  const { refetch: refetchConfigVersions } = useDeviceConfigVersionsQuery(id)
+  const {
+    isFetching: isFetchingConfigVersions,
+    refetch: refetchConfigVersions,
+  } = useDeviceConfigVersionsQuery(id)
   const [tab, setTab] = useState(0)
   const handleTabChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setTab(newValue)
@@ -94,7 +97,10 @@ const DeviceTemperaturePage: React.FC = () => {
     <Layout title={title}>
       <div className={classes.controls}>
         <DeviceSelect devices={devices} onSelect={onSelectDevice} />
-        <ReloadButton reload={reload} loading={isFetching} />
+        <ReloadButton
+          reload={reload}
+          loading={isFetchingTelemetry || isFetchingConfigVersions}
+        />
       </div>
 
       <Tabs
