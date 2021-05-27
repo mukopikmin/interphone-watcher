@@ -8,11 +8,11 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Link from 'next/link'
 import Grid from '@material-ui/core/Grid'
-import { InterphoneDevice, InterphoneDeviceConfig } from '../models/interphone'
+import { Device, DeviceConfig } from '../models/iotcore'
 
 interface Props {
-  devices?: InterphoneDevice[]
-  configs?: (InterphoneDeviceConfig | null)[]
+  devices?: Device[]
+  configs?: (DeviceConfig | null)[]
 }
 
 const useStyles = makeStyles((theme: Theme) =>

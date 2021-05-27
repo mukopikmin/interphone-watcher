@@ -1,20 +1,17 @@
 import { useQuery, UseQueryResult } from 'react-query'
 import {
   getDeviceTemperatureTelemetry,
-  getTemperatureDevice,
-  getTemperatureDevices,
+  getDevice,
+  getDevices,
 } from '../apis/temperature'
-import { TemperatureDevice, TemperatureTelemetry } from '../models/temperature'
+import { Device } from '../models/iotcore'
+import { TemperatureTelemetry } from '../models/temperature'
 
-export const useTemperatureDevices = (): UseQueryResult<
-  TemperatureDevice[],
-  Error
-> => useQuery(['temperature', 'devices'], getTemperatureDevices)
+export const useDevices = (): UseQueryResult<Device[], Error> =>
+  useQuery(['temperature', 'devices'], getDevices)
 
-export const useTemperatureDevice = (
-  id: string
-): UseQueryResult<TemperatureDevice, Error> =>
-  useQuery(['temperature', 'devices', id], () => getTemperatureDevice(id))
+export const useDevice = (id: string): UseQueryResult<Device, Error> =>
+  useQuery(['temperature', 'devices', id], () => getDevice(id))
 
 export const useTemperatureDeviceTelemetry = (
   id: string
@@ -28,5 +25,6 @@ export const useTemperatureDeviceLastTelemetry = (
 ): UseQueryResult<TemperatureTelemetry | null, Error> =>
   useQuery(['temperature', 'devices', id, 'telemetry'], async () => {
     const telemetry = await getDeviceTemperatureTelemetry(id)
+
     return telemetry.length > 0 ? telemetry[telemetry.length - 1] : null
   })

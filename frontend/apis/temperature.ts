@@ -1,6 +1,7 @@
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { TemperatureDevice, TemperatureTelemetry } from '../models/temperature'
+import { Device } from '../models/iotcore'
+import { TemperatureTelemetry } from '../models/temperature'
 
 // interface TemperatureDeviceResponse {
 //   id: string
@@ -15,9 +16,9 @@ interface TemperatureTelemetryResponse {
   timestamp: string
 }
 
-export const getTemperatureDevices = async (): Promise<TemperatureDevice[]> => {
+export const getDevices = async (): Promise<Device[]> => {
   const path = `/api/devices`
-  const { data: devices } = await axios.get<TemperatureDevice[]>(path)
+  const { data: devices } = await axios.get<Device[]>(path)
 
   return devices
   // return devices.map((device) => ({
@@ -31,13 +32,11 @@ export const getTemperatureDevices = async (): Promise<TemperatureDevice[]> => {
   // }))
 }
 
-export const getTemperatureDevice = async (
-  id: string
-): Promise<TemperatureDevice> => {
+export const getDevice = async (id: string): Promise<Device> => {
   const path = `/api/devices/${id}`
-  const { data: device } = await axios.get<TemperatureDevice>(path)
+  const { data: device } = await axios.get<Device>(path)
 
-  return device as TemperatureDevice
+  return device as Device
 }
 
 export const getDeviceTemperatureTelemetry = async (

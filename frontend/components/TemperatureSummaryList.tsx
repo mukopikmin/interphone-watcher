@@ -2,7 +2,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { useTemperatureDevices } from '../hooks/temperature'
+import { useDevices } from '../hooks/temperature'
 import TemperatureSummary from './TemperatureSummary'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const TemperatureSummaryList: React.FC = () => {
   const classes = useStyles()
-  const { data: devices, isLoading } = useTemperatureDevices()
+  const { data: devices, isLoading } = useDevices()
 
   if (isLoading) {
     return (

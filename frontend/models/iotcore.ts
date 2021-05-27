@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export interface Device {
   // credentials: any[]
   metadata: Metadata
@@ -20,4 +22,17 @@ export interface Device {
 
 interface Metadata {
   location?: string
+}
+
+export interface DeviceConfigVersion {
+  version: number
+  cloudUpdateTime: dayjs.Dayjs | null
+  deviceAckTime: dayjs.Dayjs | null
+  config: DeviceConfig | null
+}
+
+export interface DeviceConfig {
+  sensorEnabled: boolean
+  threshold: number
+  actOnce: boolean
 }

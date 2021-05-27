@@ -1,22 +1,18 @@
 import axios from 'axios'
 import dayjs from 'dayjs'
-import {
-  InterphoneDevice,
-  InterphoneDeviceConfig,
-  InterphoneDeviceConfigVersion,
-} from '../models/interphone'
+import { DeviceConfig, DeviceConfigVersion } from '../models/iotcore'
 
 interface DeviceConfigVersionsResponse {
   version: number
   cloudUpdateTime: string | null
   deviceAckTime: string | null
-  config: InterphoneDeviceConfig | null
+  config: DeviceConfig | null
 }
 
 export const getDeviceConfigVersions = async (
   deviceId: string
-): Promise<InterphoneDeviceConfigVersion[]> => {
-  const path = `/api/interphone/devices/${deviceId}`
+): Promise<DeviceConfigVersion[]> => {
+  const path = `/api/devices/${deviceId}`
   const { data } = await axios.get<DeviceConfigVersionsResponse[]>(path)
 
   return data.map((d) => ({
@@ -28,17 +24,15 @@ export const getDeviceConfigVersions = async (
 
 export const updateConfig = async (
   id: string,
-  config: InterphoneDeviceConfig
+  config: DeviceConfig
 ): Promise<void> => {
-  const path = `/api/interphone/devices/${id}`
+  const path = `/api/devices/${id}`
 
   await axios.post(path, config)
 }
 
-export const getDevices = async (): Promise<InterphoneDevice[]> => {
-  const { data } = await axios.get<InterphoneDevice[]>(
-    '/api/interphone/devices'
-  )
+// export const getDevices = async (): Promise<Device[]> => {
+//   const { data } = await axios.get<Device[]>('/api/interphone/devices')
 
-  return data
-}
+//   return data
+// }

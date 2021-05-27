@@ -2,12 +2,12 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import PublishIcon from '@material-ui/icons/Publish'
 import React from 'react'
-import { useDeviceUpdateMutation } from '../hooks/interphone'
-import { InterphoneDeviceConfig } from '../models/interphone'
+import { useDeviceUpdateMutation } from '../hooks/iotcore'
+import { DeviceConfig } from '../models/iotcore'
 
 interface Props {
   deviceId: string
-  config: InterphoneDeviceConfig
+  config: DeviceConfig
   refresh: () => {}
 }
 

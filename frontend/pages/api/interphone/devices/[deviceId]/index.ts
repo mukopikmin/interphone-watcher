@@ -2,9 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { v1 as iotCore } from '@google-cloud/iot'
 import dayjs from 'dayjs'
 import {
-  InterphoneDeviceConfig,
-  InterphoneDeviceConfigVersion,
-} from '../../../../../models/interphone'
+  DeviceConfig,
+  DeviceConfigVersion,
+} from '../../../../../models/iotcore'
 
 const region = process.env.REGION || ''
 const projectId = process.env.GCP_PROJECT || ''
@@ -24,37 +24,33 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(500).send({})
   }
 
-  const configs: InterphoneDeviceConfigVersion[] = deviceConfigs.map(
-    (version) => {
-      const binaryData = version.binaryData?.toString()
-      const cloudUpdateTime = dayjs.unix(
-        Number(version.cloudUpdateTime?.seconds)
-      )
-      const cloudUpdateTimeStr = cloudUpdateTime.isValid()
-        ? cloudUpdateTime
-        : null
-      const deviceAckTime = dayjs.unix(Number(version.deviceAckTime?.seconds))
-      const deviceAckTimeStr = deviceAckTime.isValid() ? deviceAckTime : null
+  const configs: DeviceConfigVersion[] = deviceConfigs.map((version) => {
+    const binaryData = version.binaryData?.toString()
+    const cloudUpdateTime = dayjs.unix(Number(version.cloudUpdateTime?.seconds))
+    const cloudUpdateTimeStr = cloudUpdateTime.isValid()
+      ? cloudUpdateTime
+      : null
+    const deviceAckTime = dayjs.unix(Number(version.deviceAckTime?.seconds))
+    const deviceAckTimeStr = deviceAckTime.isValid() ? deviceAckTime : null
 
-      if (binaryData) {
-        const config: InterphoneDeviceConfig = JSON.parse(binaryData)
-
-        return {
-          version: Number(version.version),
-          cloudUpdateTime: cloudUpdateTimeStr,
-          deviceAckTime: deviceAckTimeStr,
-          config,
-        }
-      }
+    if (binaryData) {
+      const config: DeviceConfig = JSON.parse(binaryData)
 
       return {
         version: Number(version.version),
         cloudUpdateTime: cloudUpdateTimeStr,
         deviceAckTime: deviceAckTimeStr,
-        config: null,
+        config,
       }
     }
-  )
+
+    return {
+      version: Number(version.version),
+      cloudUpdateTime: cloudUpdateTimeStr,
+      deviceAckTime: deviceAckTimeStr,
+      config: null,
+    }
+  })
 
   res.setHeader('Content-Type', 'applciation/json')
   res.status(200).json(configs)
@@ -63,7 +59,7 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
 const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   const deviceId = req.query.deviceId.toString()
   const iot = new iotCore.DeviceManagerClient()
-  const config = req.body as InterphoneDeviceConfig
+  const config = req.body as DeviceConfig
   const request = {
     name: iot.devicePath(projectId, region, registryId, deviceId),
     binaryData: Buffer.from(JSON.stringify(config)),

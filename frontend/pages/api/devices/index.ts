@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { v1 as iotCore } from '@google-cloud/iot'
-import { TemperatureDevice } from '../../../models/temperature'
+import { Device } from '../../../models/iotcore'
 
 const region = process.env.REGION || ''
 const projectId = process.env.GCP_PROJECT || ''
@@ -16,7 +16,7 @@ const handler = async (
     parent: registryPath,
     fieldMask: { paths: ['metadata', 'config'] },
   })
-  const devices: TemperatureDevice[] = iotDevices as TemperatureDevice[]
+  const devices: Device[] = iotDevices as Device[]
 
   res.setHeader('Content-Type', 'applciation/json')
   res.status(200).json(devices)

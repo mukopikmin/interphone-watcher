@@ -7,13 +7,13 @@ import Layout from '../../../components/Layout'
 import {
   useDeviceConfigQuery,
   useDeviceConfigVersionsQuery,
-  useDevicesQuery,
-} from '../../../hooks/interphone'
-import { InterphoneDeviceConfig } from '../../../models/interphone'
+  // useDevicesQuery,
+} from '../../../hooks/iotcore'
 import DeviceSelect from '../../../components/DeviceSelect'
 import ReloadButton from '../../../components/ReloadButton'
 import SubmitSettingsButton from '../../../components/SubmitSettingsButton'
-import { Device } from '../../../models/iotcore'
+import { Device, DeviceConfig } from '../../../models/iotcore'
+import { useDevices } from '../../../hooks/temperature'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const initialConfig: InterphoneDeviceConfig = {
+const initialConfig: DeviceConfig = {
   sensorEnabled: false,
   threshold: 100,
   actOnce: false,
@@ -39,7 +39,7 @@ const initialConfig: InterphoneDeviceConfig = {
 const DevicePage: React.FC = () => {
   const classes = useStyles()
   const router = useRouter()
-  const { data: devices, refetch: refetchDevices } = useDevicesQuery()
+  const { data: devices, refetch: refetchDevices } = useDevices()
   const id = router.query.id as string
   const {
     data: configVersions,
@@ -54,7 +54,7 @@ const DevicePage: React.FC = () => {
     await refetchDevices()
     await refetchConfigVersions()
   }
-  const updateConfig = (config: InterphoneDeviceConfig) => {
+  const updateConfig = (config: DeviceConfig) => {
     setLocalConfig(config)
   }
   const onSelectDevice = (device: Device) => {
