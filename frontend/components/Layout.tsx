@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 import Head from 'next/head'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
-import Header from './Header'
+import Header from '@/components/Header'
 
 type Props = {
   children?: ReactNode

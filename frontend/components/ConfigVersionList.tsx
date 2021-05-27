@@ -8,9 +8,9 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import React from 'react'
-import { DeviceConfigVersion } from '../models/iotcore'
-import StatusIcon from './StatusIcon'
-import DayjsTime from './DayjsTime'
+import StatusIcon from '@/components/StatusIcon'
+import DayjsTime from '@/components/DayjsTime'
+import { DeviceConfigVersion } from '@/models/iotcore'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

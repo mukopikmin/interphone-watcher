@@ -5,11 +5,7 @@ import { useEffect, useState } from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Layout from '@/components/Layout'
-import {
-  useTemperatureDeviceTelemetry,
-  useDevice,
-  useDevices,
-} from '@/hooks/temperature'
+import { useTemperatureDeviceTelemetry } from '@/hooks/temperature'
 import TimeSeriesChart, {
   TimeSeriesDataProp,
 } from '@/components/TimeSeriesChart'
@@ -17,7 +13,11 @@ import DeviceSelect from '@/components/DeviceSelect'
 import { Device } from '@/models/iotcore'
 import ReloadButton from '@/components/ReloadButton'
 import DeviceSetting from '@/components/DeviceSetting'
-import { useDeviceConfigVersionsQuery } from '@/hooks/iotcore'
+import {
+  useDeviceQuery,
+  useDeviceConfigVersionsQuery,
+  useDevicesQuery,
+} from '@/hooks/iotcore'
 import TabPanel from '@/components/TabPanel'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -35,13 +35,13 @@ const DeviceTemperaturePage: React.FC = () => {
   const classes = useStyles()
   const router = useRouter()
   const id = router.query.id as string
-  const { data: device } = useDevice(id)
+  const { data: device } = useDeviceQuery(id)
   const {
     data: telemetry,
     refetch: refetchTelemetry,
     isFetching,
   } = useTemperatureDeviceTelemetry(id)
-  const { data: devices } = useDevices()
+  const { data: devices } = useDevicesQuery()
   const title = `Temperature | ${device?.metadata.location}`
   const onSelectDevice = (device: Device) => {
     router.push(`/devices/${device.id}`)

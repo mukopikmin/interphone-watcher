@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core'
-import Layout from '../components/Layout'
-// import InterphoneSummary from '../components/InterphoneSummary'
-import TemperatureSummaryList from '../components/TemperatureSummaryList'
+import Layout from '@/components/Layout'
+// import InterphoneSummary from '@/components/InterphoneSummary'
+import TemperatureSummaryList from '@/components/TemperatureSummaryList'
 // import {
 // useDevicesConfigVersionsQuery,
 //   useDevicesQuery,

@@ -6,7 +6,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import MenuItem from '@material-ui/core/MenuItem'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { Device } from '../models/iotcore'
+import { Device } from '@/models/iotcore'
 
 interface Props {
   devices?: Device[]

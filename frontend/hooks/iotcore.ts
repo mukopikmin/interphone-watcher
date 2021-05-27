@@ -6,20 +6,17 @@ import {
 } from 'react-query'
 import {
   getDeviceConfigVersions,
-  // getDevices,
+  getDevices,
+  getDevice,
   updateConfig,
-} from '../apis/iotcore'
-import { DeviceConfig, DeviceConfigVersion } from '../models/iotcore'
-// import {
-//   InterphoneDevice,
-//   InterphoneDeviceConfig,
-//   InterphoneDeviceConfigVersion,
-// } from '../models/interphone'
+} from '@/apis/iotcore'
+import { Device, DeviceConfig, DeviceConfigVersion } from '@/models/iotcore'
 
-// export const useDevicesQuery = (): UseQueryResult<InterphoneDevice[], Error> =>
-//   useQuery('devices', getDevices, {
-//     initialData: [],
-//   })
+export const useDevicesQuery = (): UseQueryResult<Device[], Error> =>
+  useQuery(['devices'], getDevices)
+
+export const useDeviceQuery = (id: string): UseQueryResult<Device, Error> =>
+  useQuery(['devices', id], () => getDevice(id))
 
 export const useDeviceConfigVersionsQuery = (
   id: string

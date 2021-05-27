@@ -1,12 +1,26 @@
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { DeviceConfig, DeviceConfigVersion } from '../models/iotcore'
+import { Device, DeviceConfig, DeviceConfigVersion } from '../models/iotcore'
 
 interface DeviceConfigVersionsResponse {
   version: number
   cloudUpdateTime: string | null
   deviceAckTime: string | null
   config: DeviceConfig | null
+}
+
+export const getDevices = async (): Promise<Device[]> => {
+  const path = `/api/devices`
+  const { data: devices } = await axios.get<Device[]>(path)
+
+  return devices
+}
+
+export const getDevice = async (id: string): Promise<Device> => {
+  const path = `/api/devices/${id}`
+  const { data: device } = await axios.get<Device>(path)
+
+  return device as Device
 }
 
 export const getDeviceConfigVersions = async (

@@ -1,18 +1,6 @@
 import { useQuery, UseQueryResult } from 'react-query'
-import {
-  getDeviceTemperatureTelemetry,
-  getDevice,
-  getDevices,
-} from '../apis/temperature'
-import { Device } from '../models/iotcore'
+import { getDeviceTemperatureTelemetry } from '../apis/temperature'
 import { TemperatureTelemetry } from '../models/temperature'
-
-// TODO: Move to iotcore
-export const useDevices = (): UseQueryResult<Device[], Error> =>
-  useQuery(['temperature', 'devices'], getDevices)
-
-export const useDevice = (id: string): UseQueryResult<Device, Error> =>
-  useQuery(['temperature', 'devices', id], () => getDevice(id))
 
 export const useTemperatureDeviceTelemetry = (
   id: string

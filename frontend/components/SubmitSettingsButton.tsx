@@ -2,8 +2,8 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import PublishIcon from '@material-ui/icons/Publish'
 import React from 'react'
-import { useDeviceUpdateMutation } from '../hooks/iotcore'
-import { DeviceConfig } from '../models/iotcore'
+import { useDeviceUpdateMutation } from '@/hooks/iotcore'
+import { DeviceConfig } from '@/models/iotcore'
 
 interface Props {
   deviceId: string

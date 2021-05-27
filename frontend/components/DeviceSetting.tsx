@@ -3,11 +3,11 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import {
   useDeviceConfigQuery,
   useDeviceConfigVersionsQuery,
-} from '../hooks/iotcore'
-import { DeviceConfig } from '../models/iotcore'
-import DeviceSettingForm from './DeviceSettingForm'
-import SubmitSettingsButton from './SubmitSettingsButton'
-import ConfigVersionList from './ConfigVersionList'
+} from '@/hooks/iotcore'
+import { DeviceConfig } from '@/models/iotcore'
+import DeviceSettingForm from '@/components/DeviceSettingForm'
+import SubmitSettingsButton from '@/components/SubmitSettingsButton'
+import ConfigVersionList from '@/components/ConfigVersionList'
 
 interface Props {
   deviceId: string
