@@ -27,13 +27,13 @@ interface ConfigVersionListProps {
   isLoading: boolean
 }
 
-interface ConfigVersionListItem {
+interface ConfigVersionListItemProps {
   config: DeviceConfigVersion
   isActive: boolean
 }
 
-const ConfigVersionListItem: React.FC<ConfigVersionListItem> = (
-  props: ConfigVersionListItem
+const ConfigVersionListItem: React.FC<ConfigVersionListItemProps> = (
+  props: ConfigVersionListItemProps
 ) => {
   return (
     <TableRow key={props.config.version}>
@@ -71,14 +71,14 @@ const ConfigVersionList: React.FC<ConfigVersionListProps> = (
   if (props.isLoading) {
     return (
       <div className={classes.progress}>
-        <CircularProgress />
+        <CircularProgress data-testid="progress" />
       </div>
     )
   }
 
   return (
     <>
-      <TableContainer component={Card}>
+      <TableContainer component={Card} data-testid="versions-table">
         <Table>
           <TableHead>
             <TableRow>
