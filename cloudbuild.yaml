@@ -6,6 +6,10 @@ steps:
   - name: gcr.io/cloud-builders/yarn
     dir: frontend
     args:
+      - test
+  - name: gcr.io/cloud-builders/yarn
+    dir: frontend
+    args:
       - build
   - name: bash
     dir: frontend
