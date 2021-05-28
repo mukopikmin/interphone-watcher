@@ -1,5 +1,5 @@
 steps:
-  - name: gcr.io/cloud-builders/yarn
+  - name: gcr.io/cloud-builders/yarn:node-12.18.3
     dir: frontend
     args:
       - install
