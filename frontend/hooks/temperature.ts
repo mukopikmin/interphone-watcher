@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from 'react-query'
-import { getDeviceTemperatureTelemetry } from '../apis/temperature'
-import { TemperatureTelemetry } from '../models/temperature'
+import { getDeviceTemperatureTelemetry } from '../apis/firestore'
+import { TemperatureTelemetry } from '../models/firestore'
 
 export const useTemperatureDeviceTelemetry = (
   id: string

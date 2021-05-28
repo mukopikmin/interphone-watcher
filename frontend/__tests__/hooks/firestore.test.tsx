@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { TemperatureTelemetry } from '@/models/temperature'
+import { TemperatureTelemetry } from '@/models/firestore'
 import { useTemperatureDeviceTelemetry } from '@/hooks/temperature'
 
 axios.defaults.adapter = require('axios/lib/adapters/http')

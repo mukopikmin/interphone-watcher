@@ -1,6 +1,6 @@
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { TemperatureTelemetry } from '../models/temperature'
+import { TemperatureTelemetry } from '../models/firestore'
 
 interface TemperatureTelemetryResponse {
   temperature: number

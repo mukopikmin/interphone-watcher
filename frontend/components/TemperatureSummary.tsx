@@ -7,7 +7,7 @@ import Link from 'next/link'
 import Button from '@material-ui/core/Button'
 import React from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { TemperatureTelemetry } from '@/models/temperature'
+import { TemperatureTelemetry } from '@/models/firestore'
 import { useTemperatureDeviceLastTelemetry } from '@/hooks/temperature'
 import { Device } from '@/models/iotcore'
 
