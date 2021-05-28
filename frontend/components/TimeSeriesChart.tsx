@@ -3,6 +3,7 @@ import locale from 'apexcharts/dist/locales/ja.json'
 import dynamic from 'next/dynamic'
 import dayjs from 'dayjs'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Typography from '@material-ui/core/Typography'
 import { createStyles, makeStyles, Theme } from '@material-ui/core'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -10,6 +11,17 @@ const useStyles = makeStyles((theme: Theme) =>
     loading: {
       textAlign: 'center',
       margin: theme.spacing(3),
+    },
+    wrapper: {
+      margin: theme.spacing(1),
+      position: 'relative',
+    },
+    buttonProgress: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      marginTop: -12,
+      marginLeft: -12,
     },
   })
 )
@@ -53,6 +65,7 @@ const TimeSeriesChart: React.FC<Props> = (props: Props) => {
       labels: {
         formatter: (val) => `${val.toFixed(0)} ${props.unit}`,
       },
+      min: 0,
     },
     markers: {
       size: 0,
@@ -77,16 +90,26 @@ const TimeSeriesChart: React.FC<Props> = (props: Props) => {
       })),
     },
   ]
+  const noData = series[0].data.length === 0
 
   if (props.loading) {
     return (
       <div className={classes.loading}>
-        <CircularProgress />
+        <CircularProgress size={30} />
       </div>
     )
   }
 
-  return <Chart options={options} series={series} type="area" height={250} />
+  return (
+    <div className={classes.wrapper}>
+      <Chart options={options} series={series} type="area" height={250} />
+      {noData && (
+        <Typography variant="body1" className={classes.buttonProgress}>
+          No data
+        </Typography>
+      )}
+    </div>
+  )
 }
 
 export default TimeSeriesChart
