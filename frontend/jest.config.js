@@ -7,5 +7,6 @@ module.exports = {
     '^@/components/(.*)$': '<rootDir>/components/$1',
     '^@/pages/(.*)$': '<rootDir>/pages/$1',
     '^@/hooks/(.*)$': '<rootDir>/hooks/$1',
+    '^@/apis/(.*)$': '<rootDir>/apis/$1',
   },
 }
