@@ -12,7 +12,7 @@ export const useTemperatureDeviceTelemetry = (
 export const useTemperatureDeviceLastTelemetry = (
   id: string
 ): UseQueryResult<TemperatureTelemetry | null, Error> =>
-  useQuery(['temperature', 'devices', id, 'telemetry'], async () => {
+  useQuery(['temperature', 'devices', id, 'telemetry', 'last'], async () => {
     const telemetry = await getDeviceTemperatureTelemetry(id)
 
     return telemetry.length > 0 ? telemetry[telemetry.length - 1] : null

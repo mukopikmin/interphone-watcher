@@ -49,15 +49,17 @@ const DeviceSetting: React.FC<Props> = (props: Props) => {
 
   return (
     <>
+      <div>
+        <SubmitSettingsButton
+          deviceId={deviceId}
+          config={localConfig}
+          refresh={refetch}
+        />
+      </div>
       <DeviceSettingForm
         deviceId={deviceId}
         updateConfig={updateConfig}
         config={localConfig}
-      />
-      <SubmitSettingsButton
-        deviceId={deviceId}
-        config={localConfig}
-        refresh={refetch}
       />
       <div className={classes.versionList}>
         <ConfigVersionList

@@ -1,14 +1,10 @@
 import { useRouter } from 'next/router'
-import Typography from '@material-ui/core/Typography'
 import { createStyles, makeStyles, Theme } from '@material-ui/core'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Layout from '@/components/Layout'
-import { useTemperatureDeviceTelemetry } from '@/hooks/temperature'
-import TimeSeriesChart, {
-  TimeSeriesDataProp,
-} from '@/components/TimeSeriesChart'
+import { useTemperatureDeviceTelemetry } from '@/hooks/firestore'
 import DeviceSelect from '@/components/DeviceSelect'
 import { Device } from '@/models/iotcore'
 import ReloadButton from '@/components/ReloadButton'
@@ -19,6 +15,7 @@ import {
   useDevicesQuery,
 } from '@/hooks/iotcore'
 import TabPanel from '@/components/TabPanel'
+import ChartList from '@/components/ChartList'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,6 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     tabpanel: {
       marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(3),
     },
   })
 )
@@ -40,15 +38,13 @@ const DeviceTemperaturePage: React.FC = () => {
     data: telemetry,
     refetch: refetchTelemetry,
     isFetching: isFetchingTelemetry,
+    isLoading: isLoadingTelemetry,
   } = useTemperatureDeviceTelemetry(id)
   const { data: devices } = useDevicesQuery()
-  const title = `Temperature | ${device?.metadata.location}`
+  const title = `${device?.metadata.location || 'Unknown'}`
   const onSelectDevice = (device: Device) => {
     router.push(`/devices/${device.id}`)
   }
-  const [temperature, setTemperature] = useState<TimeSeriesDataProp[]>([])
-  const [humidity, setHumidity] = useState<TimeSeriesDataProp[]>([])
-  const [brightness, setBrightness] = useState<TimeSeriesDataProp[]>([])
   const {
     isFetching: isFetchingConfigVersions,
     refetch: refetchConfigVersions,
@@ -67,31 +63,6 @@ const DeviceTemperaturePage: React.FC = () => {
         break
     }
   }
-
-  useEffect(() => {
-    if (!telemetry) {
-      return
-    }
-
-    setTemperature(
-      telemetry.map((t) => ({
-        value: t.temperature,
-        timestamp: t.timestamp,
-      }))
-    )
-    setHumidity(
-      telemetry.map((t) => ({
-        value: t.humidity,
-        timestamp: t.timestamp,
-      }))
-    )
-    setBrightness(
-      telemetry.map((t) => ({
-        value: t.brightness,
-        timestamp: t.timestamp,
-      }))
-    )
-  }, [telemetry])
 
   return (
     <Layout title={title}>
@@ -117,27 +88,7 @@ const DeviceTemperaturePage: React.FC = () => {
 
       <TabPanel value={tab} index={0}>
         <div className={classes.tabpanel}>
-          <Typography variant="subtitle1">Temperature</Typography>
-          <TimeSeriesChart
-            name="Temperature"
-            loading={!telemetry}
-            unit="℃"
-            telemetry={temperature}
-          />
-          <Typography variant="subtitle1">Humidity</Typography>
-          <TimeSeriesChart
-            name="Humidity"
-            loading={!telemetry}
-            unit="%"
-            telemetry={humidity}
-          />
-          <Typography variant="subtitle1">Brightness</Typography>
-          <TimeSeriesChart
-            name="Brightness"
-            loading={!telemetry}
-            unit="Lux"
-            telemetry={brightness}
-          />
+          <ChartList telemetry={telemetry} loading={isLoadingTelemetry} />
         </div>
       </TabPanel>
 
