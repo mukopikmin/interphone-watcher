@@ -14,7 +14,6 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     thresholdForm: {
-      maxWidth: 100,
       marginRight: theme.spacing(1),
     },
   })
@@ -22,17 +21,23 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const DeviceSettingForm: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
-  const onChangeSensorEnabled = () => {
+  const onChangeInterphoneEnabled = () => {
     props.updateConfig({
       ...props.config,
-      sensorEnabled: !props.config.sensorEnabled,
+      interphoneEnabled: !props.config.interphoneEnabled,
     })
   }
-  const onChangeThrehold = (e: ChangeEvent<HTMLInputElement>) => {
-    props.updateConfig({ ...props.config, threshold: Number(e.target.value) })
+  const onChangeSoundVolume = (e: ChangeEvent<HTMLInputElement>) => {
+    props.updateConfig({
+      ...props.config,
+      soundVolume: Number(e.target.value),
+    })
   }
-  const onChangeActOnce = () => {
-    props.updateConfig({ ...props.config, actOnce: !props.config.actOnce })
+  const onChangeDetectOnce = () => {
+    props.updateConfig({
+      ...props.config,
+      detectOnce: !props.config.detectOnce,
+    })
   }
 
   return (
@@ -40,25 +45,28 @@ const DeviceSettingForm: React.FC<Props> = (props: Props) => {
       <FormControlLabel
         control={
           <Switch
-            checked={props.config.sensorEnabled}
-            onChange={onChangeSensorEnabled}
+            checked={props.config.interphoneEnabled}
+            onChange={onChangeInterphoneEnabled}
           />
         }
-        label="Sensor enabled"
+        label="Interphonse sensor"
       />
       <FormControlLabel
         control={
-          <Switch checked={props.config.actOnce} onChange={onChangeActOnce} />
+          <Switch
+            checked={props.config.detectOnce}
+            onChange={onChangeDetectOnce}
+          />
         }
-        label="Act once"
+        label="Disable after detection"
       />
       <TextField
         variant="outlined"
         type="number"
-        value={props.config.threshold}
-        onChange={onChangeThrehold}
+        value={props.config.soundVolume}
+        onChange={onChangeSoundVolume}
         size="small"
-        label="Threshold"
+        label="Sound volume"
         className={classes.thresholdForm}
       />
     </>

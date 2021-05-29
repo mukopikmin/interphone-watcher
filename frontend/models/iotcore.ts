@@ -32,7 +32,7 @@ export interface DeviceConfigVersion {
 }
 
 export interface DeviceConfig {
-  sensorEnabled: boolean
-  threshold: number
-  actOnce: boolean
+  interphoneEnabled: boolean
+  detectOnce: boolean
+  soundVolume: number
 }

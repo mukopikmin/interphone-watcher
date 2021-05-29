@@ -22,9 +22,9 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 const initialConfig: DeviceConfig = {
-  sensorEnabled: false,
-  threshold: 100,
-  actOnce: false,
+  interphoneEnabled: false,
+  soundVolume: 100,
+  detectOnce: false,
 }
 
 const DeviceSetting: React.FC<Props> = (props: Props) => {

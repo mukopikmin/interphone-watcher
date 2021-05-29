@@ -42,11 +42,11 @@ const ConfigVersionListItem: React.FC<ConfigVersionListItemProps> = (
       </TableCell>
       <TableCell>{props.config.version}</TableCell>
       <TableCell>
-        <StatusIcon active={props.config.config?.sensorEnabled} />
+        <StatusIcon active={props.config.config?.interphoneEnabled} />
       </TableCell>
-      <TableCell>{props.config.config?.threshold}</TableCell>
+      <TableCell>{props.config.config?.soundVolume}</TableCell>
       <TableCell>
-        <StatusIcon active={props.config.config?.actOnce} />
+        <StatusIcon active={props.config.config?.detectOnce} />
       </TableCell>
       <TableCell>
         <DayjsTime time={props.config.cloudUpdateTime} />
@@ -84,9 +84,9 @@ const ConfigVersionList: React.FC<ConfigVersionListProps> = (
             <TableRow>
               <TableCell>Active</TableCell>
               <TableCell>Version</TableCell>
-              <TableCell>Enabled</TableCell>
-              <TableCell>Threshold</TableCell>
-              <TableCell>Act Once</TableCell>
+              <TableCell>Interphone</TableCell>
+              <TableCell>Sound volume</TableCell>
+              <TableCell>Detect once</TableCell>
               <TableCell>Server updated</TableCell>
               <TableCell>Device updated</TableCell>
             </TableRow>
