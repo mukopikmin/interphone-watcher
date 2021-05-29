@@ -8,7 +8,7 @@ import { DeviceConfig } from '@/models/iotcore'
 interface Props {
   deviceId: string
   config: DeviceConfig
-  refresh: () => {}
+  refresh: () => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -36,3 +36,9 @@ export interface DeviceConfig {
   detectOnce: boolean
   soundVolume: number
 }
+
+export const initialDeviceConfig: DeviceConfig = {
+  interphoneEnabled: false,
+  soundVolume: 0.1,
+  detectOnce: false,
+}

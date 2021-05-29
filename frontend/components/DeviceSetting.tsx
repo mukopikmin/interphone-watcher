@@ -4,10 +4,11 @@ import {
   useDeviceConfigQuery,
   useDeviceConfigVersionsQuery,
 } from '@/hooks/iotcore'
-import { DeviceConfig } from '@/models/iotcore'
+import { DeviceConfig, initialDeviceConfig } from '@/models/iotcore'
 import DeviceSettingForm from '@/components/DeviceSettingForm'
 import SubmitSettingsButton from '@/components/SubmitSettingsButton'
 import ConfigVersionList from '@/components/ConfigVersionList'
+import ResetButton from '@/components/ResetButton'
 
 interface Props {
   deviceId: string
@@ -21,12 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const initialConfig: DeviceConfig = {
-  interphoneEnabled: false,
-  soundVolume: 100,
-  detectOnce: false,
-}
-
 const DeviceSetting: React.FC<Props> = (props: Props) => {
   const { deviceId } = props
   const classes = useStyles()
@@ -36,7 +31,7 @@ const DeviceSetting: React.FC<Props> = (props: Props) => {
     refetch,
     isFetching,
   } = useDeviceConfigVersionsQuery(deviceId)
-  const [localConfig, setLocalConfig] = useState(initialConfig)
+  const [localConfig, setLocalConfig] = useState(initialDeviceConfig)
   const updateConfig = (config: DeviceConfig) => {
     setLocalConfig(config)
   }
@@ -54,6 +49,11 @@ const DeviceSetting: React.FC<Props> = (props: Props) => {
           deviceId={deviceId}
           config={localConfig}
           refresh={refetch}
+        />
+        <ResetButton
+          deviceId={deviceId}
+          refetch={refetch}
+          loading={isFetching}
         />
       </div>
       <DeviceSettingForm
