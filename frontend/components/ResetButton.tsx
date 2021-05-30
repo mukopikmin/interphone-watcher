@@ -35,11 +35,10 @@ const ResetButton: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
   const { loading, deviceId, refetch } = props
   const mutateDevice = useDeviceUpdateMutation(deviceId)
-  const reset = () => {
+  const reset = () =>
     mutateDevice.mutate(initialDeviceConfig, {
       onSuccess: () => refetch(),
     })
-  }
 
   return (
     <span className={classes.wrapper}>

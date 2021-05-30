@@ -22,13 +22,10 @@ const useStyles = makeStyles((theme: Theme) =>
 const SubmitSettingsButton: React.FC<Props> = (props: Props) => {
   const classes = useStyles()
   const mutateDevice = useDeviceUpdateMutation(props.deviceId)
-  const submit = () => {
+  const submit = () =>
     mutateDevice.mutate(props.config, {
-      onSuccess: () => {
-        props.refresh()
-      },
+      onSuccess: () => props.refresh(),
     })
-  }
 
   return (
     <Button onClick={submit}>

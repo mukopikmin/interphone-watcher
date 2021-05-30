@@ -7,7 +7,7 @@
     "start": "next start -p $PORT",
     "type-check": "tsc",
     "lint": "eslint .",
-    "test": "jest --coverage"
+    "test": "jest"
   },
   "dependencies": {
     "@google-cloud/firestore": "^4.10.1",
