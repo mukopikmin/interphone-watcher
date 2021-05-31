@@ -15,14 +15,23 @@ const handler = async (
   const devicePath = iot.devicePath(projectId, region, registryId, deviceId)
   const [iotDevice] = await iot.getDevice({
     name: devicePath,
-    fieldMask: { paths: ['metadata', 'config'] },
+    fieldMask: {
+      paths: [
+        'id',
+        'metadata',
+        'config',
+        'last_heartbeat_time',
+        'last_event_time',
+        'last_error_time',
+        'last_error_status',
+        'last_config_ack_time',
+        'state',
+        'last_config_send_time',
+        'last_state_time',
+        'gateway_config',
+      ],
+    },
   })
-  // const metadata = iotDevice.metadata as TemperatureDeviceMetadata
-  // const device: TemperatureDevice = {
-  //   id: deviceId,
-  //   location: metadata.location,
-  //   telemetry: null,
-  // }
 
   res.setHeader('Content-Type', 'applciation/json')
   res.status(200).json(iotDevice as Device)

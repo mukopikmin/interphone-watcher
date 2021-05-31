@@ -1,23 +1,41 @@
 import dayjs from 'dayjs'
 
+interface Timestamp {
+  seconds: string
+  nanos: number
+}
+
 export interface Device {
-  // credentials: any[]
   metadata: Metadata
   id: string
   name: string
   numId: string
-  // lastHeartbeatTime?: any
-  // lastEventTime?: any
-  // lastErrorTime?: any
-  // lastErrorStatus?: anyd
-  // config?: any
-  // lastConfigAckTime?: any
-  // state?: any
-  // lastConfigSendTime?: any
+  lastHeartbeatTime?: Timestamp
+  lastEventTime?: Timestamp
+  lastErrorTime?: Timestamp
+  lastErrorStatus?: {
+    details: string[]
+    code: number
+    message: string
+  }
+  config?: {
+    version: string
+    cloudUpdateTime: Timestamp
+    deviceAckTime: Timestamp
+    binaryData: ArrayBuffer
+  }
+  lastConfigAckTime?: Timestamp
+  state?: {}
+  lastConfigSendTime?: Timestamp
   blocked: boolean
-  // lastStateTime?: any
-  // logLevel: string
-  // gatewayConfig?: any
+  lastStateTime?: Timestamp
+  logLevel?: string
+  gatewayConfig?: {
+    gatewayType: string
+    gatewayAuthMethod: string
+    lastAccessedGatewayId: string
+    lastAccessedGatewayTime?: Timestamp
+  }
 }
 
 interface Metadata {

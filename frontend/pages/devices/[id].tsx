@@ -50,9 +50,7 @@ const DeviceTemperaturePage: React.FC = () => {
     refetch: refetchConfigVersions,
   } = useDeviceConfigVersionsQuery(id)
   const [tab, setTab] = useState(0)
-  const handleTabChange = (_: React.ChangeEvent<{}>, newValue: number) => {
-    setTab(newValue)
-  }
+  const handleTabChange = (_: React.ChangeEvent<{}>, val: number) => setTab(val)
   const reload = () => {
     switch (tab) {
       case 0:
@@ -67,7 +65,11 @@ const DeviceTemperaturePage: React.FC = () => {
   return (
     <Layout title={title}>
       <div className={classes.controls}>
-        <DeviceSelect devices={devices} onSelect={onSelectDevice} />
+        <DeviceSelect
+          devices={devices}
+          device={device}
+          onSelect={onSelectDevice}
+        />
         <ReloadButton
           reload={reload}
           loading={isFetchingTelemetry || isFetchingConfigVersions}
