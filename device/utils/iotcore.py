@@ -38,9 +38,9 @@ class IoTCore:
         self.client = self._get_client()
 
         # Device configs
-        self.sensor_enabled = False
-        self.threshold = 150
-        self.act_once = False
+        self.interphone_enabled = False
+        self.sound_volume = 150
+        self.detect_once = False
 
     def renew_client(self):
         self.client = self._get_client()
@@ -101,9 +101,9 @@ class IoTCore:
         payload = str(message.payload.decode("utf-8"))
         config = json.loads(payload)
 
-        self.sensor_enabled = config["sensorEnabled"]
-        self.threshold = config["threshold"]
-        self.act_once = config["actOnce"]
+        self.interphone_enabled = config["interphoneEnabled"]
+        self.sound_volume = config["soundVolume"]
+        self.detect_once = config["detectOnce"]
 
         print(
             "Received message on topic '{}' with Qos {}".format(
@@ -111,9 +111,9 @@ class IoTCore:
             )
         )
         print("Updated device configurations.")
-        print(f"[sensor_enabled] {self.sensor_enabled}")
-        print(f"[threshold] {self.threshold}")
-        print(f"[act_once] {self.act_once}")
+        print(f"[interphone_enabled] {self.interphone_enabled}")
+        print(f"[sound_volume] {self.sound_volume}")
+        print(f"[detect_once] {self.detect_once}")
 
     def _get_client(self):
         """Create our MQTT client. The client_id is a unique string that identifies

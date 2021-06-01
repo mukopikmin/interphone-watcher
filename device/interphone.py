@@ -6,8 +6,6 @@ import requests
 import json
 import datetime
 import os
-import logging
-import paho.mqtt.client as mqtt
 from dotenv import load_dotenv
 from utils.iotcore import IoTCore
 
@@ -30,7 +28,6 @@ FREQ_LOW_BASE = 847.0  # low tone frequency
 # FREQ_LOW_BASE = 849.0   # low tone frequency
 
 ALLOWABLE_FREQ_ERROR = 0.02
-SOUND_VOLUME_THRESHOLD = 0.2
 
 
 def main(
@@ -93,7 +90,7 @@ def main(
             # print(abs_array.max())
             # print(count_h)
 
-            if abs_array.max() > SOUND_VOLUME_THRESHOLD:
+            if abs_array.max() > iotcore.sound_volume:
                 freq_max = get_max_freq_fft(ndarray, CHUNK, freq)
                 print("Max amplitude frequency: ", freq_max, "Hz")
 
@@ -115,16 +112,17 @@ def main(
                     notify(
                         f"max: {abs_array.max()} counth: {count_h} countl: {count_l}"
                     )
-                    print(datetime.datetime.now())
-                    print("Interphone sound has been detected.")
+                    print(
+                        f"Interphone sound has been detected st {datetime.datetime.now()}."
+                    )
 
-                    if iotcore.sensor_enabled:
+                    if iotcore.interphone_enabled:
                         payload = {
                             "timestamp": datetime.datetime.now().isoformat(),
                             "volume": abs_array.max(),
                         }
                         print(payload)
-                        # iotcore.client.publish(mqtt_topic, json.dumps(payload), qos=1)
+                        iotcore.client.publish(mqtt_topic, json.dumps(payload), qos=1)
 
                     time.sleep(10)
                     print("Reset state.")
