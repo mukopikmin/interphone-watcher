@@ -118,7 +118,7 @@ def main(
 
                     if iotcore.interphone_enabled:
                         payload = {
-                            "timestamp": datetime.datetime.now().isoformat(),
+                            "deviceId": device_id,
                             "volume": abs_array.max(),
                         }
                         print(payload)
