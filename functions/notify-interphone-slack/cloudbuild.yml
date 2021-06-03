@@ -1,0 +1,17 @@
+steps:
+  - name: gcr.io/cloud-builders/yarn
+    dir: functions/dnotify-interphone-slack
+  - name: gcr.io/cloud-builders/yarn
+    dir: functions/dnotify-interphone-slack
+    args:
+      - build
+  - name: gcr.io/cloud-builders/gcloud
+    dir: functions/dnotify-interphone-slack
+    args:
+      - functions
+      - deploy
+      - dnotify-interphone-slack
+      - --trigger-topic=$_TRIGGER_TOPIC
+      - --runtime=nodejs12
+      - --region=asia-northeast2
+      - --entry-point=notifyInterphoneSlack
