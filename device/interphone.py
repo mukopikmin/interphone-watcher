@@ -120,6 +120,7 @@ def main(
                         payload = {
                             "deviceId": device_id,
                             "volume": abs_array.max(),
+                            "pattern": {"high": FREQ_HIGH_BASE, "low": FREQ_LOW_BASE},
                         }
                         print(payload)
                         iotcore.client.publish(mqtt_topic, json.dumps(payload), qos=1)
